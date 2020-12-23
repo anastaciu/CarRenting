@@ -225,11 +225,32 @@
     <Compile Include="Migrations\202012231258140_comp-prop2.Designer.cs">
       <DependentUpon>202012231258140_comp-prop2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012231511155_reqs.cs" />
+    <Compile Include="Migrations\202012231511155_reqs.Designer.cs">
+      <DependentUpon>202012231511155_reqs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012231706470_resetemployee.cs" />
+    <Compile Include="Migrations\202012231706470_resetemployee.Designer.cs">
+      <DependentUpon>202012231706470_resetemployee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012231710527_Employeeuserfk.cs" />
+    <Compile Include="Migrations\202012231710527_Employeeuserfk.Designer.cs">
+      <DependentUpon>202012231710527_Employeeuserfk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012232016222_resetfks.cs" />
+    <Compile Include="Migrations\202012232016222_resetfks.Designer.cs">
+      <DependentUpon>202012232016222_resetfks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012232026240_ExplicitFks.cs" />
+    <Compile Include="Migrations\202012232026240_ExplicitFks.Designer.cs">
+      <DependentUpon>202012232026240_ExplicitFks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\Cars.cs" />
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\CompanyViewModels.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -466,6 +487,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012231258140_comp-prop2.resx">
       <DependentUpon>202012231258140_comp-prop2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012231511155_reqs.resx">
+      <DependentUpon>202012231511155_reqs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012231706470_resetemployee.resx">
+      <DependentUpon>202012231706470_resetemployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012231710527_Employeeuserfk.resx">
+      <DependentUpon>202012231710527_Employeeuserfk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012232016222_resetfks.resx">
+      <DependentUpon>202012232016222_resetfks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012232026240_ExplicitFks.resx">
+      <DependentUpon>202012232026240_ExplicitFks.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -14,5 +14,7 @@ namespace CarRenting.Models
         public string Name { get; set; }
 
         public virtual ICollection<Employee> Employees { get; set; }
+
+        public virtual ICollection<Rent> Rents { get; set; }
     }
 }

@@ -1,7 +1,12 @@
-﻿
+﻿@model CarRenting.Models.CompanyViewModel
+
+
 @{
     ViewBag.Title = "Index Empresa";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
+<p>@Html.DisplayFor(m => m.Company.CompanyName)</p>
+
+<p>@Html.DisplayFor(m => m.ApplicationUser.Name)</p>

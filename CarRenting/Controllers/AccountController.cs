@@ -83,13 +83,14 @@ namespace CarRenting.Controllers
             {
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
+
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Dados incorretos!");
                     return View(model);
             }
         }
@@ -161,15 +162,22 @@ namespace CarRenting.Controllers
                 {
                     var role = UserManager.AddToRole(user.Id, WebConfigurationManager.AppSettings["Ur"]);
 
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    if (role.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                        // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                        // Send an email with this link
+                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "ClientArea");
+                        return RedirectToAction("Index", "ClientArea");
+                    }
+                    else
+                    {
+                        await UserManager.DeleteAsync(user);
+                    }
                 }
 
                 AddErrors(result);
@@ -239,13 +247,14 @@ namespace CarRenting.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name };
                 var result = UserManager.Create(user, model.Password);
 
                 if (result.Succeeded)
                 {
                     var role = UserManager.AddToRole(user.Id, WebConfigurationManager.AppSettings["Cn"]);
-
+                    Employee emp;
                     if (role.Succeeded)
                     {
                         var company = model.Company;
@@ -264,7 +273,7 @@ namespace CarRenting.Controllers
                                 AddErrors(result);
                                 return View(model);
                             }
-                            var emp = new Employee {ApplicationUserId = user.Id, Company = company};
+                            emp = new Employee {ApplicationUserId = user.Id, Company = company};
                             db.Employees.Add(emp);
                             try
                             {
@@ -282,6 +291,10 @@ namespace CarRenting.Controllers
                         }
 
                         SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
+
+                        TempData["CompanyViewModel"] = new CompanyViewModel
+                            {ApplicationUser = user, Company = company, Employee = emp};
+                            
 
                         // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link

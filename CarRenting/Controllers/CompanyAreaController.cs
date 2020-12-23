@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CarRenting.Models;
 
 namespace CarRenting.Controllers
 {
@@ -11,7 +13,11 @@ namespace CarRenting.Controllers
         // GET: CompanyArea
         public ActionResult Index()
         {
-            return View();
+
+            CompanyViewModel companyViewModel = (CompanyViewModel)TempData["companyViewModel"];
+            return View(companyViewModel);
         }
     }
+
+
 }

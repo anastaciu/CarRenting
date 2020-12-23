@@ -10,12 +10,16 @@ namespace CarRenting.Models
         [Key]
         public int Id { get; set; }
 
-
+        [Required]
         [ForeignKey("ApplicationUser")]
         public string ApplicationUserId { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
 
-        public virtual Company Company{ get; set; }
+        [Required]
+        [ForeignKey("Company")] 
+        public int CompanyId { get; set; }
+        
+        public Company Company{ get; set; }
 
 }
 }
