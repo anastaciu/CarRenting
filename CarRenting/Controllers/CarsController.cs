@@ -21,6 +21,12 @@ namespace CarRenting.Controllers
             return View(await db.Cars.ToListAsync());
         }
 
+        public async Task<ActionResult> ShowCars()
+        {
+            return View(await db.Cars.ToListAsync());
+        }
+
+
         // GET: Cars/Details/5
         public async Task<ActionResult> Details(int? id)
         {

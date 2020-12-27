@@ -2,30 +2,53 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+
+<div class="card-deck" style="padding-top: 30vh;">
+
+    <div class="card bg-warning boxshadow">
+        <a href="@Url.Action("ShowCars", "Cars")" style="text-decoration: none">
+        <div class="card-body text-center">
+            <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
+                <div class="d-flex">
+                    <i class="fas fa-car m-auto text-primary" style="font-size: 12vh"></i>
+                </div>
+                <h3>Veículos Disponíveis</h3>
+                <p class="lead mb-0">Quero ver os veículos disponíveis para alugar na plataforma</p>
+            </div>
+        </div>
+        </a>
+    </div>
+   
+    <div class="card boxshadow">
+        <a href="@Url.Action("RegisterUser", "Account")" style="text-decoration: none">
+            <div class="card-body text-center">
+                <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
+                    <div class="d-flex">
+                        <i class="fas fa-id-card m-auto text-primary" style="font-size: 12vh"></i>
+                    </div>
+                    <h3>Alugar um Veículo</h3>
+                    <p class="lead mb-0">Quero alugar um dos veículos disponíveis na plataforma</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+    <div class="card boxshadow">
+        <a href="@Url.Action("RegisterUser", "Account")" style="text-decoration: none">
+        <div class="card-body text-center">
+            <div class="mx-auto mb-0 mb-lg-3">
+                <div class="d-flex">
+                    <i class="fas fa-parking m-auto text-primary" style="font-size: 12vh"></i>
+                </div>
+                <h3>Disponibilizar Veículos</h3>
+                <p class="lead mb-0">Quero disponibilizar os meus veículos para alugar</p>
+            </div>
+        </div>
+        </a>
+    </div>
+
+
+
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+

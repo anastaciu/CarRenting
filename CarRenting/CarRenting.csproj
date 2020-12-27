@@ -265,6 +265,8 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\pexels-pixabay-326259-min.jpg" />
+    <Content Include="Content\scripts.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -443,6 +445,7 @@
     <Content Include="Views\Companies\Details.cshtml" />
     <Content Include="Views\Companies\Edit.cshtml" />
     <Content Include="Views\Companies\Index.cshtml" />
+    <Content Include="Views\Cars\ShowCars.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

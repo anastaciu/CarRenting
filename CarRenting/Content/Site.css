@@ -22,3 +22,28 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.boxshadow {
+    -webkit-box-shadow: 5px 5px 7px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 5px 5px 7px -1px rgba(0,0,0,0.75);
+    box-shadow: 5px 5px 7px -1px rgba(0,0,0,0.75);
+}
+
+.backimg {
+    background-image: linear-gradient(90deg, rgba(0,135,25,0.3) 0%, rgba(255,255,255,0.5886555305716037) 50%, rgba(66,139,202,0.3) 100%), url("~/Content/img/pexels-pixabay-326259-min.jpg");
+    background-repeat: no-repeat;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: -100;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    -webkit-filter: blur(8px);
+    -moz-filter: blur(8px);
+    -ms-filter: blur(8px);
+    filter: blur(8px);
+}
+
