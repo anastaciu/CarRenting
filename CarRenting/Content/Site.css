@@ -30,7 +30,7 @@ textarea {
 }
 
 .backimg {
-    background-image: linear-gradient(90deg, rgba(0,135,25,0.3) 0%, rgba(255,255,255,0.5886555305716037) 50%, rgba(66,139,202,0.3) 100%), url("~/Content/img/pexels-pixabay-326259-min.jpg");
+    background-image: linear-gradient(90deg, rgba(0,135,25,0.3) 0%, rgba(255,255,255,0.5886555305716037) 50%, rgba(66,139,202,0.3) 100%), url("img/pexels-pixabay-326259-min.jpg");
     background-repeat: no-repeat;
     position: fixed;
     left: 0;
@@ -47,3 +47,11 @@ textarea {
     filter: blur(8px);
 }
 
+.full-width {
+    width: 98vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -49vw;
+    margin-right: -49vw;
+}
