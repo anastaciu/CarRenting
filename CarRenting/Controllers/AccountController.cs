@@ -23,13 +23,13 @@ namespace CarRenting.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private ApplicationRoleManager _roleManager;
-        
+
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationRoleManager roleManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -76,14 +76,40 @@ namespace CarRenting.Controllers
                 return View(model);
             }
 
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    {
+                        var user = UserManager.Users.SingleOrDefault(u => u.Email == model.Email);
+                        
+                        if (user == null)
+                        {
+                            ModelState.AddModelError("", "Dados incorretos!");
+                            return View(model);
+                        }
+                        Session["User"] = user;
+                        var role = UserManager.GetRoles(user.Id).SingleOrDefault();
+                        if (role == WebConfigurationManager.AppSettings["Cn"])
+                        {
+                            return RedirectToAction("Index", "CompanyArea");
 
+                        }
+                        if (role == WebConfigurationManager.AppSettings["Cr"])
+                        {
+                            return RedirectToAction("Index", "CompanyArea");
+                        }
+                        if (role == WebConfigurationManager.AppSettings["Ur"])
+                        {
+                            return RedirectToAction("Index", "ClientArea");
+                        }
+                        else return RedirectToLocal(returnUrl);
+
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -124,7 +150,7 @@ namespace CarRenting.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -155,9 +181,9 @@ namespace CarRenting.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser {UserName = model.Email, Email = model.Email, Name = model.Name};
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name };
                 var result = UserManager.Create(user, model.Password);
-                
+
                 if (result.Succeeded)
                 {
                     var role = UserManager.AddToRole(user.Id, WebConfigurationManager.AppSettings["Ur"]);
@@ -220,7 +246,7 @@ namespace CarRenting.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     return RedirectToAction("Index", "Home");
-                    
+
                 }
 
                 AddErrors(result);
@@ -266,25 +292,25 @@ namespace CarRenting.Controllers
                             {
                                 await db.SaveChangesAsync();
                             }
-                            catch (DbUpdateException exception)
+                            catch (Exception exception)
                             {
                                 Debug.WriteLine(exception);
                                 await UserManager.DeleteAsync(user);
-                                AddErrors(result);
+                                ModelState.AddModelError("Erro: ", exception.Message);
                                 return View(model);
                             }
-                            emp = new Employee {ApplicationUserId = user.Id, Company = company};
+                            emp = new Employee { ApplicationUserId = user.Id, Company = company };
                             db.Employees.Add(emp);
                             try
                             {
                                 await db.SaveChangesAsync();
                             }
-                            catch (DbUpdateException exception)
+                            catch (Exception exception)
                             {
                                 Debug.WriteLine(exception);
                                 await UserManager.DeleteAsync(user);
                                 db.Companies.Remove(company);
-                                AddErrors(result);
+                                ModelState.AddModelError("Erro: ", exception.Message);
                                 return View(model);
                             }
 
@@ -292,10 +318,8 @@ namespace CarRenting.Controllers
 
                         SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
 
-                        TempData["CompanyViewModel"] = new CompanyViewModel
-                            {ApplicationUser = user, Company = company, Employee = emp};
-                            
-
+                        Session["User"] = user;
+                        
                         // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
                         // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

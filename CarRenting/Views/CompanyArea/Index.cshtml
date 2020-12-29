@@ -2,11 +2,16 @@
 
 
 @{
-    ViewBag.Title = "Index Empresa";
+    ViewBag.Title = "Área de gestão da Empresa: ";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2 style="margin-top: 50px;">@ViewBag.Title @Html.DisplayFor(m => m.Company.CompanyName)</h2>
 
 <p>@Html.DisplayFor(m => m.Company.CompanyName)</p>
 
 <p>@Html.DisplayFor(m => m.ApplicationUser.Name)</p>
+
+@foreach (var e in Model.Company.Employees)
+{
+    <p>@e.ApplicationUser.Name</p>
+}

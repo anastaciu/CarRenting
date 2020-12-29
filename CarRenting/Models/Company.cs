@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,10 +9,10 @@ using System.Web;
 namespace CarRenting.Models
 {
     
-    public class Company
+    public class Company : IEnumerable
     {
         public int Id { get; set; }
-        [Display(Name = "Nome")]
+        [Display(Name = "Empresa")]
         [Required(ErrorMessage = "É necessário indicar o nome da empresa")]
         public string CompanyName { get; set; }
         [Display(Name = "Telefone")]
@@ -29,6 +30,10 @@ namespace CarRenting.Models
       
         public ICollection<Car> Cars { get; set; }
 
+        public IEnumerator GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

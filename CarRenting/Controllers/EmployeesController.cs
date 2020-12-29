@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CarRenting.Models;
+using Microsoft.AspNet.Identity;
 
 namespace CarRenting.Controllers
 {
@@ -18,7 +19,11 @@ namespace CarRenting.Controllers
         // GET: Employees
         public async Task<ActionResult> Index()
         {
-            return View(await db.Employees.ToListAsync());
+            var employeeId = User.Identity.GetUserId();
+            var employee = db.Employees.SingleOrDefault(e => e.ApplicationUserId == employeeId);
+            var company = db.Companies.SingleOrDefault(e => e.Id == employee.CompanyId);
+            var list = await Task.FromResult(company?.Employees);
+            return View(list);
         }
 
         // GET: Employees/Details/5

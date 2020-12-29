@@ -55,3 +55,9 @@ textarea {
     margin-left: -49vw;
     margin-right: -49vw;
 }
+
+
+
+.nav-link-exit {
+    color: red !important;
+}

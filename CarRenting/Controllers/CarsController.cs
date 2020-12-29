@@ -18,12 +18,8 @@ namespace CarRenting.Controllers
         // GET: Cars
         public async Task<ActionResult> Index()
         {
-            return View(await db.Cars.ToListAsync());
-        }
-
-        public async Task<ActionResult> ShowCars()
-        {
-            return View(await db.Cars.ToListAsync());
+            var cars = db.Cars.Include(c => c.Company);
+            return View(await cars.ToListAsync());
         }
 
 
@@ -42,9 +38,34 @@ namespace CarRenting.Controllers
             return View(car);
         }
 
+        // GET: Cars
+        public async Task<ActionResult> UnknownUserShowCars()
+        {
+            var cars = db.Cars.Include(c => c.Company);
+            return View(await cars.ToListAsync());
+        }
+
+
+        // GET: Cars/Details/5
+        public async Task<ActionResult> UnknownUserCarDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Car car = await db.Cars.FindAsync(id);
+            if (car == null)
+            {
+                return HttpNotFound();
+            }
+            return View(car);
+        }
+
+
         // GET: Cars/Create
         public ActionResult Create()
         {
+            ViewBag.CompanyId = new SelectList(db.Companies, "Id", "CompanyName");
             return View();
         }
 
@@ -53,7 +74,7 @@ namespace CarRenting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Model,Fuel,Seats")] Car car)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Marca,Model,Fuel,Seats,Type,Price,CompanyId")] Car car)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +83,7 @@ namespace CarRenting.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.CompanyId = new SelectList(db.Companies, "Id", "CompanyName", car.CompanyId);
             return View(car);
         }
 
@@ -77,6 +99,7 @@ namespace CarRenting.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CompanyId = new SelectList(db.Companies, "Id", "CompanyName", car.CompanyId);
             return View(car);
         }
 
@@ -85,7 +108,7 @@ namespace CarRenting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Model,Fuel,Seats")] Car car)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Marca,Model,Fuel,Seats,Type,Price,CompanyId")] Car car)
         {
             if (ModelState.IsValid)
             {
@@ -93,6 +116,7 @@ namespace CarRenting.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+            ViewBag.CompanyId = new SelectList(db.Companies, "Id", "CompanyName", car.CompanyId);
             return View(car);
         }
 
@@ -130,5 +154,6 @@ namespace CarRenting.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }
