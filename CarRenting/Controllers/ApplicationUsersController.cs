@@ -27,6 +27,10 @@ namespace CarRenting.Controllers
         public ActionResult GetCompanyEmployees()
         {
             var userId = User.Identity.GetUserId();
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var employee = db.Employees.SingleOrDefault(e => e.ApplicationUserId == userId);
             var company = db.Companies.SingleOrDefault(c => c.Id == employee.CompanyId);
             var employees = db.Employees.Where(e => e.CompanyId == company.Id);

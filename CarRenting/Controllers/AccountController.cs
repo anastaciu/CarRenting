@@ -92,7 +92,6 @@ namespace CarRenting.Controllers
                             ModelState.AddModelError("", "Dados incorretos!");
                             return View(model);
                         }
-                        Session["User"] = user;
                         var role = UserManager.GetRoles(user.Id).SingleOrDefault();
                         if (role == WebConfigurationManager.AppSettings["Cn"])
                         {
@@ -181,7 +180,7 @@ namespace CarRenting.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber};
                 var result = UserManager.Create(user, model.Password);
 
                 if (result.Succeeded)
@@ -215,8 +214,15 @@ namespace CarRenting.Controllers
 
         // GET: /Account/RegisterUser
         [AllowAnonymous]
-        public ActionResult RegisterCompanyUser()
+        public ActionResult AddCompanyUser()
         {
+            var roles = RoleManager.Roles.Where(r => r.Name.Contains("Empresa"));
+            List<SelectListItem> list = new List<SelectListItem>();
+            foreach (var role in roles)
+            {
+                list.Add(new SelectListItem(){Value = role.Name, Text = role.Name});
+            }
+            ViewBag.Roles = list;
             return View();
         }
 
@@ -225,37 +231,52 @@ namespace CarRenting.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RegisterCompanyUser(RegisterViewModel model)
+        public async Task<ActionResult> AddCompanyUser(AddCompanyUserViewModel model)
         {
+   
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name };
+            
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber};
+                
                 var result = UserManager.Create(user, model.Password);
 
                 if (result.Succeeded)
                 {
+                    var role = UserManager.AddToRole(user.Id, model.RoleName);
 
-                    var role = UserManager.AddToRole(user.Id, WebConfigurationManager.AppSettings["Cr"]);
+                    if (role.Succeeded)
+                    {
+                        using (var dbContext = new ApplicationDbContext())
+                        {
+                            var userId = User.Identity.GetUserId();
+                            var emp = dbContext.Employees.SingleOrDefault(e => e.ApplicationUserId == userId);
+                            var comp = emp.Company;
+                            
+                            dbContext.Employees.Add(new Employee {CompanyId = emp.CompanyId, ApplicationUserId = user.Id});
+                            await dbContext.SaveChangesAsync();
+                        }
+                        
+                        // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                        // Send an email with this link
+                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
-
+                        return RedirectToAction("Index", "CompanyArea");
+                    }
+                    else
+                    {
+                        AddErrors(role);
+                        await UserManager.DeleteAsync(user);
+                    }
                 }
-
                 AddErrors(result);
             }
             // If we got this far, something failed, redisplay form
             return View(model);
 
         }
-
 
         // GET: /Account/RegisterUser
         [AllowAnonymous]
@@ -269,18 +290,16 @@ namespace CarRenting.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RegisterInitCompanyAdmin(RegisterInitAdminViewModel model)
+        public async Task<ActionResult> RegisterInitCompanyAdmin(RegisterCompanyUserViewModel model)
         {
             if (ModelState.IsValid)
             {
-
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber};
                 var result = UserManager.Create(user, model.Password);
 
                 if (result.Succeeded)
                 {
                     var role = UserManager.AddToRole(user.Id, WebConfigurationManager.AppSettings["Cn"]);
-                    Employee emp;
                     if (role.Succeeded)
                     {
                         var company = model.Company;
@@ -299,7 +318,7 @@ namespace CarRenting.Controllers
                                 ModelState.AddModelError("Erro: ", exception.Message);
                                 return View(model);
                             }
-                            emp = new Employee { ApplicationUserId = user.Id, Company = company };
+                            Employee emp = new Employee { ApplicationUserId = user.Id, Company = company };
                             db.Employees.Add(emp);
                             try
                             {
@@ -315,11 +334,8 @@ namespace CarRenting.Controllers
                             }
 
                         }
-
                         SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
 
-                        Session["User"] = user;
-                        
                         // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
                         // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

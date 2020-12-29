@@ -254,6 +254,14 @@
     <Compile Include="Migrations\202012280959058_car-det2.Designer.cs">
       <DependentUpon>202012280959058_car-det2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012291737473_emp-no-req.cs" />
+    <Compile Include="Migrations\202012291737473_emp-no-req.Designer.cs">
+      <DependentUpon>202012291737473_emp-no-req.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012291805217_emp-req.cs" />
+    <Compile Include="Migrations\202012291805217_emp-req.Designer.cs">
+      <DependentUpon>202012291805217_emp-req.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
@@ -397,8 +405,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -419,7 +425,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Account\RegisterCompanyUser.cshtml" />
     <Content Include="Views\Account\RegisterUser.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
@@ -462,6 +467,8 @@
     <Content Include="Views\ApplicationUsers\Edit.cshtml" />
     <Content Include="Views\ApplicationUsers\Index.cshtml" />
     <Content Include="Views\ApplicationUsers\GetCompanyEmployees.cshtml" />
+    <Content Include="Views\Account\AddCompanyUser.cshtml" />
+    <Content Include="Views\CompanyArea\EmployeeManagement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -527,6 +534,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012280959058_car-det2.resx">
       <DependentUpon>202012280959058_car-det2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012291737473_emp-no-req.resx">
+      <DependentUpon>202012291737473_emp-no-req.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012291805217_emp-req.resx">
+      <DependentUpon>202012291805217_emp-req.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,20 +1,18 @@
-﻿@model CarRenting.Models.RegisterInitAdminViewModel
+﻿@model CarRenting.Models.RegisterCompanyUserViewModel
 @{
     ViewBag.Title = "Registar Empresa";
 }
 
-<h2 style="margin-top: 50px; text-align: center">@ViewBag.Title</h2>
+<h2 style="margin-top: 5vh">@ViewBag.Title</h2>
 
 @using (Html.BeginForm("RegisterInitCompanyAdmin", "Account", FormMethod.Post, new { @class = "", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <div style="background-color: aliceblue;margin-top: 25px;" class="full-width">
-        <hr />
-        <h4 style="text-align: center;">Dados da Empresa</h4>
-        <hr />
+    <div class="log-headers full-width">
+        <h4>Dados da Empresa</h4>
     </div>
 
-    <div class="form-row" style="margin-top: 25px">
+    <div class="form-row">
         <div class="col-md-2"></div>
         <div class="col-md-8 jumbotron">
             <div class="offset-1 col-md-10">
@@ -57,12 +55,11 @@
         </div>
         <div class="col-md-2"></div>
     </div>
-    <div style="background-color: aliceblue;" class="full-width">
-        <hr />
-        <h4 style="text-align: center;">Dados do Administrador</h4>
-        <hr />
+    <div class="full-width log-headers" style="margin-top: -2vh">
+        <h4>Dados do Administrador</h4>
+
     </div>
-    <div class="form-row" style="margin-top: 25px">
+    <div class="form-row">
         <div class="col-md-2"></div>
         <div class="col-md-8 jumbotron">
             <div class="offset-1 col-md-10">
@@ -93,9 +90,9 @@
 
             @Html.ValidationSummary("", new { @class = "text-danger" })
 
-            <div class="form-group">
-                <div class="offset-md-1 col-md-10">
-                    <input type="submit" class="btn btn-primary" value="Registar" />
+            <div style="text-align: center;margin-top: 5vh">
+                <div>
+                    <input type="submit" class="btn btn-primary" value="Registar" style="width: 30%" />
                 </div>
             </div>
         </div>

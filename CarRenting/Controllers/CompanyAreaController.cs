@@ -22,6 +22,7 @@ namespace CarRenting.Controllers
                 {
                     var employee = db.Employees.SingleOrDefault(e => e.ApplicationUserId == thisUser.Id);
                     var company = db.Companies.SingleOrDefault(c => c.Id == employee.CompanyId);
+                    
                     var companyViewModel = new CompanyViewModel
                     { Company = company, ApplicationUser = thisUser, Employee = employee };
                     return View(companyViewModel);
@@ -29,7 +30,20 @@ namespace CarRenting.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
-    }
 
+
+        public ActionResult EmployeeManagement()
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var thisUser = db.Users.Find(User.Identity.GetUserId());
+                if (thisUser != null)
+                {
+                    return View();
+                }
+            }
+            return RedirectToAction("Index", "Home");
+        }
+    }
 
 }

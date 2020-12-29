@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Gestão de Utilizadores";
+}
+
+<div class="full-width log-headers">
+    <h2 style="text-align: center">@ViewBag.Title</h2>
+</div>
+
+<div class="card-deck" style="padding-top: 25vh">
+
+    <div class="card bg-warning boxshadow btn-hover">
+        <a href="@Url.Action("AddCompanyUser", "Account")" style="text-decoration: none">
+            <div class="card-body text-center text-dark">
+                <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
+                    <div class="d-flex">
+                        <i class="fas fa-user-plus m-auto" style="font-size: 10vh"></i>
+                    </div>
+                    <h3>Adicionar Utilizador</h3>
+                    <p class="lead mb-0">Quero adicionar um utilizador na minha conta</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="card bg-warning boxshadow btn-hover">
+        <a href="@Url.Action("GetCompanyEmployees", "ApplicationUsers")" style="text-decoration: none">
+            <div class="card-body text-center text-dark">
+                <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
+                    <div class="d-flex">
+                        <i class="fas fa-parking m-auto" style="font-size: 10vh"></i>
+                    </div>
+                    <h3>Gerir Utilizadores</h3>
+                    <p class="lead mb-0">Quero ver editar ou remover utilizadores da minha conta</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+</div>
