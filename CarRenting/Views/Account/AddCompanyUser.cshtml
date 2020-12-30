@@ -64,6 +64,15 @@
                     @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="offset-1 col-md-10">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.RoleName, new { @class = "col-form-label" })
+                    <div>
+                        @Html.DropDownListFor(m=>m.RoleName, new SelectList(ViewBag.Roles, "Value", "Text"), new{@class = "form-control"})
+                    </div>
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
+            </div>
             <br/>
             <div class="row">
                 <div class="col-sm-12 text-center">

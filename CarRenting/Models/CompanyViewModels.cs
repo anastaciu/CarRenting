@@ -9,6 +9,7 @@ namespace CarRenting.Models
     {
         public ApplicationUser ApplicationUser { get; set; }
         public Company Company { get; set; }
-        public Employee Employee { get; set; }
+        public string Role;
+
     }
 }
