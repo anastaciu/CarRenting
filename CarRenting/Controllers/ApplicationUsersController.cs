@@ -17,7 +17,6 @@ namespace CarRenting.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-
         public async Task<ActionResult> Index()
         {
             return View(await db.Users.ToListAsync());
@@ -73,6 +72,10 @@ namespace CarRenting.Controllers
         // GET: ApplicationUsers/Create
         public ActionResult Create()
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -83,6 +86,10 @@ namespace CarRenting.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,Name,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (ModelState.IsValid)
             {
                 db.Users.Add(applicationUser);
@@ -96,10 +103,15 @@ namespace CarRenting.Controllers
         // GET: ApplicationUsers/Edit/5
         public async Task<ActionResult> Edit(string id)
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             ApplicationUser applicationUser = await Task.FromResult(db.Users.Find(id));
             if (applicationUser == null)
             {
@@ -115,6 +127,10 @@ namespace CarRenting.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(applicationUser).State = EntityState.Modified;
@@ -127,6 +143,10 @@ namespace CarRenting.Controllers
         // GET: ApplicationUsers/Delete/5
         public async Task<ActionResult> Delete(string id)
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -144,6 +164,10 @@ namespace CarRenting.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ApplicationUser applicationUser = await Task.FromResult(db.Users.Find(id));
             db.Users.Remove(applicationUser);
             await db.SaveChangesAsync();

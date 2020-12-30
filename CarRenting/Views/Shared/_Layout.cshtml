@@ -32,6 +32,14 @@
                         <li>@Html.ActionLink("Gerir Utilizadores", "EmployeeManagement", "CompanyArea", new { @area = "" }, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
 
                     }
+                    else
+                    {
+                        <li>@Html.ActionLink("Home", "Index", "Home", new { @area = "" }, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                        <li>@Html.ActionLink("Ver Viaturas", "UnknownUserShowCars", "Cars", new { @area = "" }, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                        <li>@Html.ActionLink("Alugar Viatura", "RegisterUser", "Account", new { @area = "" }, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                        <li>@Html.ActionLink("Empresas", "RegisterInitCompanyAdmin", "Account", new { @area = "" }, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
