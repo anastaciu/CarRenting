@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using CarRenting.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace CarRenting.Controllers
 {
@@ -36,7 +37,7 @@ namespace CarRenting.Controllers
             var employees = db.Employees.Where(e => e.CompanyId == company.Id);
             var users = db.Users.ToList();
                 
-            ICollection<ApplicationUser> empList = new List<ApplicationUser>();
+            ICollection<CompanyUserListViewModel> empList = new List<CompanyUserListViewModel>();
 
             foreach (var applicationUser in users)
             {
@@ -44,13 +45,14 @@ namespace CarRenting.Controllers
                 {
                     if (applicationUser.Id == dbEmployee.ApplicationUserId)
                     {
-                        empList.Add(applicationUser);
+                        var role = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>()
+                            .GetRoles(applicationUser.Id).SingleOrDefault();
+
+                        empList.Add(new CompanyUserListViewModel{ApplicationUser = applicationUser, Role = role});
                     }
                 }
             }
-
             return View(empList);
-
         }
 
         // GET: ApplicationUsers/Details/5

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CarRenting.Models.ApplicationUser>
+﻿@model IEnumerable<CarRenting.Models.CompanyUserListViewModel>
 
 @{
     ViewBag.Title = "Gestão de Utilizadores";
@@ -14,13 +14,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.ApplicationUser.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.ApplicationUser.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
+            @Html.DisplayNameFor(model => model.ApplicationUser.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Role)
         </th>
 
         <th></th>
@@ -28,22 +31,25 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.ApplicationUser.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ApplicationUser.Email)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ApplicationUser.PhoneNumber)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Role)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.ApplicationUser.Id }) |
+        @Html.ActionLink("Details", "Details", new { id = item.ApplicationUser.Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.ApplicationUser.Id })
+    </td>
+</tr>
     }
 
 </table>

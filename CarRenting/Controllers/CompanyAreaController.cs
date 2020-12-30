@@ -25,7 +25,7 @@ namespace CarRenting.Controllers
                     var company = db.Companies.SingleOrDefault(c => c.Id == employee.CompanyId);
                     var role= HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().GetRoles(thisUser.Id).SingleOrDefault();
 
-                    var companyViewModel = new CompanyViewModel
+                    var companyViewModel = new CompanyDashViewModel
                     { Company = company, ApplicationUser = thisUser, Role = role};
                     return View(companyViewModel);
                 }
