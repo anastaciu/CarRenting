@@ -174,11 +174,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminAreaController.cs" />
     <Compile Include="Controllers\ApplicationUsersController.cs" />
     <Compile Include="Controllers\CarsController.cs" />
     <Compile Include="Controllers\ClientAreaController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
-    <Compile Include="Controllers\CompanyAreaController.cs" />
+    <Compile Include="Controllers\CompanyAdminAreaController.cs" />
+    <Compile Include="Controllers\CompanyUserAreaController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -277,7 +279,7 @@
     <Compile Include="Models\CarType.cs" />
     <Compile Include="Models\Checks.cs" />
     <Compile Include="Models\Company.cs" />
-    <Compile Include="Models\CompanyViewModels.cs" />
+    <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -456,7 +458,7 @@
     <Content Include="Views\Rents\Details.cshtml" />
     <Content Include="Views\Rents\Edit.cshtml" />
     <Content Include="Views\Rents\Index.cshtml" />
-    <Content Include="Views\CompanyArea\Index.cshtml" />
+    <Content Include="Views\CompanyAdminArea\Index.cshtml" />
     <Content Include="Views\ClientArea\Index.cshtml" />
     <Content Include="Views\Account\RegisterInitCompanyAdmin.cshtml" />
     <Content Include="Views\Companies\Create.cshtml" />
@@ -478,7 +480,9 @@
     <Content Include="Views\ApplicationUsers\Index.cshtml" />
     <Content Include="Views\ApplicationUsers\GetCompanyEmployees.cshtml" />
     <Content Include="Views\Account\AddCompanyUser.cshtml" />
-    <Content Include="Views\CompanyArea\EmployeeManagement.cshtml" />
+    <Content Include="Views\CompanyAdminArea\EmployeeManagementIndex.cshtml" />
+    <Content Include="Views\AdminArea\Index.cshtml" />
+    <Content Include="Views\CompanyUserArea\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

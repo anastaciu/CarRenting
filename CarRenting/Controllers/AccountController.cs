@@ -76,7 +76,6 @@ namespace CarRenting.Controllers
                 return View(model);
             }
 
-
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -95,16 +94,21 @@ namespace CarRenting.Controllers
                         var role = UserManager.GetRoles(user.Id).SingleOrDefault();
                         if (role == WebConfigurationManager.AppSettings["Cn"])
                         {
-                            return RedirectToAction("Index", "CompanyArea");
+                            return RedirectToAction("Index", "CompanyAdminArea");
 
                         }
                         if (role == WebConfigurationManager.AppSettings["Cr"])
                         {
-                            return RedirectToAction("Index", "CompanyArea");
+                            return RedirectToAction("Index", "CompanyUserArea");
                         }
                         if (role == WebConfigurationManager.AppSettings["Ur"])
                         {
                             return RedirectToAction("Index", "ClientArea");
+                        }
+
+                        if (role == WebConfigurationManager.AppSettings["An"])
+                        {
+                            return RedirectToAction("Index", "AdminArea");
                         }
                         else return RedirectToLocal(returnUrl);
 
@@ -227,16 +231,15 @@ namespace CarRenting.Controllers
         }
 
         //
-        // POST: /Account/RegisterUser
+        // POST: /Account/AddCompanyUser
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddCompanyUser(AddCompanyUserViewModel model)
         {
-   
+            
             if (ModelState.IsValid)
             {
-            
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber};
                 
                 var result = UserManager.Create(user, model.Password);
@@ -263,7 +266,7 @@ namespace CarRenting.Controllers
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                        return RedirectToAction("Index", "CompanyArea");
+                        return RedirectToAction("GetCompanyEmployees", "ApplicationUsers");
                     }
                     else
                     {
@@ -342,7 +345,7 @@ namespace CarRenting.Controllers
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                        return RedirectToAction("Index", "CompanyArea");
+                        return RedirectToAction("Index", "CompanyAdminArea");
                     }
                     else
                     {
@@ -420,6 +423,10 @@ namespace CarRenting.Controllers
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
+            if (!Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return code == null ? View("Error") : View();
         }
 
@@ -540,6 +547,7 @@ namespace CarRenting.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
+
             if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Manage");
@@ -612,6 +620,64 @@ namespace CarRenting.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+
+        private bool IsCompanyAdmin()
+        {
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                var role = UserManager.GetRoles(userId).SingleOrDefault();
+                if (userId == null || role != WebConfigurationManager.AppSettings["Cn"])
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Debug: " + e.Message);
+                return false;
+            }
+        }
+
+        private bool IsCompanyAdmin(string userId)
+        {
+            try
+            {
+                var role = UserManager.GetRoles(userId).SingleOrDefault();
+                if (userId == null || role != WebConfigurationManager.AppSettings["Cn"])
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Debug: " + e.Message);
+                return false;
+            }
+        }
+
+        private bool IsAdmin()
+        {
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                var role = UserManager.GetRoles(userId).SingleOrDefault();
+                if (userId == null || role != WebConfigurationManager.AppSettings["An"])
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Debug: " + e.Message);
+                return false;
+            }
+
         }
 
         #region Helpers

@@ -13,8 +13,22 @@ namespace CarRenting.Controllers
         {
             if (User.IsInRole(WebConfigurationManager.AppSettings["Cn"]))
             {
-                return RedirectToAction("Index", "CompanyArea");
+                return RedirectToAction("Index", "CompanyAdminArea");
             }
+            if (User.IsInRole(WebConfigurationManager.AppSettings["An"]))
+            {
+                return RedirectToAction("Index", "AdminArea");
+            }
+            if(User.IsInRole(WebConfigurationManager.AppSettings["Cr"]))
+            {
+                return RedirectToAction("Index", "CompanyUserArea");
+            }
+
+            if (User.IsInRole(WebConfigurationManager.AppSettings["Ur"]))
+            {
+                return RedirectToAction("Index", "ClientArea");
+            }
+
             return View();
         }
     }

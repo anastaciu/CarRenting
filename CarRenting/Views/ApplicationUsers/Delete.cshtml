@@ -51,17 +51,23 @@
             {
                 user = HttpContext.Current.GetOwinContext()?.GetUserManager<ApplicationUserManager>()?.FindById(User.Identity.GetUserId())?.Name;
             }
-        
 
         <div class="row">
             <div class="col-sm-12 text-center">
-                @if (Request.IsAuthenticated && user != null && User.IsInRole(WebConfigurationManager.AppSettings["Cn"]))
+                @if (Request.IsAuthenticated && user != null)
                 {
-                    @Html.ActionLink("Cancelar", "GetCompanyEmployees", "ApplicationUsers", new {@area = ""}, new {@class = "btn btn-danger"})
-                }
-                else
-                {
-                    @Html.ActionLink("Back to List", "Index", null, null, new { @class = "btn btn-danger" })
+                    if (User.IsInRole(WebConfigurationManager.AppSettings["Cn"]))
+                    {
+                        @Html.ActionLink("Cancelar", "GetCompanyEmployees", "ApplicationUsers", new {@area = ""}, new {@class = "btn btn-danger"});
+                    }
+                    else if(User.IsInRole(WebConfigurationManager.AppSettings["An"]))
+                    {
+                        @Html.ActionLink("Cancelar", "Index", "ApplicationUsers", new {@area = ""}, new {@class = "btn btn-danger"});
+                    }
+                    else
+                    {
+                         Response.Redirect(@Url.Action("Index", "Home") ?? string.Empty);
+                    }
                 }
                 <button type="submit" class="btn btn-primary" Style="width: 100px;">Eliminar</button>
             </div>

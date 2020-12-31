@@ -1,0 +1,56 @@
+﻿@model CarRenting.Models.CompanyDashViewModel
+
+
+
+@{
+    ViewBag.Title = "Área de gestão";
+    
+}
+<div class="full-width log-headers">
+    <h4 style="text-align: center">@Html.DisplayFor(m => m.ApplicationUser.Name), @Html.DisplayFor(m => m.Role) @Html.DisplayFor(m => m.Company.CompanyName)</h4>
+</div>
+
+<div class="card-deck" style="padding-top: 20vh">
+
+    <div class="card bg-warning boxshadow btn-hover">
+        <a href="@Url.Action("EmployeeManagementIndex", "CompanyAdminArea")" style="text-decoration: none">
+            <div class="card-body text-center text-dark">
+                <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
+                    <div class="d-flex">
+                        <i class="fas fa-user-friends m-auto" style="font-size: 10vw"></i>
+                    </div>
+                    <h3>Gerir Utilizadores</h3>
+                    <p class="lead mb-0">Quero adicionar remover ou editar um utilizador na minha empresa</p>
+                </div>
+            </div>
+        </a>
+    </div>
+   
+    <div class="card bg-warning boxshadow btn-hover">
+        <a href="@Url.Action("RegisterUser", "Account")" style="text-decoration: none">
+            <div class="card-body text-center text-dark">
+                <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
+                    <div class="d-flex">
+                        <i class="fas fa-parking m-auto" style="font-size: 10vw"></i>
+                    </div>
+                    <h3>Gerir Frota</h3>
+                    <p class="lead mb-0">Quero adicionar editar ou remover viaturas da minha frota</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+    <div class="card bg-warning boxshadow btn-hover">
+        <a href="@Url.Action("RegisterInitCompanyAdmin", "Account")" style="text-decoration: none">
+            <div class="card-body text-center text-dark">
+                <div class="mx-auto mb-0 mb-lg-3">
+                    <div class="d-flex">
+                        <i class="fas fa-tasks m-auto" style="font-size: 10vw"></i>
+                    </div>
+                    <h3>Gerir Checklists</h3>
+                    <p class="lead mb-0">Quero gerir a lista de verificações a realizar para cada tipo de viatura</p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

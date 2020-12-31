@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using CarRenting.Models;
 using Microsoft.AspNet.Identity;
@@ -15,11 +17,43 @@ namespace CarRenting.Controllers
 {
     public class ApplicationUsersController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext dbContext = new ApplicationDbContext();
+        private ApplicationUserManager _userManager;
+        private ApplicationRoleManager _roleManager;
+
+
+        public ApplicationUsersController()
+        {
+        }
+
+        public ApplicationUsersController(ApplicationUserManager userManager, ApplicationRoleManager roleManager)
+        {
+            UserManager = userManager;
+            RoleManager = roleManager;
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            private set => _userManager = value;
+        }
+
+        public ApplicationRoleManager RoleManager
+        {
+            get => _roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
+            private set => _roleManager = value;
+        }
 
         public async Task<ActionResult> Index()
         {
-            return View(await db.Users.ToListAsync());
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View(await dbContext.Users.ToListAsync());
+            }
         }
 
 
@@ -27,16 +61,16 @@ namespace CarRenting.Controllers
         public ActionResult GetCompanyEmployees()
         {
             var userId = User.Identity.GetUserId();
-            if (userId == null)
+            if (!IsCompanyAdmin(userId))
             {
                 return RedirectToAction("Index", "Home");
             }
-            var employee = db.Employees.SingleOrDefault(e => e.ApplicationUserId == userId);
-            var company = db.Companies.SingleOrDefault(c => c.Id == employee.CompanyId);
-            var employees = db.Employees.Where(e => e.CompanyId == company.Id);
-            var users = db.Users.ToList();
-                
-            ICollection<CompanyUserListViewModel> empList = new List<CompanyUserListViewModel>();
+            var employee = dbContext.Employees.SingleOrDefault(e => e.ApplicationUserId == userId);
+            var company = dbContext.Companies.SingleOrDefault(c => c.Id == employee.CompanyId);
+            var employees = dbContext.Employees.Where(e => e.CompanyId == company.Id);
+            var users = dbContext.Users.ToList();
+
+            ICollection<UserDashViewModel> empList = new List<UserDashViewModel>();
 
             foreach (var applicationUser in users)
             {
@@ -44,15 +78,14 @@ namespace CarRenting.Controllers
                 {
                     if (applicationUser.Id == dbEmployee.ApplicationUserId)
                     {
-                        var role = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>()
-                            .GetRoles(applicationUser.Id).SingleOrDefault();
-
-                        empList.Add(new CompanyUserListViewModel{ApplicationUser = applicationUser, Role = role});
+                        var role = UserManager.GetRoles(applicationUser.Id).SingleOrDefault();
+                        empList.Add(new UserDashViewModel { ApplicationUser = applicationUser, Role = role });
                     }
                 }
             }
             return View(empList);
         }
+
 
         // GET: ApplicationUsers/Details/5
         public async Task<ActionResult> Details(string id)
@@ -61,7 +94,7 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser = await Task.FromResult(db.Users.Find(id));
+            ApplicationUser applicationUser = await Task.FromResult(dbContext.Users.Find(id));
             if (applicationUser == null)
             {
                 return HttpNotFound();
@@ -92,8 +125,8 @@ namespace CarRenting.Controllers
             }
             if (ModelState.IsValid)
             {
-                db.Users.Add(applicationUser);
-                await db.SaveChangesAsync();
+                dbContext.Users.Add(applicationUser);
+                await dbContext.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
@@ -112,7 +145,7 @@ namespace CarRenting.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            ApplicationUser applicationUser = await Task.FromResult(db.Users.Find(id));
+            ApplicationUser applicationUser = await Task.FromResult(dbContext.Users.Find(id));
             if (applicationUser == null)
             {
                 return HttpNotFound();
@@ -133,8 +166,8 @@ namespace CarRenting.Controllers
             }
             if (ModelState.IsValid)
             {
-                db.Entry(applicationUser).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                dbContext.Entry(applicationUser).State = EntityState.Modified;
+                await dbContext.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(applicationUser);
@@ -151,7 +184,7 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser = await Task.FromResult(db.Users.Find(id));
+            ApplicationUser applicationUser = await Task.FromResult(dbContext.Users.Find(id));
             if (applicationUser == null)
             {
                 return HttpNotFound();
@@ -164,21 +197,91 @@ namespace CarRenting.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
-            if (!Request.IsAuthenticated)
+            if (!IsAdmin() && !IsCompanyAdmin())
             {
                 return RedirectToAction("Index", "Home");
             }
-            ApplicationUser applicationUser = await Task.FromResult(db.Users.Find(id));
-            db.Users.Remove(applicationUser);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            ApplicationUser applicationUser = await Task.FromResult(dbContext.Users.Find(id));
+            dbContext.Users.Remove(applicationUser);
+            await dbContext.SaveChangesAsync();
+            if (IsAdmin())
+            {
+                return RedirectToAction("Index");
+            }
+            else if (IsCompanyAdmin())
+            {
+                return RedirectToAction("GetCompanyEmployees");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+
+        private bool IsCompanyAdmin()
+        {
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                var role = UserManager.GetRoles(userId).SingleOrDefault();
+                if (userId == null || role != WebConfigurationManager.AppSettings["Cn"])
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Debug: " + e.Message);
+                return false;
+            }
+        }
+
+        private bool IsCompanyAdmin(string userId)
+        {
+            try
+            {
+                var role = UserManager.GetRoles(userId).SingleOrDefault();
+                if (userId == null || role != WebConfigurationManager.AppSettings["Cn"])
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Debug: " + e.Message);
+                return false;
+            }
+        }
+
+        private bool IsAdmin()
+        {
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                var role = UserManager.GetRoles(userId).SingleOrDefault();
+                if (userId == null || role != WebConfigurationManager.AppSettings["An"])
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Debug: " + e.Message);
+                return false;
+            }
+            
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                dbContext.Dispose();
             }
             base.Dispose(disposing);
         }

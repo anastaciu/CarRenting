@@ -1,4 +1,7 @@
-﻿@model IEnumerable<CarRenting.Models.CompanyUserListViewModel>
+﻿@using System.Web.Configuration
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin
+@model IEnumerable<CarRenting.Models.UserDashViewModel>
 
 @{
     ViewBag.Title = "Gestão de Utilizadores";
@@ -31,64 +34,50 @@
 
     @foreach (var item in Model)
     {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.ApplicationUser.Name)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.ApplicationUser.Email)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.ApplicationUser.PhoneNumber)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Role)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.ApplicationUser.Id }) |
-        @Html.ActionLink("Details", "Details", new { id = item.ApplicationUser.Id }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.ApplicationUser.Id })
-    </td>
-</tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ApplicationUser.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ApplicationUser.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ApplicationUser.Id })
+            </td>
+        </tr>
     }
 
 </table>
 
-<div class="container">
-    <h2>Cards with Contextual Classes</h2>
-    <div class="card">
-        <div class="card-body">Basic card</div>
-    </div>
-    <br>
-    <div class="card bg-primary text-white">
-        <div class="card-body"><span style="text-align: center"> merda </span><span> foda-se </span> rimary card </div>
-    </div>
-    <br>
-    <div class="card bg-success text-white">
-        <div class="card-body">Success card</div>
-    </div>
-    <br>
-    <div class="card bg-info text-white">
-        <div class="card-body">Info card</div>
-    </div>
-    <br>
-    <div class="card bg-warning text-white">
-        <div class="card-body">Warning card</div>
-    </div>
-    <br>
-    <div class="card bg-danger text-white">
-        <div class="card-body">Danger card</div>
-    </div>
-    <br>
-    <div class="card bg-secondary text-white">
-        <div class="card-body">Secondary card</div>
-    </div>
-    <br>
-    <div class="card bg-dark text-white">
-        <div class="card-body">Dark card</div>
-    </div>
-    <br>
-    <div class="card bg-light text-dark">
-        <div class="card-body">Light card</div>
+@{
+    string user = null;
+    if (User.Identity.IsAuthenticated)
+    {
+        user = HttpContext.Current.GetOwinContext()?.GetUserManager<ApplicationUserManager>()?.FindById(User.Identity.GetUserId())?.Name;
+    }
+}
+<div class="row">
+    <div class="col-sm-12 text-center">
+        @if (Request.IsAuthenticated && user != null)
+        {
+            if (User.IsInRole(WebConfigurationManager.AppSettings["Cn"]))
+            {
+                @Html.ActionLink("Voltar", "Index", "CompanyAdminArea", new { @area = "" }, new { @class = "btn btn-danger" })
+                ;
+            }
+            else
+            {
+                Response.Redirect(@Url.Action("Index", "Home") ?? string.Empty);
+            }
+        }
+        <button type="submit" class="btn btn-primary" Style="width: 100px;">Eliminar</button>
     </div>
 </div>

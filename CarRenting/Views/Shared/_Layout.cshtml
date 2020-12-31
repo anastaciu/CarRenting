@@ -21,15 +21,15 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            @Html.ActionLink("Car Renting", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style="color: gold" })
+            @Html.ActionLink("Car Renting", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "color: gold" })
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav">
                     @if (User.IsInRole(WebConfigurationManager.AppSettings["Cn"]))
                     {
-                    <li>@Html.ActionLink("Home", "Index", "CompanyArea", new { @area = "" }, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
-                        <li>@Html.ActionLink("Gerir Checklists", "Index", "CompanyArea", new { @area = "" }, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                        <li>@Html.ActionLink("Home", "Index", "CompanyAdminArea", new { @area = "" }, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                        <li>@Html.ActionLink("Gerir Checklists", "Index", "CompanyAdminArea", new { @area = "" }, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
                         <li>@Html.ActionLink("Gerir Veículos", "Index", "Cars", new { @area = "" }, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
-                        <li>@Html.ActionLink("Gerir Utilizadores", "EmployeeManagement", "CompanyArea", new { @area = "" }, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                        <li>@Html.ActionLink("Gerir Utilizadores", "EmployeeManagementIndex", "CompanyAdminArea", new { @area = "" }, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
 
                     }
                     else
