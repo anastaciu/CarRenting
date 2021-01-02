@@ -9,12 +9,7 @@ namespace CarRenting.Models
 {
     public class Rent
     {
-        public Rent()
-        {
-            this.Checks = new HashSet<Checks>();
-        }
         public int Id { get; set; }
-
         public DateTime Begin { get; set; }
         public DateTime End { get; set; }
         public bool IsConfirmed { get; set; }
@@ -27,7 +22,7 @@ namespace CarRenting.Models
         [ForeignKey("Car")]
         public int CarId { get; set; }
         public Car Car { get; set; }
-        public virtual ICollection<Checks> Checks { get; set; }
+        public virtual CheckList CheckList { get; set; }
 
 
     }
