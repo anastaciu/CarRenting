@@ -12,7 +12,7 @@ namespace CarRenting.Models
         [Required]
         [Display(Name = "Nome")]
         public string Name { get; set; }
-
+        public virtual ICollection<Employee> Employees { get; set; }
         public virtual ICollection<Rent> Rents { get; set; }
     }
 }
