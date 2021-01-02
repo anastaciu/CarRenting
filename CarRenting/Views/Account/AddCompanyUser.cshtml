@@ -21,8 +21,7 @@
                     <div>
                         @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
                     </div>
-                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
-                </div>
+                </div> 
             </div>
 
 
@@ -32,7 +31,6 @@
                     <div>
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                     </div>
-                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -52,7 +50,6 @@
                     <div>
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                     </div>
-                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="offset-1 col-md-10">
@@ -61,7 +58,6 @@
                     <div>
                         @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
                     </div>
-                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="offset-1 col-md-10">
@@ -70,9 +66,9 @@
                     <div>
                         @Html.DropDownListFor(m=>m.RoleName, new SelectList(ViewBag.Roles, "Value", "Text"), new{@class = "form-control"})
                     </div>
-                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
                 </div>
             </div>
+            @Html.ValidationSummary("", new { @class = "text-danger" })
             <br/>
             <div class="row">
                 <div class="col-sm-12 text-center">

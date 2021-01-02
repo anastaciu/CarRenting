@@ -21,13 +21,22 @@ namespace CarRenting.Controllers
                 var thisUser = db.Users.Find(User.Identity.GetUserId());
                 if (thisUser != null)
                 {
-                    var employee = db.Employees.SingleOrDefault(e => e.ApplicationUserId == thisUser.Id);
-                    var company = db.Companies.SingleOrDefault(c => c.Id == employee.CompanyId);
-                    var role= HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().GetRoles(thisUser.Id).SingleOrDefault();
+                    try
+                    {
+                        var employee = db.Employees.SingleOrDefault(e => e.ApplicationUserId == thisUser.Id);
+                        var company = db.Companies.SingleOrDefault(c => c.Id == employee.CompanyId);
+                        var role = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().GetRoles(thisUser.Id).SingleOrDefault();
 
-                    var companyViewModel = new CompanyDashViewModel
-                    { Company = company, ApplicationUser = thisUser, Role = role};
-                    return View(companyViewModel);
+                        var companyViewModel = new CompanyDashViewModel
+                            { Company = company, ApplicationUser = thisUser, Role = role };
+                        return View(companyViewModel);
+
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.Message);
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
             }
             return RedirectToAction("Index", "Home");

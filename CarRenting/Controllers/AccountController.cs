@@ -220,12 +220,7 @@ namespace CarRenting.Controllers
         [AllowAnonymous]
         public ActionResult AddCompanyUser()
         {
-            var roles = RoleManager.Roles.Where(r => r.Name.Contains("Empresa"));
-            List<SelectListItem> list = new List<SelectListItem>();
-            foreach (var role in roles)
-            {
-                list.Add(new SelectListItem(){Value = role.Name, Text = role.Name});
-            }
+            var list = new SelectList(RoleManager.Roles.Where(r => r.Name.Contains("Empresa")), "Name", "Name");
             ViewBag.Roles = list;
             return View();
         }
@@ -274,9 +269,14 @@ namespace CarRenting.Controllers
                         await UserManager.DeleteAsync(user);
                     }
                 }
-                AddErrors(result);
+                else
+                {
+                    AddErrors(result);
+                }
             }
             // If we got this far, something failed, redisplay form
+            var list = new SelectList(RoleManager.Roles.Where(r => r.Name.Contains("Empresa")), "Name", "Name");
+            ViewBag.Roles = list;
             return View(model);
 
         }

@@ -54,7 +54,7 @@ h2, h4 {
 }
 
 .backimg {
-    background-image: linear-gradient(90deg, rgba(0,135,25,0.3) 0%, rgba(255,255,255,0.5886555305716037) 50%, rgba(66,139,202,0.3) 100%), url("img/pexels-pixabay-326259-min.jpg");
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, rgba(255,255,255,0.5) 50%, rgba(247, 202, 24, 0.5)  100%), url("img/pexels-pixabay-326259-min.jpg");
     background-repeat: no-repeat;
     position: fixed;
     left: 0;
@@ -80,16 +80,34 @@ h2, h4 {
     margin-right: -49vw;
 }
 
+
 .btn-hover:hover {
     background-color: goldenrod !important;
-    transition: 500ms;
+    transition: 600ms;
 }
 
-.bg-warning:hover {
-
-
+.nav.navbar-nav li a {
+    color: white !important;
 }
 
-.nav-link-exit {
+    .nav.navbar-nav li a:hover {
+        color: #ffc107 !important;
+        transition: 600ms;
+    }
+
+.nav.navbar-nav li.exit-btn a:hover {
     color: red !important;
+    transition: 600ms;
 }
+
+.nav.navbar-nav li.user-logo a:hover {
+    color: rgb(50, 255, 47) !important;
+    transition: 600ms;
+}
+
+ul {
+    list-style-type: none;
+    text-align: center;
+}
+
+
