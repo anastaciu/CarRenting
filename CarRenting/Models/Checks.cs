@@ -8,8 +8,12 @@ namespace CarRenting.Models
 {
     public class Checks
     {
+        public Checks()
+        {
+            this.Rents = new HashSet<Rent>();
+        }
         public int Id { get; set; }
         public string Description { get; set; }
-        private ICollection<Car> Cars { get; set; }
+        public virtual ICollection<Rent> Rents { get; set; }
     }
 }

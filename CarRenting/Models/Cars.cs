@@ -33,7 +33,6 @@ namespace CarRenting.Models
         public int CompanyId { get; set; }
         public Company Company { get; set; }
         public ICollection<Rent> Rents { get; set; }
-        public ICollection<Checks> Checks { get; set; }
 
         public Car()
         {

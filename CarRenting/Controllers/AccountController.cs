@@ -217,7 +217,7 @@ namespace CarRenting.Controllers
         }
 
         // GET: /Account/RegisterUser
-        [AllowAnonymous]
+        [Authorize(Roles = "Administrador da Empresa")]
         public ActionResult AddCompanyUser()
         {
             var list = new SelectList(RoleManager.Roles.Where(r => r.Name.Contains("Empresa")), "Name", "Name");
@@ -228,7 +228,7 @@ namespace CarRenting.Controllers
         //
         // POST: /Account/AddCompanyUser
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Administrador da Empresa")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddCompanyUser(AddCompanyUserViewModel model)
         {
