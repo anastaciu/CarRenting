@@ -141,6 +141,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -177,6 +180,8 @@
     <Compile Include="Controllers\AdminAreaController.cs" />
     <Compile Include="Controllers\ApplicationUsersController.cs" />
     <Compile Include="Controllers\CarsController.cs" />
+    <Compile Include="Controllers\CarTypesController.cs" />
+    <Compile Include="Controllers\ChecksController.cs" />
     <Compile Include="Controllers\ClientAreaController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\CompanyAdminAreaController.cs" />
@@ -276,11 +281,16 @@
     <Compile Include="Migrations\202101031304346_remove_checks.Designer.cs">
       <DependentUpon>202101031304346_remove_checks.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101031401111_car-type-checks.cs" />
+    <Compile Include="Migrations\202101031401111_car-type-checks.Designer.cs">
+      <DependentUpon>202101031401111_car-type-checks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\Cars.cs" />
     <Compile Include="Models\CarType.cs" />
+    <Compile Include="Models\Check.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -486,6 +496,16 @@
     <Content Include="Views\CompanyAdminArea\EmployeeManagementIndex.cshtml" />
     <Content Include="Views\AdminArea\Index.cshtml" />
     <Content Include="Views\CompanyUserArea\Index.cshtml" />
+    <Content Include="Views\CarTypes\Create.cshtml" />
+    <Content Include="Views\CarTypes\Delete.cshtml" />
+    <Content Include="Views\CarTypes\Details.cshtml" />
+    <Content Include="Views\CarTypes\Edit.cshtml" />
+    <Content Include="Views\CarTypes\Index.cshtml" />
+    <Content Include="Views\Checks\Create.cshtml" />
+    <Content Include="Views\Checks\Delete.cshtml" />
+    <Content Include="Views\Checks\Details.cshtml" />
+    <Content Include="Views\Checks\Edit.cshtml" />
+    <Content Include="Views\Checks\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -567,6 +587,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101031304346_remove_checks.resx">
       <DependentUpon>202101031304346_remove_checks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101031401111_car-type-checks.resx">
+      <DependentUpon>202101031401111_car-type-checks.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
