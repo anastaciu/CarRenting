@@ -3,7 +3,8 @@
 @{
     ViewBag.Title = "Error";
 }
-
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
-
+<div class="text-center jumbotron shadow" style="margin-top: 5vh">
+    <h3 class="text-danger">Erro</h3>
+    <h4 class="text-danger">Não foi possível aceder ao recurso pretendido</h4>
+    @Html.ActionLink("Voltar", "Index", "Home", null, new{@class="btn btn-primary"})
+</div>

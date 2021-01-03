@@ -479,13 +479,6 @@
     <Content Include="Views\Companies\Details.cshtml" />
     <Content Include="Views\Companies\Edit.cshtml" />
     <Content Include="Views\Companies\Index.cshtml" />
-    <Content Include="Views\Cars\Create.cshtml" />
-    <Content Include="Views\Cars\Delete.cshtml" />
-    <Content Include="Views\Cars\Details.cshtml" />
-    <Content Include="Views\Cars\Edit.cshtml" />
-    <Content Include="Views\Cars\Index.cshtml" />
-    <Content Include="Views\Cars\UnknownUserShowCars.cshtml" />
-    <Content Include="Views\Cars\UnknownUserCarDetails.cshtml" />
     <Content Include="Views\ApplicationUsers\Create.cshtml" />
     <Content Include="Views\ApplicationUsers\Delete.cshtml" />
     <Content Include="Views\ApplicationUsers\Details.cshtml" />
@@ -506,10 +499,14 @@
     <Content Include="Views\Checks\Details.cshtml" />
     <Content Include="Views\Checks\Edit.cshtml" />
     <Content Include="Views\Checks\Index.cshtml" />
+    <Content Include="Views\Cars\Create.cshtml" />
+    <Content Include="Views\Cars\Delete.cshtml" />
+    <Content Include="Views\Cars\Details.cshtml" />
+    <Content Include="Views\Cars\Edit.cshtml" />
+    <Content Include="Views\Cars\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Errors\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

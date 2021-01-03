@@ -110,4 +110,19 @@ ul {
     text-align: center;
 }
 
+table {
+    background-color: goldenrod;
+    border-collapse: collapse;
 
+    width: 100%;
+}
+
+td, th {
+    border: 3px solid transparent;
+    text-align: center;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #ffc107;
+}

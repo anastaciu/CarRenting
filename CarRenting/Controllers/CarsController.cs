@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CarRenting.Models;
+using Microsoft.AspNet.Identity;
 
 namespace CarRenting.Controllers
 {
@@ -18,10 +19,9 @@ namespace CarRenting.Controllers
         // GET: Cars
         public async Task<ActionResult> Index()
         {
-            var cars = db.Cars.Include(c => c.Company);
+            var cars = db.Cars.Include(c => c.Company).Include(c => c.Type);
             return View(await cars.ToListAsync());
         }
-
 
         // GET: Cars/Details/5
         public async Task<ActionResult> Details(int? id)
@@ -38,34 +38,18 @@ namespace CarRenting.Controllers
             return View(car);
         }
 
-        // GET: Cars
-        public async Task<ActionResult> UnknownUserShowCars()
-        {
-            var cars = db.Cars.Include(c => c.Company);
-            return View(await cars.ToListAsync());
-        }
-
-
-        // GET: Cars/Details/5
-        public async Task<ActionResult> UnknownUserCarDetails(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Car car = await db.Cars.FindAsync(id);
-            if (car == null)
-            {
-                return HttpNotFound();
-            }
-            return View(car);
-        }
-
-
         // GET: Cars/Create
         public ActionResult Create()
         {
-            ViewBag.CompanyId = new SelectList(db.Companies, "Id", "CompanyName");
+            List<SelectListItem> fuelList = new List<SelectListItem>
+            {
+                new SelectListItem() { Value = "Vazio", Text = "Vazio" },
+                new SelectListItem() { Value = "Meio", Text = "Meio" },
+                new SelectListItem() { Value = "Cheio", Text = "Cheio" }
+            };
+            ViewBag.FuelLevels = fuelList;
+            ViewBag.TypeId = new SelectList(db.CarTypes, "Id", "Type");
+            
             return View();
         }
 
@@ -74,16 +58,20 @@ namespace CarRenting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Marca,Model,Fuel,Seats,Type,Price,CompanyId")] Car car)
+        [Authorize(Roles = "Administrador da Empresa")]
+        public async Task<ActionResult> Create([Bind(Include = "Id,Marca,Model,Fuel,FuelLevel,Seats,TypeId,Price,Kms")] Car car)
         {
             if (ModelState.IsValid)
             {
+                var userId = User.Identity.GetUserId();
+                var employee = db.Employees.SingleOrDefault(e => e.ApplicationUserId == userId);
+                var company = db.Companies.SingleOrDefault(c => c.Id == employee.CompanyId);
+                car.Company = company;
                 db.Cars.Add(car);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.CompanyId = new SelectList(db.Companies, "Id", "CompanyName", car.CompanyId);
+            ViewBag.TypeId = new SelectList(db.CarTypes, "Id", "Type", car.TypeId);
             return View(car);
         }
 
@@ -100,6 +88,7 @@ namespace CarRenting.Controllers
                 return HttpNotFound();
             }
             ViewBag.CompanyId = new SelectList(db.Companies, "Id", "CompanyName", car.CompanyId);
+            ViewBag.TypeId = new SelectList(db.CarTypes, "Id", "Type", car.TypeId);
             return View(car);
         }
 
@@ -108,7 +97,7 @@ namespace CarRenting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Marca,Model,Fuel,Seats,Type,Price,CompanyId")] Car car)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Marca,Model,Fuel,FuelLevel,Seats,TypeId,Price,Kms,CompanyId")] Car car)
         {
             if (ModelState.IsValid)
             {
@@ -117,6 +106,7 @@ namespace CarRenting.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CompanyId = new SelectList(db.Companies, "Id", "CompanyName", car.CompanyId);
+            ViewBag.TypeId = new SelectList(db.CarTypes, "Id", "Type", car.TypeId);
             return View(car);
         }
 
@@ -154,6 +144,7 @@ namespace CarRenting.Controllers
             }
             base.Dispose(disposing);
         }
+
 
     }
 }

@@ -18,6 +18,7 @@ namespace CarRenting.Models
         [Display(Name = "Combustível")]
         public string Fuel { get; set; } 
         [Required] 
+        [Display(Name = "Nível do depósito")]
         public string FuelLevel { get; set; }
         [Display(Name = "Lugares")]
         [Range(1, 200)]

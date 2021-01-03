@@ -14,7 +14,7 @@ namespace CarRenting.Models
             this.Checks = new HashSet<Check>();
         }
         public int Id { get; set; }
-        [Display(Name = "Tipo de Veículo")]
+        [Display(Name = "Categoria")]
         public string Type { get; set; }
         public virtual ICollection<Car> Cars { get; set; }
 

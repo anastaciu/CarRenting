@@ -15,6 +15,9 @@
             @Html.DisplayNameFor(model => model.Company.CompanyName)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Type.Type)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Marca)
         </th>
         <th>
@@ -24,13 +27,16 @@
             @Html.DisplayNameFor(model => model.Fuel)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.FuelLevel)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Seats)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Type)
+            @Html.DisplayNameFor(model => model.Price)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Price)
+            @Html.DisplayNameFor(model => model.Kms)
         </th>
         <th></th>
     </tr>
@@ -39,6 +45,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Company.CompanyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type.Type)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Marca)
@@ -50,13 +59,16 @@
             @Html.DisplayFor(modelItem => item.Fuel)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.FuelLevel)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Seats)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Type)
+            @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Price)
+            @Html.DisplayFor(modelItem => item.Kms)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
