@@ -9,9 +9,17 @@ namespace CarRenting.Models
 {
     public class CarType
     {
+        public CarType()
+        {
+            this.Checks = new HashSet<Check>();
+        }
         public int Id { get; set; }
         [Display(Name = "Tipo de Veículo")]
         public string Type { get; set; }
-        public ICollection<Car> Cars { get; set; }
+        public virtual ICollection<Car> Cars { get; set; }
+
+        public virtual ICollection<Check> Checks { get; set; }
+
+
     }
 }
