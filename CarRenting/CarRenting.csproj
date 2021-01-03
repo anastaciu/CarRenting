@@ -280,6 +280,10 @@
     <Compile Include="Migrations\202101021915150_checklist.Designer.cs">
       <DependentUpon>202101021915150_checklist.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101030956196_checks-rents-update.cs" />
+    <Compile Include="Migrations\202101030956196_checks-rents-update.Designer.cs">
+      <DependentUpon>202101030956196_checks-rents-update.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
@@ -575,6 +579,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101021915150_checklist.resx">
       <DependentUpon>202101021915150_checklist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101030956196_checks-rents-update.resx">
+      <DependentUpon>202101030956196_checks-rents-update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

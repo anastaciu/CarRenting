@@ -12,7 +12,7 @@ namespace CarRenting.Models
         [ForeignKey("Rent")]
         public int Id { get; set; }
         [Display(Name = "Danos nos pneus")]
-        public bool Tyres { get; set; }
+        public bool Tires { get; set; }
         [Display(Name = "Danos nna carroçaria")]
         public bool Body { get; set; }
         [Display(Name = "Problemas mecânicos")]
