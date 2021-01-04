@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Company User Area";
+}
+
+<div class="card-deck" style="padding-top: 20vh">
+
+    <div class="card bg-warning boxshadow btn-hover">
+        <a href="@Url.Action("Index", "Rents")" style="text-decoration: none">
+            <div class="card-body text-center text-dark">
+                <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
+                    <div class="d-flex">
+                        <i class="fas fa-key m-auto" style="font-size: 10vw"></i>
+                    </div>
+                    <h3>Gerir Reservas</h3>
+                    <p class="lead mb-0">Gestão de reservas efetuadas na plataforma por utilizadores particulares</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="card bg-warning boxshadow btn-hover">
+        <a href="@Url.Action("RegisterUser", "Account")" style="text-decoration: none">
+            <div class="card-body text-center text-dark">
+                <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
+                    <div class="d-flex">
+                        <i class="fas fa-parking m-auto" style="font-size: 10vw"></i>
+                    </div>
+                    <h3>Gerir Frota</h3>
+                    <p class="lead mb-0">Quero adicionar editar ou remover viaturas da minha frota</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="card bg-warning boxshadow btn-hover">
+        <a href="@Url.Action("RegisterInitCompanyAdmin", "Account")" style="text-decoration: none">
+            <div class="card-body text-center text-dark">
+                <div class="mx-auto mb-0 mb-lg-3">
+                    <div class="d-flex">
+                        <i class="fas fa-tasks m-auto" style="font-size: 10vw"></i>
+                    </div>
+                    <h3>Gerir Checklists</h3>
+                    <p class="lead mb-0">Quero gerir a lista de verificações a realizar para cada tipo de viatura</p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

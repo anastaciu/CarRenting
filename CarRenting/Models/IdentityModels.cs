@@ -38,10 +38,10 @@ namespace CarRenting.Models
 
         public DbSet<Company> Companies { get; set; }
         public DbSet<Car> Cars { get; set; }
-
         public DbSet<Rent> Rents { get; set; }
-
         public DbSet<Employee> Employees { get; set; }
-
+        public DbSet<CarType> CarTypes { get; set; }
+        public DbSet<Check> Checks { get; set; }
+    
     }
 }

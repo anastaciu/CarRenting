@@ -1,45 +1,83 @@
-﻿<!DOCTYPE html>
+﻿@using System.Web.Configuration
+@using System.Web.UI.WebControls
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>Car Renting</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="https://kit.fontawesome.com/a9d1f8d59f.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700%7CRoboto%7CJosefin+Sans:100,300,400,500"
+          rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
+<div class="backimg"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark boxshadow">
         <div class="container">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            @Html.ActionLink("My Web Portal", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Car Renting", "Index", "Home", null, new { @class = "navbar-brand", @style = "color: gold" })
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                <ul class="nav navbar-nav">
 
-                <ul class="nav navbar-nav mr-auto">
-                    <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Alugueres", "Index", "Rents", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Carros", "Index", "Cars", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Empresas", "Index", "Companies", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Empregados", "Index", "Employees", null, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+
+                    @if (User.IsInRole(WebConfigurationManager.AppSettings["Cn"]))
+                    {
+
+                        <li>@Html.ActionLink("Gerir Checklists", "Index", "CompanyAdminArea", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                        <li>@Html.ActionLink("Gerir Veículos", "Index", "Cars", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                        <li>@Html.ActionLink("Gerir Utilizadores", "GetCompanyEmployees", "ApplicationUsers", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+
+                    }
+                    else if (User.IsInRole(WebConfigurationManager.AppSettings["Ur"]))
+                    {
+
+                    }
+                    else if ((User.IsInRole(WebConfigurationManager.AppSettings["Cr"])))
+                    {
+                        <li>@Html.ActionLink("Gerir Reservas", "Index", "Rents", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+
+                    }
+                    else if ((User.IsInRole(WebConfigurationManager.AppSettings["An"])))
+                    {
+
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Ver Viaturas", "Index", "Cars", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                        <li>@Html.ActionLink("Alugar Viatura", "RegisterUser", "Account", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                        <li>@Html.ActionLink("Empresas", "RegisterInitCompanyAdmin", "Account", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
+
             </div>
         </div>
     </nav>
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Ricardo &amp; Luís</p>
-        </footer>
-    </div>
+<div class="container body-content" style="min-height: 88vh">
+    @Html.Partial("_UserInfoPartial");
+    @RenderBody()
+
+</div>
+    <hr />
+    <footer>
+        <p class="text-center font-weight-bold text-dark">&copy; @DateTime.Now.Year - Ricardo Silva &amp; Luís Viegas</p>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Content/custom_scripts")
     @RenderSection("scripts", required: false)
+
+
 </body>
 </html>

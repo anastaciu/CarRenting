@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,7 +12,7 @@ namespace CarRenting.Models
     public class Company
     {
         public int Id { get; set; }
-        [Display(Name = "Nome")]
+        [Display(Name = "Empresa")]
         [Required(ErrorMessage = "É necessário indicar o nome da empresa")]
         public string CompanyName { get; set; }
         [Display(Name = "Telefone")]
@@ -25,9 +26,10 @@ namespace CarRenting.Models
         [Display(Name = "E-mail")]
         public string Email { get; set; }
 
-        public ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<Check> Checks { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
       
-        public ICollection<Car> Cars { get; set; }
+        public virtual ICollection<Car> Cars { get; set; }
 
     }
 

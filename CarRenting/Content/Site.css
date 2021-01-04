@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: Poppins;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -20,5 +21,113 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    input,
+    select,
+    textarea {
+        max-width: 80% !important;
+    }
+}
+
+h2, h4 {
+    padding: 2vh;
+    text-align: center;
+}
+
+.log-headers {
+    background-color: #343a40;
+    color: #ffc107;
+    margin-top: 5vh;
+}
+
+.jumbotron {
+    background-color: goldenrod;
+    border-radius: 0px!important;
+}
+
+.boxshadow {
+    -webkit-box-shadow: 5px 5px 7px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 5px 5px 7px -1px rgba(0,0,0,0.75);
+    box-shadow: 5px 5px 7px -1px rgba(0,0,0,0.75);
+}
+
+.backimg {
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, rgba(255,255,255,0.5) 50%, rgba(240, 173, 78, 0.5) 100%), url("img/pexels-pixabay-326259-min.jpg");
+    background-repeat: no-repeat;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: -100;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    -webkit-filter: blur(8px);
+    -moz-filter: blur(8px);
+    -ms-filter: blur(8px);
+    filter: blur(8px);
+}
+
+.full-width {
+    width: 98vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -49vw;
+    margin-right: -49vw;
+}
+
+
+.btn-hover:hover {
+    background-color: goldenrod !important;
+    transition: 600ms;
+}
+
+.nav.navbar-nav li a {
+    color: white !important;
+}
+
+    .nav.navbar-nav li a:hover {
+        color: #ffc107 !important;
+        transition: 600ms;
+    }
+
+.nav.navbar-nav li.exit-btn a:hover {
+    color: red !important;
+    transition: 600ms;
+}
+
+.nav.navbar-nav li.user-logo a:hover {
+    color: rgb(50, 255, 47) !important;
+    transition: 600ms;
+}
+
+ul {
+    list-style-type: none;
+    text-align: center;
+}
+
+table {
+    background-color: goldenrod;
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+    word-break: break-word;
+    overflow: hidden;
+    
+}
+
+td, th {
+    border-top: none !important;
+    border: 5px solid transparent;
+    text-align: center;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #ffc107;
 }

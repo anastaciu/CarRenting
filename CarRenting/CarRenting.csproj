@@ -141,6 +141,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -174,11 +177,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminAreaController.cs" />
+    <Compile Include="Controllers\ApplicationUsersController.cs" />
     <Compile Include="Controllers\CarsController.cs" />
+    <Compile Include="Controllers\CarTypesController.cs" />
+    <Compile Include="Controllers\ChecksController.cs" />
     <Compile Include="Controllers\ClientAreaController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
-    <Compile Include="Controllers\CompanyAreaController.cs" />
+    <Compile Include="Controllers\CompanyAdminAreaController.cs" />
+    <Compile Include="Controllers\CompanyUserAreaController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RentsController.cs" />
@@ -225,11 +234,78 @@
     <Compile Include="Migrations\202012231258140_comp-prop2.Designer.cs">
       <DependentUpon>202012231258140_comp-prop2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202012231511155_reqs.cs" />
+    <Compile Include="Migrations\202012231511155_reqs.Designer.cs">
+      <DependentUpon>202012231511155_reqs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012231706470_resetemployee.cs" />
+    <Compile Include="Migrations\202012231706470_resetemployee.Designer.cs">
+      <DependentUpon>202012231706470_resetemployee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012231710527_Employeeuserfk.cs" />
+    <Compile Include="Migrations\202012231710527_Employeeuserfk.Designer.cs">
+      <DependentUpon>202012231710527_Employeeuserfk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012232016222_resetfks.cs" />
+    <Compile Include="Migrations\202012232016222_resetfks.Designer.cs">
+      <DependentUpon>202012232016222_resetfks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012232026240_ExplicitFks.cs" />
+    <Compile Include="Migrations\202012232026240_ExplicitFks.Designer.cs">
+      <DependentUpon>202012232026240_ExplicitFks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012271931479_cardet.cs" />
+    <Compile Include="Migrations\202012271931479_cardet.Designer.cs">
+      <DependentUpon>202012271931479_cardet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012280959058_car-det2.cs" />
+    <Compile Include="Migrations\202012280959058_car-det2.Designer.cs">
+      <DependentUpon>202012280959058_car-det2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012291737473_emp-no-req.cs" />
+    <Compile Include="Migrations\202012291737473_emp-no-req.Designer.cs">
+      <DependentUpon>202012291737473_emp-no-req.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012291805217_emp-req.cs" />
+    <Compile Include="Migrations\202012291805217_emp-req.Designer.cs">
+      <DependentUpon>202012291805217_emp-req.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012301407188_cartypes-checks.cs" />
+    <Compile Include="Migrations\202012301407188_cartypes-checks.Designer.cs">
+      <DependentUpon>202012301407188_cartypes-checks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012301411321_emp-appuser-rel.cs" />
+    <Compile Include="Migrations\202012301411321_emp-appuser-rel.Designer.cs">
+      <DependentUpon>202012301411321_emp-appuser-rel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101031304346_remove_checks.cs" />
+    <Compile Include="Migrations\202101031304346_remove_checks.Designer.cs">
+      <DependentUpon>202101031304346_remove_checks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101031401111_car-type-checks.cs" />
+    <Compile Include="Migrations\202101031401111_car-type-checks.Designer.cs">
+      <DependentUpon>202101031401111_car-type-checks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101041435398_company-checks.cs" />
+    <Compile Include="Migrations\202101041435398_company-checks.Designer.cs">
+      <DependentUpon>202101041435398_company-checks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101041803456_license.cs" />
+    <Compile Include="Migrations\202101041803456_license.Designer.cs">
+      <DependentUpon>202101041803456_license.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101041805146_brand.cs" />
+    <Compile Include="Migrations\202101041805146_brand.Designer.cs">
+      <DependentUpon>202101041805146_brand.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\Cars.cs" />
+    <Compile Include="Models\CarType.cs" />
+    <Compile Include="Models\Check.cs" />
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -244,6 +320,8 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\pexels-pixabay-326259-min.jpg" />
+    <Content Include="Content\scripts.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -365,8 +443,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -387,7 +463,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Account\RegisterCompanyUser.cshtml" />
     <Content Include="Views\Account\RegisterUser.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
@@ -399,11 +474,6 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Cars\Create.cshtml" />
-    <Content Include="Views\Cars\Delete.cshtml" />
-    <Content Include="Views\Cars\Details.cshtml" />
-    <Content Include="Views\Cars\Edit.cshtml" />
-    <Content Include="Views\Cars\Index.cshtml" />
     <Content Include="Views\Employees\Create.cshtml" />
     <Content Include="Views\Employees\Delete.cshtml" />
     <Content Include="Views\Employees\Details.cshtml" />
@@ -414,7 +484,7 @@
     <Content Include="Views\Rents\Details.cshtml" />
     <Content Include="Views\Rents\Edit.cshtml" />
     <Content Include="Views\Rents\Index.cshtml" />
-    <Content Include="Views\CompanyArea\Index.cshtml" />
+    <Content Include="Views\CompanyAdminArea\Index.cshtml" />
     <Content Include="Views\ClientArea\Index.cshtml" />
     <Content Include="Views\Account\RegisterInitCompanyAdmin.cshtml" />
     <Content Include="Views\Companies\Create.cshtml" />
@@ -422,6 +492,33 @@
     <Content Include="Views\Companies\Details.cshtml" />
     <Content Include="Views\Companies\Edit.cshtml" />
     <Content Include="Views\Companies\Index.cshtml" />
+    <Content Include="Views\ApplicationUsers\Create.cshtml" />
+    <Content Include="Views\ApplicationUsers\Delete.cshtml" />
+    <Content Include="Views\ApplicationUsers\Details.cshtml" />
+    <Content Include="Views\ApplicationUsers\Edit.cshtml" />
+    <Content Include="Views\ApplicationUsers\Index.cshtml" />
+    <Content Include="Views\ApplicationUsers\GetCompanyEmployees.cshtml" />
+    <Content Include="Views\Account\AddCompanyUser.cshtml" />
+    <Content Include="Views\AdminArea\Index.cshtml" />
+    <Content Include="Views\CompanyUserArea\Index.cshtml" />
+    <Content Include="Views\CarTypes\Create.cshtml" />
+    <Content Include="Views\CarTypes\Delete.cshtml" />
+    <Content Include="Views\CarTypes\Details.cshtml" />
+    <Content Include="Views\CarTypes\Edit.cshtml" />
+    <Content Include="Views\CarTypes\Index.cshtml" />
+    <Content Include="Views\Checks\Create.cshtml" />
+    <Content Include="Views\Checks\Delete.cshtml" />
+    <Content Include="Views\Checks\Details.cshtml" />
+    <Content Include="Views\Checks\Edit.cshtml" />
+    <Content Include="Views\Checks\Index.cshtml" />
+    <Content Include="Views\Cars\Create.cshtml" />
+    <Content Include="Views\Cars\Delete.cshtml" />
+    <Content Include="Views\Cars\Details.cshtml" />
+    <Content Include="Views\Cars\Edit.cshtml" />
+    <Content Include="Views\Cars\Index.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Cars\CompanyCars.cshtml" />
+    <Content Include="Views\Shared\_UserInfoPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -466,6 +563,54 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202012231258140_comp-prop2.resx">
       <DependentUpon>202012231258140_comp-prop2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012231511155_reqs.resx">
+      <DependentUpon>202012231511155_reqs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012231706470_resetemployee.resx">
+      <DependentUpon>202012231706470_resetemployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012231710527_Employeeuserfk.resx">
+      <DependentUpon>202012231710527_Employeeuserfk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012232016222_resetfks.resx">
+      <DependentUpon>202012232016222_resetfks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012232026240_ExplicitFks.resx">
+      <DependentUpon>202012232026240_ExplicitFks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012271931479_cardet.resx">
+      <DependentUpon>202012271931479_cardet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012280959058_car-det2.resx">
+      <DependentUpon>202012280959058_car-det2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012291737473_emp-no-req.resx">
+      <DependentUpon>202012291737473_emp-no-req.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012291805217_emp-req.resx">
+      <DependentUpon>202012291805217_emp-req.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012301407188_cartypes-checks.resx">
+      <DependentUpon>202012301407188_cartypes-checks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012301411321_emp-appuser-rel.resx">
+      <DependentUpon>202012301411321_emp-appuser-rel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101031304346_remove_checks.resx">
+      <DependentUpon>202101031304346_remove_checks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101031401111_car-type-checks.resx">
+      <DependentUpon>202101031401111_car-type-checks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101041435398_company-checks.resx">
+      <DependentUpon>202101041435398_company-checks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101041803456_license.resx">
+      <DependentUpon>202101041803456_license.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101041805146_brand.resx">
+      <DependentUpon>202101041805146_brand.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

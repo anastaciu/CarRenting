@@ -8,17 +8,23 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CarRenting.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace CarRenting.Controllers
 {
     public class EmployeesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext dbContext = new ApplicationDbContext();
 
         // GET: Employees
         public async Task<ActionResult> Index()
         {
-            return View(await db.Employees.ToListAsync());
+            var employeeId = User.Identity.GetUserId();
+            var employee = dbContext.Employees.SingleOrDefault(e => e.ApplicationUserId == employeeId);
+            var company = dbContext.Companies.SingleOrDefault(e => e.Id == employee.CompanyId);
+            var list = await Task.FromResult(company?.Employees);
+            return View(list);
         }
 
         // GET: Employees/Details/5
@@ -28,7 +34,7 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = await db.Employees.FindAsync(id);
+            Employee employee = await dbContext.Employees.FindAsync(id);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -52,8 +58,8 @@ namespace CarRenting.Controllers
 
             if (ModelState.IsValid)
             {
-                db.Employees.Add(employee);
-                await db.SaveChangesAsync();
+                dbContext.Employees.Add(employee);
+                await dbContext.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
@@ -67,7 +73,7 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = await db.Employees.FindAsync(id);
+            Employee employee = await dbContext.Employees.FindAsync(id);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -84,8 +90,8 @@ namespace CarRenting.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(employee).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                dbContext.Entry(employee).State = EntityState.Modified;
+                await dbContext.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(employee);
@@ -98,7 +104,7 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = await db.Employees.FindAsync(id);
+            Employee employee = await dbContext.Employees.FindAsync(id);
             if (employee == null)
             {
                 return HttpNotFound();
@@ -111,9 +117,9 @@ namespace CarRenting.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Employee employee = await db.Employees.FindAsync(id);
-            db.Employees.Remove(employee);
-            await db.SaveChangesAsync();
+            Employee employee = await dbContext.Employees.FindAsync(id);
+            dbContext.Employees.Remove(employee);
+            await dbContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -121,7 +127,7 @@ namespace CarRenting.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                dbContext.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -24,7 +24,11 @@ namespace CarRenting
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/Site.css"));
+
+            bundles.Add(new ScriptBundle("~/Content/custom_scripts").Include(
+                "~/Content/scripts.js"));
+
         }
     }
 }

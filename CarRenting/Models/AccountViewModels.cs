@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Security;
 
 namespace CarRenting.Models
 {
@@ -73,15 +74,19 @@ namespace CarRenting.Models
         [Display(Name = "Nome")]
         public string Name { get; set; }
 
+        [Display(Name = "Telefone/Telemóvel")]
+        [Phone]
+        public string PhoneNumber { get; set; }
+
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "A {0} deve ter pelo menos {2} caracteres!", MinimumLength = 4)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "A palavra passe e a confirmação não coincidem!")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -93,14 +98,14 @@ namespace CarRenting.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "A {0} deve ter pelo menos {2} caracteres!", MinimumLength = 4)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "A palavra passe e a confirmação não coincidem!")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
@@ -115,7 +120,7 @@ namespace CarRenting.Models
     }
 
 
-    public class RegisterInitAdminViewModel
+    public class RegisterCompanyUserViewModel
     {
         [Required]
         [EmailAddress]
@@ -127,18 +132,52 @@ namespace CarRenting.Models
         public string Name { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "A {0} deve ter pelo menos {2} caracteres!", MinimumLength = 4)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
+
         public string Password { get; set; }
+        [Phone]
+        [Display(Name = "Telefone/Telemóvel")]
+        public string PhoneNumber { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "A palavra passe e a confirmação não coincidem!")]
         public string ConfirmPassword { get; set; }
 
         public Company Company { get; set; }
+    }
 
+    public class AddCompanyUserViewModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
+        [Required]
+        [Display(Name = "Nome")]
+        public string Name { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "A {0} deve ter pelo menos {2} caracteres!", MinimumLength = 4)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+
+        public string Password { get; set; }
+        [Phone]
+        [Display(Name = "Telefone/Telemóvel")]
+        public string PhoneNumber { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "A palavra passe e a confirmação não coincidem!")]
+
+        public string ConfirmPassword { get; set; }
+        public Company Company { get; set; }
+
+        [Display(Name = "Permissões de uso")]
+        public string RoleName { get; set; }
     }
 }

@@ -1,33 +1,29 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using System.Web.Configuration
+@using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.Owin
 
 
-
-@{
-    string user = null;
-    if (User.Identity.IsAuthenticated)
-    {
-        user = HttpContext.Current.GetOwinContext()?.GetUserManager<ApplicationUserManager>()?.FindById(User.Identity.GetUserId())?.Name;
-    }
-}
-
-
-    @if (Request.IsAuthenticated && user != null)
+@if (Request.IsAuthenticated)
 {
+    string user = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId()).Name ?? String.Empty;
+
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "ml-auto" }))
     {
         @Html.AntiForgeryToken()
         <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item">@Html.ActionLink("Hello " + user + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })</li>
-            <li class="nav-item"><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+            <li class="user-logo">
+                <a class="nav-link" href=@Url.Action("Index", "Manage")><span><i class="fa fa-user"></i> @user</span></a>
+            </li>
+            <li class="exit-btn">
+                <a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()"><span><i class="fa fa-power-off"></i> Sair</span></a>
+            </li>
         </ul>
     }
 }
 else
 {
-<ul class="nav navbar-nav ml-auto">
-    <li class="nav-item">@Html.ActionLink("Registar", "RegisterUser", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>
-    <li class="nav-item">@Html.ActionLink("Registar CAdmin", "RegisterInitCompanyAdmin", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>
-    <li class="nav-item">@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
-</ul>
+    <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item"></li>
+        <li class="nav-item">@Html.ActionLink("Entrar", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
+    </ul>
 }
