@@ -27,8 +27,9 @@ namespace CarRenting.Controllers
                         var company = db.Companies.SingleOrDefault(c => c.Id == employee.CompanyId);
                         var role = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().GetRoles(thisUser.Id).SingleOrDefault();
 
-                        var companyViewModel = new CompanyDashViewModel
-                            { Company = company, ApplicationUser = thisUser, Role = role };
+                        var companyViewModel = new DashViewModel
+                            { CompanyName = company?.CompanyName, UserName = thisUser.Name, Role = role };
+                        Session["UserInfo"] = companyViewModel;
                         return View(companyViewModel);
 
                     }
@@ -42,19 +43,6 @@ namespace CarRenting.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-
-        public ActionResult EmployeeManagementIndex()
-        {
-            using (var db = new ApplicationDbContext())
-            {
-                var thisUser = db.Users.Find(User.Identity.GetUserId());
-                if (thisUser != null)
-                {
-                    return View();
-                }
-            }
-            return RedirectToAction("Index", "Home");
-        }
     }
 
 }

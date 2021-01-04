@@ -70,7 +70,7 @@ namespace CarRenting.Controllers
             var employees = dbContext.Employees.Where(e => e.CompanyId == company.Id);
             var users = dbContext.Users.ToList();
 
-            ICollection<UserDashViewModel> empList = new List<UserDashViewModel>();
+            ICollection<EmployeeViewModel> empList = new List<EmployeeViewModel>();
 
             foreach (var applicationUser in users)
             {
@@ -79,12 +79,14 @@ namespace CarRenting.Controllers
                     if (applicationUser.Id == dbEmployee.ApplicationUserId)
                     {
                         var role = UserManager.GetRoles(applicationUser.Id).SingleOrDefault();
-                        empList.Add(new UserDashViewModel { ApplicationUser = applicationUser, Role = role });
+                        empList.Add(new EmployeeViewModel { ApplicationUser = applicationUser, Role = role });
                     }
                 }
             }
             return View(empList);
         }
+
+
 
 
         // GET: ApplicationUsers/Details/5

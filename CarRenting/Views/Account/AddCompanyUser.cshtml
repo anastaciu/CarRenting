@@ -4,8 +4,8 @@
 @{
     ViewBag.Title = "Adicionar Utilizador";
 }
-<div class="full-width log-headers">
-    <h2>@ViewBag.Title</h2>
+<div class="log-headers boxshadow">
+    <h4>@ViewBag.Title</h4>
 </div>
 
 @using (Html.BeginForm("AddCompanyUser", "Account", FormMethod.Post, new { @class = "", role = "form" }))
@@ -14,7 +14,7 @@
 
     <div class="form-row">
         <div class="col-md-2"></div>
-        <div class="col-md-8 jumbotron">
+        <div class="col-md-8 jumbotron boxshadow">
             <div class="offset-1 col-md-10">
                 <div class="form-group">
                     @Html.LabelFor(m => m.Name, new { @class = "col-form-label" })

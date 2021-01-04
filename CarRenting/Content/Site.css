@@ -45,6 +45,7 @@ h2, h4 {
 
 .jumbotron {
     background-color: goldenrod;
+    border-radius: 0px!important;
 }
 
 .boxshadow {
@@ -54,7 +55,7 @@ h2, h4 {
 }
 
 .backimg {
-    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, rgba(255,255,255,0.5) 50%, rgba(247, 202, 24, 0.5)  100%), url("img/pexels-pixabay-326259-min.jpg");
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, rgba(255,255,255,0.5) 50%, rgba(240, 173, 78, 0.5) 100%), url("img/pexels-pixabay-326259-min.jpg");
     background-repeat: no-repeat;
     position: fixed;
     left: 0;
@@ -113,12 +114,16 @@ ul {
 table {
     background-color: goldenrod;
     border-collapse: collapse;
-
     width: 100%;
+    table-layout: fixed;
+    word-break: break-word;
+    overflow: hidden;
+    
 }
 
 td, th {
-    border: 3px solid transparent;
+    border-top: none !important;
+    border: 5px solid transparent;
     text-align: center;
     padding: 8px;
 }

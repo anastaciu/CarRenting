@@ -26,14 +26,14 @@
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav">
 
-                    <li>@Html.ActionLink("Home", "Index", "Home", null, new {@class = "nav-link", @style = "margin-right:10px;"})</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
 
                     @if (User.IsInRole(WebConfigurationManager.AppSettings["Cn"]))
                     {
 
-                        <li>@Html.ActionLink("Gerir Checklists", "Index", "CompanyAdminArea", null, new {@class = "nav-link", @style = "margin-right:10px;"})</li>
-                        <li>@Html.ActionLink("Gerir Veículos", "Index", "Cars", null, new {@class = "nav-link", @style = "margin-right:10px;"})</li>
-                        <li>@Html.ActionLink("Gerir Utilizadores", "EmployeeManagementIndex", "CompanyAdminArea", null, new {@class = "nav-link", @style = "margin-right:10px;"})</li>
+                        <li>@Html.ActionLink("Gerir Checklists", "Index", "CompanyAdminArea", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                        <li>@Html.ActionLink("Gerir Veículos", "Index", "Cars", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                        <li>@Html.ActionLink("Gerir Utilizadores", "GetCompanyEmployees", "ApplicationUsers", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
 
                     }
                     else if (User.IsInRole(WebConfigurationManager.AppSettings["Ur"]))
@@ -42,6 +42,7 @@
                     }
                     else if ((User.IsInRole(WebConfigurationManager.AppSettings["Cr"])))
                     {
+                        <li>@Html.ActionLink("Gerir Reservas", "Index", "Rents", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
 
                     }
                     else if ((User.IsInRole(WebConfigurationManager.AppSettings["An"])))
@@ -50,21 +51,23 @@
                     }
                     else
                     {
-                        <li>@Html.ActionLink("Ver Viaturas", "Index", "Cars", null, new {@class = "nav-link", @style = "margin-right:10px;"})</li>
-                        <li>@Html.ActionLink("Alugar Viatura", "RegisterUser", "Account", null, new {@class = "nav-link", @style = "margin-right:10px;"})</li>
-                        <li>@Html.ActionLink("Empresas", "RegisterInitCompanyAdmin", "Account", null, new {@class = "nav-link", @style = "margin-right:10px;"})</li>
+                        <li>@Html.ActionLink("Ver Viaturas", "Index", "Cars", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                        <li>@Html.ActionLink("Alugar Viatura", "RegisterUser", "Account", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                        <li>@Html.ActionLink("Empresas", "RegisterInitCompanyAdmin", "Account", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
 
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
+
             </div>
         </div>
     </nav>
 
-    <div class="container body-content" style="min-height: 95vh">
-        @RenderBody()
+<div class="container body-content" style="min-height: 88vh">
+    @Html.Partial("_UserInfoPartial");
+    @RenderBody()
 
-    </div>
+</div>
     <hr />
     <footer>
         <p class="text-center font-weight-bold text-dark">&copy; @DateTime.Now.Year - Ricardo Silva &amp; Luís Viegas</p>

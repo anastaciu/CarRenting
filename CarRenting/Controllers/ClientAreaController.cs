@@ -21,7 +21,7 @@ namespace CarRenting.Controllers
                 {
                     var role = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().GetRoles(thisUser.Id).SingleOrDefault();
 
-                    var userViewModel = new UserDashViewModel()
+                    var userViewModel = new EmployeeViewModel()
                         {ApplicationUser = thisUser, Role = role };
                     return View(userViewModel);
                 }

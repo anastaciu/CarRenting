@@ -18,7 +18,7 @@ namespace CarRenting.Controllers
         // GET: Checks
         public async Task<ActionResult> Index()
         {
-            return View(await db.Checks.ToListAsync());
+            return View(await db.Checks.Include(c=>c.CarTypes).ToListAsync());
         }
 
         // GET: Checks/Details/5

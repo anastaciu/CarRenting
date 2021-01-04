@@ -187,6 +187,7 @@
     <Compile Include="Controllers\CompanyAdminAreaController.cs" />
     <Compile Include="Controllers\CompanyUserAreaController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RentsController.cs" />
@@ -284,6 +285,18 @@
     <Compile Include="Migrations\202101031401111_car-type-checks.cs" />
     <Compile Include="Migrations\202101031401111_car-type-checks.Designer.cs">
       <DependentUpon>202101031401111_car-type-checks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101041435398_company-checks.cs" />
+    <Compile Include="Migrations\202101041435398_company-checks.Designer.cs">
+      <DependentUpon>202101041435398_company-checks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101041803456_license.cs" />
+    <Compile Include="Migrations\202101041803456_license.Designer.cs">
+      <DependentUpon>202101041803456_license.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101041805146_brand.cs" />
+    <Compile Include="Migrations\202101041805146_brand.Designer.cs">
+      <DependentUpon>202101041805146_brand.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -486,7 +499,6 @@
     <Content Include="Views\ApplicationUsers\Index.cshtml" />
     <Content Include="Views\ApplicationUsers\GetCompanyEmployees.cshtml" />
     <Content Include="Views\Account\AddCompanyUser.cshtml" />
-    <Content Include="Views\CompanyAdminArea\EmployeeManagementIndex.cshtml" />
     <Content Include="Views\AdminArea\Index.cshtml" />
     <Content Include="Views\CompanyUserArea\Index.cshtml" />
     <Content Include="Views\CarTypes\Create.cshtml" />
@@ -504,6 +516,9 @@
     <Content Include="Views\Cars\Details.cshtml" />
     <Content Include="Views\Cars\Edit.cshtml" />
     <Content Include="Views\Cars\Index.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Cars\CompanyCars.cshtml" />
+    <Content Include="Views\Shared\_UserInfoPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -587,6 +602,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101031401111_car-type-checks.resx">
       <DependentUpon>202101031401111_car-type-checks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101041435398_company-checks.resx">
+      <DependentUpon>202101041435398_company-checks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101041803456_license.resx">
+      <DependentUpon>202101041803456_license.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101041805146_brand.resx">
+      <DependentUpon>202101041805146_brand.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

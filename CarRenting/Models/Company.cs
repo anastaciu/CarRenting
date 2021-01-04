@@ -9,7 +9,7 @@ using System.Web;
 namespace CarRenting.Models
 {
     
-    public class Company : IEnumerable
+    public class Company
     {
         public int Id { get; set; }
         [Display(Name = "Empresa")]
@@ -26,14 +26,11 @@ namespace CarRenting.Models
         [Display(Name = "E-mail")]
         public string Email { get; set; }
 
-        public ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<Check> Checks { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
       
-        public ICollection<Car> Cars { get; set; }
+        public virtual ICollection<Car> Cars { get; set; }
 
-        public IEnumerator GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
     }
 
 }

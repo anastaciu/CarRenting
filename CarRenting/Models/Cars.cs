@@ -11,8 +11,10 @@ namespace CarRenting.Models
     public class Car
     {
         public int Id { get; set; }
+        [Display(Name = "Matrícula")]
+        public string License { get; set; }
         [Display(Name = "Marca")]
-        public string Marca { get; set; }
+        public string Brand { get; set; }
         [Display(Name = "Modelo")]
         public string Model { get; set; }
         [Display(Name = "Combustível")]

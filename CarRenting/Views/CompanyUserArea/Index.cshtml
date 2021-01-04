@@ -1,26 +1,19 @@
-﻿@model CarRenting.Models.CompanyDashViewModel
-
+﻿
 @{
     ViewBag.Title = "Company User Area";
 }
 
-<h2>Area de Utilizador da Empresa</h2>
-
-<div class="full-width log-headers">
-    <h4 style="text-align: center">@Html.DisplayFor(m => m.ApplicationUser.Name), @Html.DisplayFor(m => m.Role) @Html.DisplayFor(m => m.Company.CompanyName)</h4>
-</div>
-
 <div class="card-deck" style="padding-top: 20vh">
 
     <div class="card bg-warning boxshadow btn-hover">
-        <a href="@Url.Action("EmployeeManagementIndex", "CompanyAdminArea")" style="text-decoration: none">
+        <a href="@Url.Action("Index", "Rents")" style="text-decoration: none">
             <div class="card-body text-center text-dark">
                 <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
                     <div class="d-flex">
-                        <i class="fas fa-user-friends m-auto" style="font-size: 10vw"></i>
+                        <i class="fas fa-key m-auto" style="font-size: 10vw"></i>
                     </div>
-                    <h3>Gerir Utilizadores</h3>
-                    <p class="lead mb-0">Quero adicionar remover ou editar um utilizador na minha empresa</p>
+                    <h3>Gerir Reservas</h3>
+                    <p class="lead mb-0">Gestão de reservas efetuadas na plataforma por utilizadores particulares</p>
                 </div>
             </div>
         </a>

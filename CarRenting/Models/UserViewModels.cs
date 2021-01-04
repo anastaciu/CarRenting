@@ -6,18 +6,18 @@ using System.Web;
 
 namespace CarRenting.Models
 {
-    public class CompanyDashViewModel
+    public class DashViewModel
     {
-        public ApplicationUser ApplicationUser { get; set; }
-        public Company Company { get; set; }
-        public string Role;
+        public string UserName { get; set; }
+        public string CompanyName { get; set; }
+        public string Role { get; set; }
 
     }
-    public class UserDashViewModel
+    public class EmployeeViewModel
     {
         public ApplicationUser ApplicationUser { get; set; }
         [Display(Name = "Permissões")]
-        public string Role;
+        public string Role { get; set; }
 
     }
 

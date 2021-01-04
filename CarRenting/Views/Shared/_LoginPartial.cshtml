@@ -3,18 +3,10 @@
 @using Microsoft.AspNet.Identity.Owin
 
 
-
-@{
-    string user = null;
-    if (User.Identity.IsAuthenticated)
-    {
-        user = HttpContext.Current.GetOwinContext()?.GetUserManager<ApplicationUserManager>()?.FindById(User.Identity.GetUserId())?.Name;
-    }
-}
-
-
-@if (Request.IsAuthenticated && user != null)
+@if (Request.IsAuthenticated)
 {
+    string user = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId()).Name ?? String.Empty;
+
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "ml-auto" }))
     {
         @Html.AntiForgeryToken()

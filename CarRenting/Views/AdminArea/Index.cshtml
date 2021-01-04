@@ -1,15 +1,10 @@
-﻿@model CarRenting.Models.UserDashViewModel
+﻿
 
 @{
     ViewBag.Title = "Gestão de Tipos de Veículo";
 }
 
-
-<div class="full-width log-headers">
-    <h4 style="text-align: center">@Html.DisplayFor(m => m.ApplicationUser.Name), @Html.DisplayFor(m => m.Role)</h4>
-</div>
-
-<div class="card-deck" style="padding-top: 25vh">
+<div class="card-deck" style="padding-top: 15vh">
 
     <div class="card bg-warning boxshadow btn-hover">
         <a href="@Url.Action("Create", "CarTypes")" style="text-decoration: none">

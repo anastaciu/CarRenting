@@ -10,6 +10,18 @@ namespace CarRenting
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+
+        protected void Application_Error(Object sender, EventArgs e)
+        {
+
+            var exception = Server.GetLastError();
+            if (exception != null)
+            {
+                Server.TransferRequest("~/Error?Message=" + exception.Message);
+            }
+
+        }
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();

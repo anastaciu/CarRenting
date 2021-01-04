@@ -8,13 +8,13 @@
 @using (Html.BeginForm("RegisterInitCompanyAdmin", "Account", FormMethod.Post, new { @class = "", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <div class="log-headers full-width">
+    <div class="log-headers boxshadow">
         <h4>Dados da Empresa</h4>
     </div>
 
     <div class="form-row">
         <div class="col-md-2"></div>
-        <div class="col-md-8 jumbotron">
+        <div class="col-md-8 jumbotron boxshadow">
             <div class="offset-1 col-md-10">
                 <div class="form-group">
                     @Html.LabelFor(m => m.Company.CompanyName, new { @class = "col-form-label" })
@@ -55,13 +55,13 @@
         </div>
         <div class="col-md-2"></div>
     </div>
-    <div class="full-width log-headers" style="margin-top: -2vh">
+    <div class="log-headers boxshadow" style="margin-top: -2vh">
         <h4>Dados do Administrador</h4>
 
     </div>
     <div class="form-row">
         <div class="col-md-2"></div>
-        <div class="col-md-8 jumbotron">
+        <div class="col-md-8 jumbotron boxshadow">
             <div class="offset-1 col-md-10">
                 @Html.LabelFor(m => m.Name, new { @class = "col-form-label" })
                 <div class="form-group">

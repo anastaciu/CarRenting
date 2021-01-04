@@ -1,20 +1,17 @@
 ﻿@using System.Web.Configuration
 @using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.Owin
-@model IEnumerable<CarRenting.Models.UserDashViewModel>
+@model IEnumerable<CarRenting.Models.EmployeeViewModel>
 
 @{
     ViewBag.Title = "Gestão de Utilizadores";
 }
 
-<div class="full-width log-headers">
+<div class="log-headers boxshadow">
     <h2>Gestão de Funcionários</h2>
 </div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<table class="table boxshadow">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.ApplicationUser.Name)
@@ -48,9 +45,17 @@
                 @Html.DisplayFor(modelItem => item.Role)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ApplicationUser.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ApplicationUser.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ApplicationUser.Id })
+                @if (item.ApplicationUser.Id == User.Identity.GetUserId())
+                {
+                    <span>Utilizador</span>
+                }
+                else
+                {
+                    <span>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.ApplicationUser.Id }, new { @class = "btn btn-dark", @style="padding:2px!important"})
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.ApplicationUser.Id }, new { @class = "btn btn-danger", @style = "padding:2px!important" })
+                    </span>
+                }
             </td>
         </tr>
     }
@@ -71,13 +76,14 @@
             if (User.IsInRole(WebConfigurationManager.AppSettings["Cn"]))
             {
                 @Html.ActionLink("Voltar", "Index", "CompanyAdminArea", new { @area = "" }, new { @class = "btn btn-danger" })
-                ;
+
             }
             else
             {
                 Response.Redirect(@Url.Action("Index", "Home") ?? string.Empty);
             }
         }
-        <button type="submit" class="btn btn-primary" Style="width: 100px;">Eliminar</button>
+
+        @Html.ActionLink("Adicionar Utilizador", "AddCompanyUser", "Account", null, new { @class = "btn btn-primary" })
     </div>
 </div>

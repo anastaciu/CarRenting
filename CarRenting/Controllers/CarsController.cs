@@ -23,6 +23,14 @@ namespace CarRenting.Controllers
             return View(await cars.ToListAsync());
         }
 
+        [Authorize(Roles = "Administrador da Empresa")]
+        public async Task<ActionResult> CompanyCars()
+        {
+            var userId = User.Identity.GetUserId();
+            var employee = db.Employees.Include(e=>e.Company).SingleOrDefault(e => e.ApplicationUserId == userId);
+            var cars = db.Cars.Where(c=>c.CompanyId == employee.CompanyId).Include(c=>c.Type);
+            return View(await cars.ToListAsync());
+        }
         // GET: Cars/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -38,7 +46,7 @@ namespace CarRenting.Controllers
             return View(car);
         }
 
-        // GET: Cars/Create
+        [Authorize(Roles = "Administrador da Empresa")]
         public ActionResult Create()
         {
             List<SelectListItem> fuelList = new List<SelectListItem>
@@ -59,7 +67,7 @@ namespace CarRenting.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador da Empresa")]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Marca,Model,Fuel,FuelLevel,Seats,TypeId,Price,Kms")] Car car)
+        public async Task<ActionResult> Create([Bind(Include = "Id,License,Brand,Model,Fuel,FuelLevel,Seats,TypeId,Price,Kms")] Car car)
         {
             if (ModelState.IsValid)
             {
@@ -71,6 +79,13 @@ namespace CarRenting.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+            List<SelectListItem> fuelList = new List<SelectListItem>
+            {
+                new SelectListItem() { Value = "Vazio", Text = "Vazio" },
+                new SelectListItem() { Value = "Meio", Text = "Meio" },
+                new SelectListItem() { Value = "Cheio", Text = "Cheio" }
+            };
+            ViewBag.FuelLevels = fuelList;
             ViewBag.TypeId = new SelectList(db.CarTypes, "Id", "Type", car.TypeId);
             return View(car);
         }
@@ -97,7 +112,7 @@ namespace CarRenting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Marca,Model,Fuel,FuelLevel,Seats,TypeId,Price,Kms,CompanyId")] Car car)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Brand,Model,Fuel,FuelLevel,Seats,TypeId,Price,Kms,CompanyId")] Car car)
         {
             if (ModelState.IsValid)
             {

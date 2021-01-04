@@ -21,9 +21,11 @@ namespace CarRenting.Controllers
                 {
                     var role = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().GetRoles(thisUser.Id).SingleOrDefault();
 
-                    var userViewModel = new UserDashViewModel()
-                        { ApplicationUser = thisUser, Role = role };
-                    return View(userViewModel);
+                    var userViewModel = new DashViewModel()
+                        { UserName = thisUser.Name, Role = role, CompanyName = null};
+
+                    Session["UserInfo"] = userViewModel;
+                    return View();
                 }
             }
             return RedirectToAction("Index", "Home");
