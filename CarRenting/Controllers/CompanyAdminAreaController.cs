@@ -30,7 +30,7 @@ namespace CarRenting.Controllers
                         var companyViewModel = new DashViewModel
                             { CompanyName = company?.CompanyName, UserName = thisUser.Name, Role = role };
                         Session["UserInfo"] = companyViewModel;
-                        return View(companyViewModel);
+                        return View();
 
                     }
                     catch (Exception e)

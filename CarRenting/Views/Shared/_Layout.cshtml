@@ -31,7 +31,7 @@
                     @if (User.IsInRole(WebConfigurationManager.AppSettings["Cn"]))
                     {
 
-                        <li>@Html.ActionLink("Gerir Checklists", "Index", "CompanyAdminArea", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                        <li>@Html.ActionLink("Gerir Checklists", "Index", "Checks", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
                         <li>@Html.ActionLink("Gerir Veículos", "Index", "Cars", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
                         <li>@Html.ActionLink("Gerir Utilizadores", "GetCompanyEmployees", "ApplicationUsers", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
 
