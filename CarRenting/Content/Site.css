@@ -2,6 +2,7 @@
     padding-top: 50px;
     padding-bottom: 20px;
     font-family: Poppins;
+    overflow: auto;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -73,12 +74,12 @@ h2, h4 {
 }
 
 .full-width {
-    width: 98vw;
+    width: 96vw;
     position: relative;
     left: 50%;
     right: 50%;
-    margin-left: -49vw;
-    margin-right: -49vw;
+    margin-left: -48vw;
+    margin-right: -48vw;
 }
 
 

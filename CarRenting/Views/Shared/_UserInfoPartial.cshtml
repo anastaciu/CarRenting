@@ -2,15 +2,21 @@
 
 @if (Request.IsAuthenticated)
 {
-    DashViewModel dashViewModel = (DashViewModel)Session["UserInfo"];
+    DashViewModel dashViewModel = (DashViewModel)Session["UserInfo"] ?? null;
     <div class="full-width log-headers boxshadow">
-        <h4 style="text-align: center">
-            @dashViewModel.UserName, @dashViewModel.Role
-            @if (dashViewModel.CompanyName != null)
-            {
-                @dashViewModel.CompanyName
-            }
-        </h4>
+        @if (dashViewModel != null)
+        {
+            <h4 style="text-align: center">
+
+                @dashViewModel.UserName,
+                @dashViewModel.Role
+                @if (dashViewModel.CompanyName != null)
+                {
+                    @dashViewModel.CompanyName
+                }
+
+            </h4>
+        }
     </div>
 }
 

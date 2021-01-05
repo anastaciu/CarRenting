@@ -8,20 +8,24 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CarRenting.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace CarRenting.Controllers
 {
+    [Authorize(Roles = "Administrador do Site")]
     public class CarTypesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: CarTypes
+    
         public async Task<ActionResult> Index()
         {
             return View(await db.CarTypes.ToListAsync());
         }
 
         // GET: CarTypes/Details/5
+ 
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,6 +41,7 @@ namespace CarRenting.Controllers
         }
 
         // GET: CarTypes/Create
+      
         public ActionResult Create()
         {
             return View();
@@ -46,20 +51,26 @@ namespace CarRenting.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+     
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,Type")] CarType carType)
         {
             if (ModelState.IsValid)
             {
-                db.CarTypes.Add(carType);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                var type = db.CarTypes.SingleOrDefault(t => t.Type == carType.Type);
+                if (type == null)
+                {
+                    db.CarTypes.Add(carType);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
             }
-
+            ModelState.AddModelError("carTypeError", "Já existe uma categoria com esse nome");
             return View(carType);
         }
 
         // GET: CarTypes/Edit/5
+    
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,9 +86,11 @@ namespace CarRenting.Controllers
         }
 
         // POST: CarTypes/Edit/5
+       
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+   
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Type")] CarType carType)
         {
@@ -91,6 +104,7 @@ namespace CarRenting.Controllers
         }
 
         // GET: CarTypes/Delete/5
+  
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -106,6 +120,7 @@ namespace CarRenting.Controllers
         }
 
         // POST: CarTypes/Delete/5
+       
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)

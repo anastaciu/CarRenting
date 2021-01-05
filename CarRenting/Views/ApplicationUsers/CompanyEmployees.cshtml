@@ -1,0 +1,89 @@
+﻿@using System.Web.Configuration
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin
+@model IEnumerable<CarRenting.Models.EmployeeViewModel>
+
+@{
+    ViewBag.Title = "Gestão de Utilizadores";
+}
+
+<div class="log-headers boxshadow">
+    <h2>Gestão de Funcionários</h2>
+</div>
+
+<table class="table boxshadow">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ApplicationUser.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApplicationUser.Email)
+        </th>
+        <th>
+            Telefone
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoleName)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApplicationUser.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleName)
+            </td>
+            <td>
+                @if (item.ApplicationUser.Id == User.Identity.GetUserId())
+                {
+                    <span>Utilizador</span>
+                }
+                else
+                {
+                    <span>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.ApplicationUser.Id }, new { @class = "btn btn-dark", @style="padding:2px!important"})
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.ApplicationUser.Id }, new { @class = "btn btn-danger", @style = "padding:2px!important" })
+                    </span>
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+@{
+    string user = null;
+    if (User.Identity.IsAuthenticated)
+    {
+        user = HttpContext.Current.GetOwinContext()?.GetUserManager<ApplicationUserManager>()?.FindById(User.Identity.GetUserId())?.Name;
+    }
+}
+<div class="row">
+    <div class="col-sm-12 text-center">
+        @if (Request.IsAuthenticated && user != null)
+        {
+            if (User.IsInRole(WebConfigurationManager.AppSettings["Cn"]))
+            {
+                @Html.ActionLink("Voltar", "Index", "CompanyAdminArea", new { @area = "" }, new { @class = "btn btn-danger" })
+
+            }
+            else
+            {
+                Response.Redirect(@Url.Action("Index", "Home") ?? string.Empty);
+            }
+        }
+
+        @Html.ActionLink("Adicionar Utilizador", "AddCompanyUser", "Account", null, new { @class = "btn btn-primary" })
+    </div>
+</div>

@@ -22,7 +22,7 @@ namespace CarRenting.Controllers
                     var role = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().GetRoles(thisUser.Id).SingleOrDefault();
 
                     var userViewModel = new EmployeeViewModel()
-                        {ApplicationUser = thisUser, Role = role };
+                        {ApplicationUser = thisUser, RoleName = role };
                     return View(userViewModel);
                 }
             }

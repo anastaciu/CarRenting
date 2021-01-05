@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,6 +8,7 @@ using System.Web;
 
 namespace CarRenting.Models
 {
+
     public class CarType
     {
         public CarType()
@@ -22,4 +24,5 @@ namespace CarRenting.Models
 
 
     }
+
 }

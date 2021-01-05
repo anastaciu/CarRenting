@@ -1,9 +1,5 @@
 ﻿@model IEnumerable<CarRenting.Models.Car>
 
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <div>
     <table class="table boxshadow">
         <tr>
@@ -64,7 +60,6 @@
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                     @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 </td>
             </tr>
         }

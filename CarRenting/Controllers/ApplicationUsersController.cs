@@ -58,7 +58,7 @@ namespace CarRenting.Controllers
 
 
         // GET: ApplicationUsers
-        public ActionResult GetCompanyEmployees()
+        public ActionResult CompanyEmployees()
         {
             var userId = User.Identity.GetUserId();
             if (!IsCompanyAdmin(userId))
@@ -79,14 +79,12 @@ namespace CarRenting.Controllers
                     if (applicationUser.Id == dbEmployee.ApplicationUserId)
                     {
                         var role = UserManager.GetRoles(applicationUser.Id).SingleOrDefault();
-                        empList.Add(new EmployeeViewModel { ApplicationUser = applicationUser, Role = role });
+                        empList.Add(new EmployeeViewModel { ApplicationUser = applicationUser, RoleName = role });
                     }
                 }
             }
             return View(empList);
         }
-
-
 
 
         // GET: ApplicationUsers/Details/5
@@ -104,39 +102,9 @@ namespace CarRenting.Controllers
             return View(applicationUser);
         }
 
-        // GET: ApplicationUsers/Create
-        public ActionResult Create()
-        {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            return View();
-        }
-
-        // POST: ApplicationUsers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
-        {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            if (ModelState.IsValid)
-            {
-                dbContext.Users.Add(applicationUser);
-                await dbContext.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-
-            return View(applicationUser);
-        }
-
         // GET: ApplicationUsers/Edit/5
-        public async Task<ActionResult> Edit(string id)
+        [Authorize(Roles = "Administrador da Empresa, Administrador do Site")]
+        public ActionResult Edit(string id)
         {
             if (!Request.IsAuthenticated)
             {
@@ -146,42 +114,79 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            ApplicationUser applicationUser = await Task.FromResult(dbContext.Users.Find(id));
+            ApplicationUser applicationUser = dbContext.Users.Find(id);
             if (applicationUser == null)
             {
                 return HttpNotFound();
             }
-            return View(applicationUser);
+
+            var roles = new SelectList(dbContext.Roles.Where(r => r.Name.Contains("Empresa")), "Name", "Name");
+            ViewBag.Roles = roles;
+            UserEditViewModel userEditViewModel = new UserEditViewModel
+            {
+                Id = applicationUser.Id,
+                Name = applicationUser.Name,
+                PhoneNumber = applicationUser.PhoneNumber,
+                Role = null,
+                Email = applicationUser.Email
+            };
+            return View(userEditViewModel);
         }
 
         // POST: ApplicationUsers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Administrador da Empresa, Administrador do Site")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
+        public ActionResult Edit([Bind(Include = "Id,Name,Email,PhoneNumber,Role")] UserEditViewModel applicationUser)
         {
-            if (!Request.IsAuthenticated)
+            var user = dbContext.Users.Find(applicationUser.Id);
+            SelectList roles;
+            if (user != null)
             {
-                return RedirectToAction("Index", "Home");
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        var originalRole = user.Roles.ElementAt(0);
+                        var role = RoleManager.Roles.SingleOrDefault(r => r.Id == originalRole.RoleId);
+
+                        if (role?.Name != applicationUser.Role)
+                        {
+                            user.Roles.Remove(originalRole);
+                            var result = UserManager.AddToRoles(applicationUser.Id, applicationUser.Role);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e);
+                        roles = new SelectList(dbContext.Roles.Where(r => r.Name.Contains("Empresa")), "Name",
+                            "Name");
+                        ViewBag.Roles = roles;
+                        return View(applicationUser);
+                    }
+
+                    user.Id = applicationUser.Id;
+                    user.PhoneNumber = applicationUser.PhoneNumber;
+                    user.UserName = applicationUser.Email;
+                    user.Name = applicationUser.Name;
+                    user.Email = applicationUser.Email;
+                    dbContext.Entry(user).State = EntityState.Modified;
+                    dbContext.SaveChanges();
+              
+                    return RedirectToAction("CompanyEmployees");
+                }
             }
-            if (ModelState.IsValid)
-            {
-                dbContext.Entry(applicationUser).State = EntityState.Modified;
-                await dbContext.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
+            roles = new SelectList(dbContext.Roles.Where(r => r.Name.Contains("Empresa")), "Name", "Name");
+            ViewBag.Roles = roles;
             return View(applicationUser);
         }
 
         // GET: ApplicationUsers/Delete/5
+        [Authorize(Roles = "Administrador da Empresa, Administrador do Site")]
         public async Task<ActionResult> Delete(string id)
         {
-            if (!Request.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Home");
-            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -196,13 +201,10 @@ namespace CarRenting.Controllers
 
         // POST: ApplicationUsers/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Administrador da Empresa, Administrador do Site")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
-            if (!IsAdmin() && !IsCompanyAdmin())
-            {
-                return RedirectToAction("Index", "Home");
-            }
 
             ApplicationUser applicationUser = await Task.FromResult(dbContext.Users.Find(id));
             dbContext.Users.Remove(applicationUser);
@@ -213,14 +215,13 @@ namespace CarRenting.Controllers
             }
             else if (IsCompanyAdmin())
             {
-                return RedirectToAction("GetCompanyEmployees");
+                return RedirectToAction("CompanyEmployees");
             }
             else
             {
                 return RedirectToAction("Index", "Home");
             }
         }
-
 
         private bool IsCompanyAdmin()
         {
