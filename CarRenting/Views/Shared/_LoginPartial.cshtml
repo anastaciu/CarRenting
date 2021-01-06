@@ -5,7 +5,7 @@
 
 @if (Request.IsAuthenticated)
 {
-    string user = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId()).Name ?? String.Empty;
+    string user = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId()).Name ?? String.Format("Utilizador");
 
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "ml-auto" }))
     {
@@ -24,6 +24,6 @@ else
 {
     <ul class="nav navbar-nav ml-auto">
         <li class="nav-item"></li>
-        <li class="nav-item">@Html.ActionLink("Entrar", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
+        <li class="nav-item">@Html.ActionLink("Entrar", "Login", "Account", null, new { id = "loginLink", @class = "nav-link" })</li>
     </ul>
 }
