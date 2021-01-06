@@ -44,6 +44,7 @@ namespace CarRenting.Controllers
             private set => _roleManager = value;
         }
 
+        [Authorize(Roles = "Administrador da Empresa")]
         public async Task<ActionResult> Index()
         {
             if (!IsAdmin())
@@ -56,33 +57,30 @@ namespace CarRenting.Controllers
             }
         }
 
-
         // GET: ApplicationUsers
+        [Authorize(Roles = "Administrador da Empresa")]
         public ActionResult CompanyEmployees()
         {
             var userId = User.Identity.GetUserId();
-            if (!IsCompanyAdmin(userId))
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            var employee = dbContext.Employees.SingleOrDefault(e => e.ApplicationUserId == userId);
-            var company = dbContext.Companies.SingleOrDefault(c => c.Id == employee.CompanyId);
-            var employees = dbContext.Employees.Where(e => e.CompanyId == company.Id);
+            var employees = dbContext.Companies.Include(c=>c.Employees).SingleOrDefault(c => c.Employees.Any(e => e.ApplicationUserId == userId))?.Employees; 
             var users = dbContext.Users.ToList();
 
-            ICollection<EmployeeViewModel> empList = new List<EmployeeViewModel>();
+            ICollection<UserViewModel> empList = new List<UserViewModel>();
 
-            foreach (var applicationUser in users)
-            {
-                foreach (var dbEmployee in employees)
+            if (employees != null)
+                foreach (var employee in employees)
                 {
-                    if (applicationUser.Id == dbEmployee.ApplicationUserId)
                     {
-                        var role = UserManager.GetRoles(applicationUser.Id).SingleOrDefault();
-                        empList.Add(new EmployeeViewModel { ApplicationUser = applicationUser, RoleName = role });
+                        var role = UserManager.GetRoles(employee.ApplicationUser.Id).SingleOrDefault();
+                        empList.Add(new UserViewModel
+                        {
+                            Name = employee.ApplicationUser.Name, Id = employee.ApplicationUserId,
+                            Email = employee.ApplicationUser.Email, PhoneNumber = employee.ApplicationUser.PhoneNumber,
+                            Role = role
+                        });
                     }
                 }
-            }
+
             return View(empList);
         }
 
@@ -122,7 +120,7 @@ namespace CarRenting.Controllers
 
             var roles = new SelectList(dbContext.Roles.Where(r => r.Name.Contains("Empresa")), "Name", "Name");
             ViewBag.Roles = roles;
-            UserEditViewModel userEditViewModel = new UserEditViewModel
+            UserViewModel userViewModel = new UserViewModel
             {
                 Id = applicationUser.Id,
                 Name = applicationUser.Name,
@@ -130,7 +128,7 @@ namespace CarRenting.Controllers
                 Role = null,
                 Email = applicationUser.Email
             };
-            return View(userEditViewModel);
+            return View(userViewModel);
         }
 
         // POST: ApplicationUsers/Edit/5
@@ -139,7 +137,7 @@ namespace CarRenting.Controllers
         [HttpPost]
         [Authorize(Roles = "Administrador da Empresa, Administrador do Site")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Email,PhoneNumber,Role")] UserEditViewModel applicationUser)
+        public ActionResult Edit([Bind(Include = "Id,Name,Email,PhoneNumber,Role")] UserViewModel applicationUser)
         {
             var user = dbContext.Users.Find(applicationUser.Id);
             SelectList roles;

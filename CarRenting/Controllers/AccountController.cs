@@ -248,10 +248,10 @@ namespace CarRenting.Controllers
                         using (var dbContext = new ApplicationDbContext())
                         {
                             var userId = User.Identity.GetUserId();
-                            var emp = dbContext.Employees.SingleOrDefault(e => e.ApplicationUserId == userId);
-                            var comp = emp.Company;
-                            
-                            dbContext.Employees.Add(new Employee {CompanyId = emp.CompanyId, ApplicationUserId = user.Id});
+                            var emp = dbContext.Employees?.SingleOrDefault(e => e.ApplicationUserId == userId);
+                            if (emp != null)
+                                dbContext.Employees.Add(new Employee
+                                    {CompanyId = emp.CompanyId, ApplicationUserId = user.Id});
                             await dbContext.SaveChangesAsync();
                         }
                         

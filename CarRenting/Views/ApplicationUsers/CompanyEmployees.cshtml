@@ -1,29 +1,29 @@
 ﻿@using System.Web.Configuration
 @using Microsoft.AspNet.Identity
 @using Microsoft.AspNet.Identity.Owin
-@model IEnumerable<CarRenting.Models.EmployeeViewModel>
+@model IEnumerable<CarRenting.Models.UserViewModel>
 
 @{
     ViewBag.Title = "Gestão de Utilizadores";
 }
 
-<div class="log-headers boxshadow">
+<div class="log-headers-h2 boxshadow">
     <h2>Gestão de Funcionários</h2>
 </div>
 
 <table class="table boxshadow">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ApplicationUser.Name)
+            @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ApplicationUser.Email)
+            @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            Telefone
+            @Html.DisplayNameFor(model => model.PhoneNumber)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RoleName)
+            @Html.DisplayNameFor(model => model.Role)
         </th>
 
         <th></th>
@@ -33,27 +33,27 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.Name)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.Email)
+                @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationUser.PhoneNumber)
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RoleName)
+                @Html.DisplayFor(modelItem => item.Role)
             </td>
             <td>
-                @if (item.ApplicationUser.Id == User.Identity.GetUserId())
+                @if (item.Id == User.Identity.GetUserId())
                 {
                     <span>Utilizador</span>
                 }
                 else
                 {
                     <span>
-                        @Html.ActionLink("Editar", "Edit", new { id = item.ApplicationUser.Id }, new { @class = "btn btn-dark", @style="padding:2px!important"})
-                        @Html.ActionLink("Eliminar", "Delete", new { id = item.ApplicationUser.Id }, new { @class = "btn btn-danger", @style = "padding:2px!important" })
+                        @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-dark", @style="padding:2px!important"})
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-danger", @style = "padding:2px!important" })
                     </span>
                 }
             </td>

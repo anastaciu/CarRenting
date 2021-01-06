@@ -14,15 +14,8 @@ namespace CarRenting.Models
         public string Role { get; set; }
 
     }
-    public class EmployeeViewModel
-    {
-        public ApplicationUser ApplicationUser { get; set; }
-        [Display(Name = "Permissões")]
-        public string RoleName { get; set; }
-
-    }
-
-    public class UserEditViewModel
+    
+    public class UserViewModel
     {
         [Required]
         public string Id { get; set; }
