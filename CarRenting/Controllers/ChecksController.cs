@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CarRenting.Models;
+using Microsoft.AspNet.Identity;
 
 namespace CarRenting.Controllers
 {
@@ -51,6 +52,9 @@ namespace CarRenting.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = User.Identity.GetUserId();
+                var company = db.Companies.SingleOrDefault(c => c.Employees.Any(e => e.ApplicationUserId == userId));
+                check.Company = company;
                 db.Checks.Add(check);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
