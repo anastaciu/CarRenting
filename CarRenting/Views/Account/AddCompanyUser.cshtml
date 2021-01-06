@@ -19,18 +19,18 @@
             <div class="form-group offset-1 col-md-10">
                 @Html.LabelFor(m => m.Name, new {@class = "col-form-label"})
 
-                @Html.TextBoxFor(m => m.Name, new {@class = "form-control"})
+                @Html.TextBoxFor(m => m.Name, new {@class = "form-control", @placeholder="Nome Apelido"})
             </div>
             <div class="form-group offset-1 col-md-10">
                 @Html.LabelFor(m => m.Email, new {@class = "col-form-label"})
 
-                @Html.TextBoxFor(m => m.Email, new {@class = "form-control"})
+                @Html.TextBoxFor(m => m.Email, new {@class = "form-control", @placeholder = "email@email.com" })
 
             </div>
             <div class="form-group offset-1 col-md-10">
                 @Html.LabelFor(m => m.PhoneNumber, new {@class = "col-form-label"})
 
-                @Html.TextBoxFor(m => m.PhoneNumber, new {@class = "form-control"})
+                @Html.TextBoxFor(m => m.PhoneNumber, new {@class = "form-control", @placeholder = "912345678" })
             </div>
             <div class="form-group offset-1 col-md-10">
                 @Html.LabelFor(m => m.Password, new {@class = "col-form-label"})

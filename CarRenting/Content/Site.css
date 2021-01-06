@@ -139,3 +139,7 @@ td, th {
 tr:nth-child(even) {
     background-color: #ffc107;
 }
+
+.btn {
+    border-radius: 0px;
+}

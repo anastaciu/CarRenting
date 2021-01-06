@@ -15,6 +15,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace CarRenting.Controllers
 {
+    [Authorize(Roles = "Administrador da Empresa, Administrador do Site")]
     public class ApplicationUsersController : Controller
     {
         private ApplicationDbContext dbContext = new ApplicationDbContext();
@@ -44,7 +45,6 @@ namespace CarRenting.Controllers
             private set => _roleManager = value;
         }
 
-        [Authorize(Roles = "Administrador da Empresa")]
         public async Task<ActionResult> Index()
         {
             if (!IsAdmin())
@@ -101,7 +101,6 @@ namespace CarRenting.Controllers
         }
 
         // GET: ApplicationUsers/Edit/5
-        [Authorize(Roles = "Administrador da Empresa, Administrador do Site")]
         public ActionResult Edit(string id)
         {
             if (!Request.IsAuthenticated)
@@ -135,7 +134,6 @@ namespace CarRenting.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize(Roles = "Administrador da Empresa, Administrador do Site")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Email,PhoneNumber,Role")] UserViewModel applicationUser)
         {
@@ -182,7 +180,6 @@ namespace CarRenting.Controllers
         }
 
         // GET: ApplicationUsers/Delete/5
-        [Authorize(Roles = "Administrador da Empresa, Administrador do Site")]
         public async Task<ActionResult> Delete(string id)
         {
             if (id == null)
@@ -199,7 +196,6 @@ namespace CarRenting.Controllers
 
         // POST: ApplicationUsers/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Authorize(Roles = "Administrador da Empresa, Administrador do Site")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
