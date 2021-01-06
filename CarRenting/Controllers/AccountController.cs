@@ -247,8 +247,8 @@ namespace CarRenting.Controllers
                     {
                         using (var dbContext = new ApplicationDbContext())
                         {
-                            var userId = User.Identity.GetUserId();
-                            var emp = dbContext.Employees?.SingleOrDefault(e => e.ApplicationUserId == userId);
+                            var currentUserId = User.Identity.GetUserId();
+                            var emp = dbContext.Employees?.SingleOrDefault(e => e.ApplicationUserId == currentUserId);
                             if (emp != null)
                                 dbContext.Employees.Add(new Employee
                                     {CompanyId = emp.CompanyId, ApplicationUserId = user.Id});

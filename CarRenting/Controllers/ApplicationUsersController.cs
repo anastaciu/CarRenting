@@ -71,7 +71,7 @@ namespace CarRenting.Controllers
                 foreach (var employee in employees)
                 {
                     {
-                        var role = UserManager.GetRoles(employee.ApplicationUser.Id).SingleOrDefault();
+                        var role = UserManager.GetRoles(employee.ApplicationUser.Id).SingleOrDefault() ?? string.Empty;
                         empList.Add(new UserViewModel
                         {
                             Name = employee.ApplicationUser.Name, Id = employee.ApplicationUserId,

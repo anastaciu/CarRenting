@@ -19,6 +19,11 @@ namespace CarRenting.Controllers
         // GET: Cars
         public async Task<ActionResult> Index()
         {
+            if (Request.IsAuthenticated)
+            {
+                RedirectToAction("Index", "Home");
+            }
+
             var cars = db.Cars.Include(c => c.Company).Include(c => c.Type);
             return View(await cars.ToListAsync());
         }
@@ -28,8 +33,8 @@ namespace CarRenting.Controllers
         {
             var userId = User.Identity.GetUserId();
             var employee = db.Employees.Include(e=>e.Company).SingleOrDefault(e => e.ApplicationUserId == userId);
-            var cars = db.Cars.Where(c=>c.CompanyId == employee.CompanyId).Include(c=>c.Type);
-            return View(await cars.ToListAsync());
+            var carsWithType = db.Cars.Where(c=>c.CompanyId == employee.CompanyId).Include(c=>c.Type);
+            return View(await carsWithType.ToListAsync());
         }
         // GET: Cars/Details/5
         public async Task<ActionResult> Details(int? id)
@@ -38,7 +43,8 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Car car = await db.Cars.FindAsync(id);
+            Car car = await db.Cars.Include(c=>c.Type).Include(c=>c.Company).SingleOrDefaultAsync(c=>c.Id == id);
+
             if (car == null)
             {
                 return HttpNotFound();
@@ -72,14 +78,16 @@ namespace CarRenting.Controllers
             if (ModelState.IsValid)
             {
                 var userId = User.Identity.GetUserId();
-                var employee = db.Employees.SingleOrDefault(e => e.ApplicationUserId == userId);
-                var company = db.Companies.SingleOrDefault(c => c.Id == employee.CompanyId);
-                car.Company = company;
-                db.Cars.Add(car);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                var employee = db.Employees.Include(e=>e.Company).SingleOrDefault(e => e.ApplicationUserId == userId);
+                if (employee != null)
+                {
+                    car.Company = employee.Company;
+                    db.Cars.Add(car);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("CompanyCars");
+                }
             }
-            List<SelectListItem> fuelList = new List<SelectListItem>
+            var fuelList = new List<SelectListItem>
             {
                 new SelectListItem() { Value = "Vazio", Text = "Vazio" },
                 new SelectListItem() { Value = "Meio", Text = "Meio" },
@@ -91,6 +99,7 @@ namespace CarRenting.Controllers
         }
 
         // GET: Cars/Edit/5
+        [Authorize(Roles = "Administrador da Empresa")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -102,15 +111,23 @@ namespace CarRenting.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CompanyId = new SelectList(db.Companies, "Id", "CompanyName", car.CompanyId);
+            var fuelList = new List<SelectListItem>
+            {
+                new SelectListItem() { Value = "Vazio", Text = "Vazio" },
+                new SelectListItem() { Value = "Meio", Text = "Meio" },
+                new SelectListItem() { Value = "Cheio", Text = "Cheio" }
+            };
+            ViewBag.FuelLevels = fuelList;
             ViewBag.TypeId = new SelectList(db.CarTypes, "Id", "Type", car.TypeId);
+
             return View(car);
         }
-
+        
         // POST: Cars/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Administrador da Empresa")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Brand,Model,Fuel,FuelLevel,Seats,TypeId,Price,Kms,CompanyId")] Car car)
         {
@@ -125,7 +142,9 @@ namespace CarRenting.Controllers
             return View(car);
         }
 
+
         // GET: Cars/Delete/5
+        [Authorize(Roles = "Administrador da Empresa")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -142,7 +161,9 @@ namespace CarRenting.Controllers
 
         // POST: Cars/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Administrador da Empresa")]
         [ValidateAntiForgeryToken]
+        
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Car car = await db.Cars.FindAsync(id);

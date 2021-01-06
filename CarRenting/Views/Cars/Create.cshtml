@@ -4,20 +4,20 @@
     ViewBag.Title = "Adicionar Veículo";
 }
 <div class="container">
-    <div class="boxshadow log-headers offset-md-2 col-md-8">
+    <div class="boxshadow log-headers-h2 offset-md-2 col-md-8">
         <h2>@ViewBag.Title</h2>
     </div>
 
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
 <div class="jumbotron boxshadow offset-md-2 col-md-8">
     <div class="form-group offset-1 col-md-10">
         @Html.LabelFor(model => model.License, htmlAttributes: new { @class = "col-form-label" })
 
         @Html.EditorFor(model => model.License, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.License, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.License, "", new { @class = "text-danger bg-warning" })
 
     </div>
     <div class="form-group offset-1 col-md-10">
@@ -48,7 +48,7 @@
         @Html.LabelFor(model => model.FuelLevel, htmlAttributes: new { @class = "col-form-label" })
         @Html.DropDownListFor(m => m.FuelLevel, new SelectList(ViewBag.FuelLevels, "Value", "Text"), new { @class = "form-control" })
 
-        @Html.ValidationMessageFor(model => model.FuelLevel, "", new { @class = "text-danger" })
+       
 
     </div>
 
@@ -56,7 +56,7 @@
         @Html.LabelFor(model => model.Seats, htmlAttributes: new { @class = "col-form-label" })
 
         @Html.EditorFor(model => model.Seats, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Seats, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(model => model.Seats, "", new { @class = "text-danger bg-warning" })
 
     </div>
 
