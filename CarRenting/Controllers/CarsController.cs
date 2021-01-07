@@ -41,7 +41,7 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index", "Error");
             }
             Car car = await db.Cars.Include(c=>c.Type).Include(c=>c.Company).SingleOrDefaultAsync(c=>c.Id == id);
 
@@ -57,9 +57,9 @@ namespace CarRenting.Controllers
         {
             List<SelectListItem> fuelList = new List<SelectListItem>
             {
-                new SelectListItem() { Value = "Vazio", Text = "Vazio" },
-                new SelectListItem() { Value = "Meio", Text = "Meio" },
-                new SelectListItem() { Value = "Cheio", Text = "Cheio" }
+                new SelectListItem { Value = "Vazio", Text = "Vazio" },
+                new SelectListItem { Value = "Meio", Text = "Meio" },
+                new SelectListItem { Value = "Cheio", Text = "Cheio" }
             };
             ViewBag.FuelLevels = fuelList;
             ViewBag.TypeId = new SelectList(db.CarTypes, "Id", "Type");
