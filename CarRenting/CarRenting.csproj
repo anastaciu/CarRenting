@@ -308,6 +308,10 @@
     <Compile Include="Migrations\202101051653216_upd.Designer.cs">
       <DependentUpon>202101051653216_upd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101071555454_RentFields.cs" />
+    <Compile Include="Migrations\202101071555454_RentFields.Designer.cs">
+      <DependentUpon>202101071555454_RentFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
@@ -623,6 +627,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101051653216_upd.resx">
       <DependentUpon>202101051653216_upd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101071555454_RentFields.resx">
+      <DependentUpon>202101071555454_RentFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

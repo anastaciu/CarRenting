@@ -15,7 +15,7 @@
 
 </head>
 <body>
-<div class="backimg"></div>
+    <div class="backimg"></div>
 
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark boxshadow">
         <div class="container">
@@ -63,11 +63,10 @@
         </div>
     </nav>
 
-<div class="container body-content" style="min-height: 88vh">
-    @Html.Partial("_UserInfoPartial");
-    @RenderBody()
-
-</div>
+    <div class="container body-content" style="min-height: 88vh">
+        @Html.Partial("_UserInfoPartial");
+        @RenderBody()
+    </div>
     <hr />
     <footer>
         <p class="text-center font-weight-bold text-dark">&copy; @DateTime.Now.Year - Ricardo Silva &amp; Luís Viegas</p>

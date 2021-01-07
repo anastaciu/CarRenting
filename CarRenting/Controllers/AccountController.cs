@@ -400,13 +400,12 @@ namespace CarRenting.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url?.Scheme);
-                string body = $"Clique no link para redefinir a sua password: {callbackUrl}";
+                var body = $"Clique no link para redefinir a sua password: {callbackUrl}";
                 await UserManager.SendEmailAsync(user.Id, "Recuperação de password", body);
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
