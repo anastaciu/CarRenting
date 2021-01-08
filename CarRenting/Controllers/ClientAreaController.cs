@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace CarRenting.Controllers
 {
+    [Authorize(Roles = "Utilizador Registado")]
     public class ClientAreaController : Controller
     {
         // GET: ClientArea

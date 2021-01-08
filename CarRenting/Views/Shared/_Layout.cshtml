@@ -8,11 +8,12 @@
     <title>Car Renting</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
     <script src="https://kit.fontawesome.com/a9d1f8d59f.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700%7CRoboto%7CJosefin+Sans:100,300,400,500"
           rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-
+    <script src="~/Scripts/jquery-3.5.1.min.js"></script>
 </head>
 <body>
     <div class="backimg"></div>
@@ -73,8 +74,10 @@
     </footer>
 
     @Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/toastr")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Content/custom_scripts")
+
     @RenderSection("scripts", required: false)
 
 

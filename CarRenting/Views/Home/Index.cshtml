@@ -3,23 +3,34 @@
     ViewBag.Title = "Home Page";
 }
 
+@if (null == null)
+{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            toastr.success('Added');
+        })
+    </script>
+
+}
+
 <div class="card-deck" style="padding-top: 20vh">
 
     <div class="card bg-warning boxshadow btn-hover">
-        
+
         <a href="@Url.Action("Index", "Cars", null)" style="text-decoration: none">
             <div class="card-body text-center text-dark">
                 <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
                     <div class="d-flex">
                         <i class="fas fa-car m-auto" style="font-size: 6em"></i>
                     </div>
-                    <h3>Veículos Disponíveis</h3>
+                    <h3>Ver Veículos Disponíveis</h3>
                     <p class="lead mb-0">Quero ver os veículos disponíveis para alugar na plataforma</p>
                 </div>
             </div>
         </a>
     </div>
-   
+
     <div class="card bg-warning boxshadow btn-hover">
         <a href="@Url.Action("RegisterUser", "Account")" style="text-decoration: none">
             <div class="card-body text-center text-dark">
@@ -33,23 +44,20 @@
             </div>
         </a>
     </div>
-    
+
     <div class="card bg-warning boxshadow btn-hover">
         <a href="@Url.Action("RegisterInitCompanyAdmin", "Account")" style="text-decoration: none">
-        <div class="card-body text-center text-dark">
-            <div class="mx-auto mb-0 mb-lg-3">
-                <div class="d-flex">
-                    <i class="fas fa-parking m-auto" style="font-size: 6em"></i>
+            <div class="card-body text-center text-dark">
+                <div class="mx-auto mb-0 mb-lg-3">
+                    <div class="d-flex">
+                        <i class="fas fa-parking m-auto" style="font-size: 6em"></i>
+                    </div>
+                    <h3>Empresas</h3>
+                    <p class="lead mb-0">Quero disponibilizar os meus veículos para alugar na plataforma</p>
                 </div>
-                <h3>Disponibilizar Veículos</h3>
-                <p class="lead mb-0">Quero disponibilizar os meus veículos para alugar</p>
             </div>
-        </div>
         </a>
     </div>
-
-
-
 </div>
 
 

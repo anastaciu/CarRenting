@@ -5,8 +5,8 @@
     $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function () {
         if (
             location.pathname.replace(/^\//, "") ==
-                this.pathname.replace(/^\//, "") &&
-                location.hostname == this.hostname
+            this.pathname.replace(/^\//, "") &&
+            location.hostname == this.hostname
         ) {
             var target = $(this.hash);
             target = target.length
@@ -48,4 +48,13 @@
     navbarCollapse();
     // Collapse the navbar when page is scrolled
     $(window).scroll(navbarCollapse);
+
 })(jQuery); // End of use strict
+
+$(document).ready(function () {
+    $(".datepicker").datepicker({
+        dateFormat: "dd-mm-yy",
+        changemonth: true,
+        changeyear: true
+    });
+}); 

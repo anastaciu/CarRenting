@@ -8,6 +8,7 @@ using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Configuration;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -23,11 +24,10 @@ namespace CarRenting
         public Task SendAsync(IdentityMessage message)
         { 
             SmtpClient client = new SmtpClient();
-            return client.SendMailAsync("carrenting@ricardo-silva.com",
+            return client.SendMailAsync(WebConfigurationManager.AppSettings["EmailSender"],
                                         message.Destination,
                                         message.Subject,
                                         message.Body);
-
         }
 
     }

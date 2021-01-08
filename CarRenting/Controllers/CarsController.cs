@@ -6,9 +6,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using CarRenting.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace CarRenting.Controllers
 {
@@ -19,11 +21,11 @@ namespace CarRenting.Controllers
         // GET: Cars
         public async Task<ActionResult> Index()
         {
-            if (Request.IsAuthenticated)
+            
+            if (Request.IsAuthenticated && !User.IsInRole(WebConfigurationManager.AppSettings["Ur"]))
             {
                 RedirectToAction("Index", "Home");
             }
-
             var cars = db.Cars.Include(c => c.Company).Include(c => c.Type);
             return View(await cars.ToListAsync());
         }

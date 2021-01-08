@@ -13,6 +13,7 @@
         </div>
 
         <div class=" offset-md-2 col-md-8 jumbotron boxshadow">
+            @Html.ValidationSummary("", new { @class = "text-danger" })
             <div class="form-group offset-1 col-md-10">
                 @Html.LabelFor(m => m.Company.CompanyName, new { @class = "col-form-label" })
                 @Html.TextBoxFor(m => m.Company.CompanyName, new { @class = "form-control " })
@@ -60,16 +61,15 @@
             <div class="form-group offset-1 col-md-10">
                 @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-form-label" })
                 @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-               
+
             </div>
-
-            @Html.ValidationSummary("", new { @class = "text-danger" })
-
             <div class="text-center">
-                
-                    @Html.ActionLink("Voltar", "Index", "Home", null, new{@class="btn btn-danger"})
-                    <input type="submit" class="btn btn-primary" value="Registar"/>
-               
+                @Html.ActionLink("Já tenho uma conta", "Login", null, new { @class = "text-white" })
+            </div>
+            <br />
+            <div class="text-center">
+                @Html.ActionLink("Voltar", "Index", "Home", null, new { @class = "btn btn-danger" })
+                <input type="submit" class="btn btn-primary" value="Registar" />
             </div>
         </div>
 

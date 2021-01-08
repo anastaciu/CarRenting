@@ -36,21 +36,23 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="text-center">
+                            <p class="form-group text-white">
+                                @Html.ActionLink("Registar como Utilizador", "RegisterUser", null, new{@class="text-white"})
+                            </p>
+                            <p class="form-group text-white">
+                                @Html.ActionLink("Registar como Empresa", "RegisterInitCompanyAdmin", null, new { @class = "text-white"})
+                            </p>
+                            <p class="form-group text-white">
+                                @Html.ActionLink("Esqueceu-se da Password?", "ForgotPassword", null, new { @class = "text-white"})
+                            </p>
+                        </div>
+                        <br />
                         <div class="form-group text-center">
                             @Html.ActionLink("Voltar", "Index", "Home", null, new {@class="btn btn-danger"})
                             <input type="submit" value="Entrar" class="btn btn-primary" />
                         </div>
-                        <div class="text-center">
-                            <p class="form-group offset-1 col-md-10">
-                                @Html.ActionLink("Registar como Utilizador", "RegisterUser")
-                            </p>
-                            <p class="form-group offset-1 col-md-10">
-                                @Html.ActionLink("Registar como Empresa", "RegisterInitCompanyAdmin")
-                            </p>
-                            <p class="form-group offset-1 col-md-10">
-                                @Html.ActionLink("Esqueceu-se da Password?", "ForgotPassword")
-                            </p>
-                        </div>
+
                     </div>
                 }
             </section>

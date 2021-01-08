@@ -5,13 +5,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Web;
+using CarRenting.Attributes;
 
 namespace CarRenting.Models
 {
+    
     public class Rent
     {
+        
         public int Id { get; set; }
         [Required]
+        [MinDate(ErrorMessage = "Datas inferiores à atual são inválidas")]
         [Display(Name = "Data de início")]
         public DateTime Begin { get; set; }
         [Required]
@@ -38,7 +42,14 @@ namespace CarRenting.Models
         public int KmsOut { get; set; }
         [Display(Name = "Danos ao receber")]
         public bool IsDamaged { get; set; }
+        public ICollection<DamageImage> DamageImages { get; set; }
 
+
+        public Rent()
+        {
+            Begin = DateTime.Now.AddDays(1);
+            End = DateTime.Now.AddDays(2);
+        }
 
     }
 }

@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CarRenting.Models;
+using Microsoft.AspNet.Identity;
 
 namespace CarRenting.Controllers
 {
@@ -16,10 +17,42 @@ namespace CarRenting.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Rents
+        [Authorize(Roles = "Utilizador Registado")]
         public async Task<ActionResult> Index()
         {
-            return View(await db.Rents.ToListAsync());
+            var userId = User.Identity.GetUserId();
+            var rents = db.Rents.Include(r => r.ApplicationUser).Include(r => r.Car).Where(r=>r.ApplicationUserId == userId);
+            return View(await rents.ToListAsync());
         }
+
+        [Authorize(Roles = "Utilizador Registado")]
+        public async Task<ActionResult> RentVehicle(int carId)
+        {
+            var userId = User.Identity.GetUserId();
+            Rent rent = new Rent {CarId = carId, ApplicationUserId = userId};
+            return View(await Task.FromResult(rent));
+        }
+
+        // POST: Rents/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [Authorize(Roles = "Utilizador Registado")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RentVehicle([Bind(Include = "Id,Begin,End,ApplicationUserId,CarId")] Rent rent)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Rents.Add(rent);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Name", rent.ApplicationUserId);
+            ViewBag.CarId = new SelectList(db.Cars, "Id", "License", rent.CarId);
+            return View(rent);
+        }
+
 
         // GET: Rents/Details/5
         public async Task<ActionResult> Details(int? id)
@@ -39,6 +72,8 @@ namespace CarRenting.Controllers
         // GET: Rents/Create
         public ActionResult Create()
         {
+            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Name");
+            ViewBag.CarId = new SelectList(db.Cars, "Id", "License");
             return View();
         }
 
@@ -47,7 +82,7 @@ namespace CarRenting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Begin,End")] Rent rent)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Begin,End,ApplicationUserId,CarId,IsConfirmed,IsDelivered,IsReceived,IsChecked,DeliveryFaults,KmsIn,KmsOut,IsDamaged")] Rent rent)
         {
             if (ModelState.IsValid)
             {
@@ -56,6 +91,8 @@ namespace CarRenting.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Name", rent.ApplicationUserId);
+            ViewBag.CarId = new SelectList(db.Cars, "Id", "License", rent.CarId);
             return View(rent);
         }
 
@@ -71,6 +108,8 @@ namespace CarRenting.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Name", rent.ApplicationUserId);
+            ViewBag.CarId = new SelectList(db.Cars, "Id", "License", rent.CarId);
             return View(rent);
         }
 
@@ -79,7 +118,7 @@ namespace CarRenting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Begin,End")] Rent rent)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Begin,End,ApplicationUserId,CarId,IsConfirmed,IsDelivered,IsReceived,IsChecked,DeliveryFaults,KmsIn,KmsOut,IsDamaged")] Rent rent)
         {
             if (ModelState.IsValid)
             {
@@ -87,6 +126,8 @@ namespace CarRenting.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Name", rent.ApplicationUserId);
+            ViewBag.CarId = new SelectList(db.Cars, "Id", "License", rent.CarId);
             return View(rent);
         }
 

@@ -182,6 +182,12 @@ namespace CarRenting.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterUser(RegisterViewModel model)
         {
+
+            if (Request.IsAuthenticated)
+            {
+                RedirectToAction("Index", "Home");
+            }
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber};
@@ -289,12 +295,16 @@ namespace CarRenting.Controllers
         }
 
         //
-        // POST: /Account/RegisterUser
+        // POST: /Account/RegisterInitCompanyAdmin
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterInitCompanyAdmin(RegisterCompanyUserViewModel model)
         {
+            if (Request.IsAuthenticated)
+            {
+                RedirectToAction("Index", "Home");
+            }
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber};

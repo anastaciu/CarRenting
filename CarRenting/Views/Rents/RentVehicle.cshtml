@@ -1,0 +1,54 @@
+﻿@model CarRenting.Models.Rent
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(m => m.CarId);
+    @Html.HiddenFor(m => m.ApplicationUserId);
+    @Html.HiddenFor(m=>m.Id)
+    var minimum = DateTime.Now;
+    <div class="container">
+        
+        <div>
+            <h2 class="log-headers-h2 boxshadow col-md-8 offset-md-2">
+                Alugar Veículo
+            </h2>
+        </div>
+
+        <div>
+            <h4 class="log-headers boxshadow col-md-8 offset-md-2">
+                Escolha de Datas
+            </h4>
+        </div>
+
+        <div class="jumbotron boxshadow col-md-8 offset-md-2">
+            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+            <div class="form-group col-md-10 offset-md-1">
+                
+                @Html.LabelFor(model => model.Begin, htmlAttributes: new {@class = "col-form-label"})
+                @Html.EditorFor(model => model.Begin, new {htmlAttributes = new {@class = "form-control", @type = "date", @min = @minimum}})
+                @Html.ValidationMessageFor(model => model.Begin, "", new {@class = "text-danger"})
+            </div>
+            <div class="form-group col-md-10 offset-md-1">
+                @Html.LabelFor(model => model.End, htmlAttributes: new { @class = "col-form-label" })
+                @Html.EditorFor(model => model.Begin, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.End, "", new { @class = "text-danger" })
+            </div>
+            <br/>
+            <div class="form-group text-center">
+                @Html.ActionLink("Voltar", "Index", "Cars",null, new{@class="btn btn-danger"})
+                <input type="submit" value="Reservar" class="btn btn-primary" />
+            </div>
+        </div>
+
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
