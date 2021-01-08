@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using CarRenting.Attributes;
 using Microsoft.Ajax.Utilities;
 
 namespace CarRenting.Models
@@ -12,6 +13,7 @@ namespace CarRenting.Models
     {
         public int Id { get; set; }
         [Display(Name = "Matrícula")]
+        [UniqueLicense(ErrorMessage = "A matrícula já está registada")]
         public string License { get; set; }
         [Display(Name = "Marca")]
         public string Brand { get; set; }
