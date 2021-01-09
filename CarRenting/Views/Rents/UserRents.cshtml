@@ -1,0 +1,99 @@
+﻿@model IEnumerable<CarRenting.Models.Rent>
+
+@{
+    ViewBag.Title = "GetUserRents";
+}
+
+<h2>GetUserRents</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ApplicationUser.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Car.License)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Begin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.End)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsConfirmed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsDelivered)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsReceived)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsChecked)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeliveryFaults)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KmsIn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KmsOut)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsDamaged)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApplicationUser.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Car.License)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Begin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.End)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsConfirmed)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsDelivered)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsReceived)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsChecked)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeliveryFaults)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KmsIn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KmsOut)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsDamaged)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

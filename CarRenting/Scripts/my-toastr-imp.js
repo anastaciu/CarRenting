@@ -1,16 +1,17 @@
-﻿$(document).ready(function () {
+﻿
 
-    //displayToastr();
+//$(document).ready(function () {
+//    displayToastr();
+//});
 
-});
 
-function displayToastr() {
+//function displayToastr() {
     
-    toastr.info('Info Toastr');
+//    toastr.info('Info Toastr');
 
-    toastr.warning('Toastr de Aviso');
+//    toastr.warning('Toastr de Aviso');
 
-    toastr.success('Tarefa Concluída', 'Sucesso');
+//    toastr.success('Tarefa Concluída', 'Sucesso');
 
-    toastr.error('Ocorreu um erro', 'Contacte o administrador');
-}
+//    toastr.error('Ocorreu um erro', 'Contacte o administrador');
+//}

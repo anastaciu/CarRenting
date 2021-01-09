@@ -16,9 +16,11 @@ namespace CarRenting.Models
         public int Id { get; set; }
         [Required]
         [MinDate(ErrorMessage = "Datas inferiores à atual são inválidas")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         [Display(Name = "Data de início")]
         public DateTime Begin { get; set; }
         [Required]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         [Display(Name = "Data de fim")]
         public DateTime End { get; set; }
         [ForeignKey("ApplicationUser")] 

@@ -6,14 +6,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car Renting</title>
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
-    <script src="https://kit.fontawesome.com/a9d1f8d59f.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700%7CRoboto%7CJosefin+Sans:100,300,400,500"
-          rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link href="~/Content/fontawesome-all.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.5.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700%7CRoboto%7CJosefin+Sans:100,300,400,500" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div class="backimg"></div>
@@ -74,12 +75,10 @@
     </footer>
 
     @Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/toastr")
     @Scripts.Render("~/bundles/bootstrap")
-
     @RenderSection("scripts", required: false)
-
 
 </body>
 </html>

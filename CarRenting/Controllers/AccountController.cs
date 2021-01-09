@@ -256,8 +256,7 @@ namespace CarRenting.Controllers
                             var currentUserId = User.Identity.GetUserId();
                             var emp = dbContext.Employees?.SingleOrDefault(e => e.ApplicationUserId == currentUserId);
                             if (emp != null)
-                                dbContext.Employees.Add(new Employee
-                                    {CompanyId = emp.CompanyId, ApplicationUserId = user.Id});
+                                dbContext.Employees.Add(new Employee {CompanyId = emp.CompanyId, ApplicationUserId = user.Id});
                             await dbContext.SaveChangesAsync();
                         }
                         
@@ -267,7 +266,7 @@ namespace CarRenting.Controllers
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                        return RedirectToAction("CompanyEmployees", "ApplicationUsers");
+                        return RedirectToAction("CompanyEmployees", "ApplicationUsers", new{isCreated = true});
                     }
                     else
                     {

@@ -59,7 +59,7 @@ namespace CarRenting.Controllers
 
         // GET: ApplicationUsers
         [Authorize(Roles = "Administrador da Empresa")]
-        public ActionResult CompanyEmployees()
+        public ActionResult CompanyEmployees(bool? isCreated)
         {
             var userId = User.Identity.GetUserId();
             var employees = dbContext.Companies.Include(c=>c.Employees).SingleOrDefault(c => c.Employees.Any(e => e.ApplicationUserId == userId))?.Employees; 
@@ -68,6 +68,7 @@ namespace CarRenting.Controllers
             ICollection<UserViewModel> empList = new List<UserViewModel>();
 
             if (employees != null)
+            {
                 foreach (var employee in employees)
                 {
                     {
@@ -80,7 +81,8 @@ namespace CarRenting.Controllers
                         });
                     }
                 }
-
+            }
+            ViewBag.IsCreated = isCreated != null;
             return View(empList);
         }
 
