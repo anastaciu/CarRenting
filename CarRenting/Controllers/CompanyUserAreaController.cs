@@ -12,7 +12,7 @@ namespace CarRenting.Controllers
     public class CompanyUserAreaController : Controller
     {
         // GET: CompanyUserArea
-        public ActionResult Index()
+        public ActionResult Index(bool? isDelivered)
         {
             using (var db = new ApplicationDbContext())
             {
@@ -26,6 +26,7 @@ namespace CarRenting.Controllers
 
                         var companyViewModel = new DashViewModel{ CompanyName = company?.CompanyName, UserName = thisUser.Name, Role = role };
                         Session["UserInfo"] = companyViewModel;
+                        ViewBag.IsDelivered = isDelivered != null;
                         return View();
 
                     }

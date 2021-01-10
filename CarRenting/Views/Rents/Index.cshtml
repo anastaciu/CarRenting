@@ -52,11 +52,12 @@
                 <td>
                     @if (!item.IsConfirmed)
                     {
-                        @Html.ActionLink("Confirmar", "ConfirmRent", new { id = item.Id }, new { @class = "btn btn-success", @style = "padding:2px" })
+                        <a href="@Url.Action("ConfirmRent", "Rents", new { id = item.Id })" class="btn btn-success" style="padding: 1px 5px" title="Confirmar Reserva"><i class="fas fa-fw fa-sm fa-check-circle"></i></a>
+
                     }
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary", @style = "padding:2px" }) 
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary", @style = "padding:2px" }) 
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger", @style = "padding:2px" })
+                    <a href="@Url.Action("Edit", "Rents", new { id = item.Id })" class="btn btn-primary" style="padding: 1px 5px" title="Editar Reserva"><i class="fas text-center fa-fw fa-sm fa-edit"></i></a>
+                    <a href="@Url.Action("Details", "Rents", new { id = item.Id })" class="btn btn-info" style="padding: 1px 5px" title="Detalhes da Reserva"><i class="fas fa-sm fa-fw fa-info-circle "></i></a>
+                    <a href="@Url.Action("Delete", "Rents", new { id = item.Id })" class="btn btn-danger" style="padding: 1px 5px" title="Apagar Reserva"><i class="fas fa-fw fa-sm fa-trash-alt "></i></a>
                 </td>
             </tr>
         }

@@ -3,6 +3,15 @@
     ViewBag.Title = "Company User Area";
 }
 
+@if (ViewBag.IsDelivered)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            toastr.success('O veículo foi dado como entregue', 'Operação realizada');
+        });
+    </script>
+}
+
 <div class="card-deck" style="padding-top: 20vh">
 
     <div class="card bg-warning boxshadow btn-hover">
@@ -10,7 +19,7 @@
             <div class="card-body text-center text-dark">
                 <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
                     <div class="d-flex">
-                        <i class="fas fa-key m-auto" style="font-size: 10vw"></i>
+                        <i class="fas fa-key m-auto" style="font-size: 6vw"></i>
                     </div>
                     <h3>Gerir Reservas</h3>
                     <p class="lead mb-0">Gestão de reservas efetuadas na plataforma por utilizadores particulares</p>
@@ -20,13 +29,13 @@
     </div>
 
     <div class="card bg-warning boxshadow btn-hover">
-        <a href="@Url.Action("RegisterUser", "Account")" style="text-decoration: none">
+        <a href="@Url.Action("ListForDelivery", "Rents")" style="text-decoration: none">
             <div class="card-body text-center text-dark">
                 <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
                     <div class="d-flex">
-                        <i class="fas fa-parking m-auto" style="font-size: 10vw"></i>
+                        <i class="fas fa-parking m-auto" style="font-size: 6vw"></i>
                     </div>
-                    <h3>Entrega de Veículos</h3>
+                    <h3>Entregar Veículo</h3>
                     <p class="lead mb-0">Entregar veículo disponível para entrega</p>
                 </div>
             </div>
@@ -38,7 +47,7 @@
             <div class="card-body text-center text-dark">
                 <div class="mx-auto mb-0 mb-lg-3">
                     <div class="d-flex">
-                        <i class="fas fa-tasks m-auto" style="font-size: 10vw"></i>
+                        <i class="fas fa-tasks m-auto" style="font-size: 6vw"></i>
                     </div>
                     <h3>Receber veículo</h3>
                     <p class="lead mb-0">Receber veículo devolvido pelo cliente</p>
