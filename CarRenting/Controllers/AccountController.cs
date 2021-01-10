@@ -60,6 +60,10 @@ namespace CarRenting.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (Request.IsAuthenticated)
+            {
+                RedirectToAction("Index", "Home");
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -75,7 +79,7 @@ namespace CarRenting.Controllers
             {
                 return View(model);
             }
-
+            
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -325,9 +329,8 @@ namespace CarRenting.Controllers
                             }
                             catch (Exception exception)
                             {
-                                Debug.WriteLine(exception);
                                 await UserManager.DeleteAsync(user);
-                                ModelState.AddModelError("Erro: ", exception.Message);
+                                ModelState.AddModelError("", exception.Message);
                                 return View(model);
                             }
                             Employee emp = new Employee { ApplicationUserId = user.Id, Company = company };
@@ -338,10 +341,9 @@ namespace CarRenting.Controllers
                             }
                             catch (Exception exception)
                             {
-                                Debug.WriteLine(exception);
                                 await UserManager.DeleteAsync(user);
                                 db.Companies.Remove(company);
-                                ModelState.AddModelError("Erro: ", exception.Message);
+                                ModelState.AddModelError("", exception.Message);
                                 return View(model);
                             }
 

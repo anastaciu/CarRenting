@@ -9,13 +9,14 @@
         $(document).ready(function () {
             toastr.success('O veículo foi dado como entregue', 'Operação realizada');
         });
+        
     </script>
 }
 
 <div class="card-deck" style="padding-top: 20vh">
 
     <div class="card bg-warning boxshadow btn-hover">
-        <a href="@Url.Action("Index", "Rents")" style="text-decoration: none">
+        <a href="@Url.Action("Index", "Rents")" style="text-decoration: none" click="displayToastr()">
             <div class="card-body text-center text-dark">
                 <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
                     <div class="d-flex">
@@ -33,7 +34,7 @@
             <div class="card-body text-center text-dark">
                 <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
                     <div class="d-flex">
-                        <i class="fas fa-parking m-auto" style="font-size: 6vw"></i>
+                        <i class="fas fa-check m-auto" style="font-size: 6vw"></i>
                     </div>
                     <h3>Entregar Veículo</h3>
                     <p class="lead mb-0">Entregar veículo disponível para entrega</p>
@@ -47,7 +48,7 @@
             <div class="card-body text-center text-dark">
                 <div class="mx-auto mb-0 mb-lg-3">
                     <div class="d-flex">
-                        <i class="fas fa-tasks m-auto" style="font-size: 6vw"></i>
+                        <i class="fas fa-check-double m-auto" style="font-size: 6vw"></i>
                     </div>
                     <h3>Receber veículo</h3>
                     <p class="lead mb-0">Receber veículo devolvido pelo cliente</p>

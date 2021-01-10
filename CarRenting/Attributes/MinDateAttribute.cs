@@ -11,7 +11,7 @@ namespace CarRenting.Attributes
         public override bool IsValid(object value)
         {
             DateTime date = Convert.ToDateTime(value);
-            return date > DateTime.Now; 
+            return date.Day >= DateTime.Now.Day; 
 
         }
     }

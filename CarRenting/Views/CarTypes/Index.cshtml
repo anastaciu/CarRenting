@@ -2,7 +2,41 @@
 
 @{
     ViewBag.Title = "Gerir Categorias";
+    var isModified = TempData["isModified"] as bool?;
+    var isCreated = TempData["isCreated"] as bool?;
 }
+
+@if (isModified != null)
+{
+
+    if(isModified == true)
+    {
+        <script type="text/javascript">
+            $(document).ready(function() {
+                toastr.success('Categoria Modificada', 'Operação realizada');
+            });
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            $(document).ready(function() {
+                toastr.error('Categoria Não Modificada', 'Operação não realizada');
+            });
+        </script>
+    }
+
+}
+
+@if(isCreated != null && isCreated == true)
+{
+<script type="text/javascript">
+    $(document).ready(function() {
+        toastr.success('Categoria Criada', 'Operação realizada');
+    });
+</script>
+}
+
 
 <div class="log-headers boxshadow">
     <h2>@ViewBag.Title</h2>

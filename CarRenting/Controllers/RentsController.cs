@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CarRenting.Models;
+using CarRenting.Utils;
 using Microsoft.AspNet.Identity;
 
 
@@ -22,7 +24,7 @@ namespace CarRenting.Controllers
         public async Task<ActionResult> Index(bool? isConfirmed)
         {
             var userId = User.Identity.GetUserId();
-            var companyRents = _dbContext.Rents.Where(r => r.Car.Company.Employees.Any(e => e.ApplicationUserId == userId)).Include(r=>r.Car).Include(r=>r.ApplicationUser);
+            var companyRents = _dbContext.Rents.Where(r => r.Car.Company.Employees.Any(e => e.ApplicationUserId == userId)).Include(r => r.Car).Include(r => r.ApplicationUser);
             ViewBag.IsConfirmed = isConfirmed != null;
             return View(await companyRents.ToListAsync());
         }
@@ -37,10 +39,14 @@ namespace CarRenting.Controllers
         }
 
         [Authorize(Roles = "Utilizador Registado")]
-        public async Task<ActionResult> RentVehicle(int carId)
+        public async Task<ActionResult> RentVehicle(int? carId)
         {
             var userId = User.Identity.GetUserId();
-            Rent rent = new Rent {CarId = carId, ApplicationUserId = userId};
+            if (carId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Rent rent = new Rent { CarId = (int)carId, ApplicationUserId = userId };
             return View(await Task.FromResult(rent));
         }
 
@@ -54,13 +60,16 @@ namespace CarRenting.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (rent.End.Day < rent.Begin.Day)
+                {
+                    ModelState.AddModelError(nameof(rent.End), string.Format(@"Data de fim não pode ser inferior à data de início"));
+                    return View(rent);
+                }
                 _dbContext.Rents.Add(rent);
                 await _dbContext.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("UserRents");
             }
 
-            ViewBag.ApplicationUserId = new SelectList(_dbContext.Users, "Id", "Name", rent.ApplicationUserId);
-            ViewBag.CarId = new SelectList(_dbContext.Cars, "Id", "License", rent.CarId);
             return View(rent);
         }
 
@@ -82,7 +91,7 @@ namespace CarRenting.Controllers
                 _dbContext.Entry(rent).State = EntityState.Modified;
                 await _dbContext.SaveChangesAsync();
             }
-            return RedirectToAction("Index", new {isConfirmed = true});
+            return RedirectToAction("Index", new { isConfirmed = true });
         }
 
 
@@ -104,14 +113,7 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            List<SelectListItem> fuelList = new List<SelectListItem>
-            {
-                new SelectListItem { Value = "Vazio", Text = "Vazio" },
-                new SelectListItem { Value = "Meio", Text = "Meio Vazio"},
-                new SelectListItem { Value = "Cheio", Text = "Meio" },
-                new SelectListItem { Value = "Meio", Text = "Meio Cheio"},
-                new SelectListItem { Value = "Cheio", Text = "Cheio" }
-            };
+            var fuelList = SelectLists.FuelLevelList();
             ViewBag.FuelLevels = fuelList;
             var deliveryModel = new DeliveryViewModel
             {
@@ -140,12 +142,18 @@ namespace CarRenting.Controllers
                 rent.IsDelivered = true;
                 _dbContext.Entry(rent).State = EntityState.Modified;
                 await _dbContext.SaveChangesAsync();
-
-                return RedirectToAction("Index", "CompanyUserArea", new {isDelivered = true});
+                return RedirectToAction("Index", "CompanyUserArea", new { isDelivered = true });
             }
 
-            return View();
+            var fuelList = SelectLists.FuelLevelList();
+            ViewBag.FuelLevels = fuelList;
+            return View(deliveryModel);
         }
+
+        //public async Task<ActionResult> SaveVehicleDetails(int? id)
+        //{
+
+        //}
 
         //[Authorize(Roles = "Empregado da Empresa")]
         //public async Task<ActionResult> ReceiveVehicle(int rentId)
@@ -160,12 +168,11 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rent rent = await _dbContext.Rents.FindAsync(id);
+            Rent rent = await _dbContext.Rents.Include(r=>r.Car).Include(r=>r.ApplicationUser).FirstOrDefaultAsync(r=>r.Id == id);
             if (rent == null)
             {
                 return HttpNotFound();
             }
-
             return View(rent);
         }
 

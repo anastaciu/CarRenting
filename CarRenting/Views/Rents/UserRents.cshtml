@@ -1,15 +1,13 @@
 ﻿@model IEnumerable<CarRenting.Models.Rent>
 
 @{
-    ViewBag.Title = "GetUserRents";
+    ViewBag.Title = "Lista de Reservas";
 }
+<div class="boxshadow log-headers-h2">
+    <h2>@ViewBag.Title</h2>
+</div>
 
-<h2>GetUserRents</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<table class="table boxshadow">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.ApplicationUser.Name)

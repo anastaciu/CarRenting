@@ -184,6 +184,7 @@
     <Compile Include="Attributes\UniqueCompany.cs" />
     <Compile Include="Attributes\UniqueCompanyEmailAttribute.cs" />
     <Compile Include="Attributes\UniqueLicenseAttribute.cs" />
+    <Compile Include="Attributes\UniqueTypeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminAreaController.cs" />
     <Compile Include="Controllers\ApplicationUsersController.cs" />
@@ -318,12 +319,17 @@
     <Compile Include="Migrations\202101081233436_RentImages.Designer.cs">
       <DependentUpon>202101081233436_RentImages.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101101415318_EmptyType.cs" />
+    <Compile Include="Migrations\202101101415318_EmptyType.Designer.cs">
+      <DependentUpon>202101101415318_EmptyType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\Cars.cs" />
     <Compile Include="Models\CarType.cs" />
     <Compile Include="Models\Check.cs" />
+    <Compile Include="Models\ChecksViewModels.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\DamageImage.cs" />
     <Compile Include="Models\RentViewModels.cs" />
@@ -334,6 +340,7 @@
     <Compile Include="Models\Rent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils\SelectLists.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -637,6 +644,7 @@
     <Content Include="webfonts\fa-brands-400.eot" />
     <Content Include="Views\Rents\ListForDelivery.cshtml" />
     <Content Include="Views\Rents\DeliverVehicle.cshtml" />
+    <Content Include="Views\Checks\AssociateCarType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -738,6 +746,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101081233436_RentImages.resx">
       <DependentUpon>202101081233436_RentImages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101101415318_EmptyType.resx">
+      <DependentUpon>202101101415318_EmptyType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

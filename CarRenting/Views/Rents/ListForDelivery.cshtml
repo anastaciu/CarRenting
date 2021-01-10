@@ -1,15 +1,13 @@
 ﻿@model IEnumerable<CarRenting.Models.Rent>
 
 @{
-    ViewBag.Title = "ListForDelivery";
+    ViewBag.Title = "Veículos para entrega";
 }
+<div class="boxshadow log-headers-h2">
+    <h2>@ViewBag.Title</h2>
+</div>
 
-<h2>ListForDelivery</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<table class="table boxshadow">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.ApplicationUser.Name)
@@ -46,7 +44,7 @@
             @Html.DisplayFor(modelItem => item.End)
         </td>
         <td>
-            @Html.ActionLink("Entregar", "DeliverVehicle", new { id=item.Id }, new{@class="btn-success btn"})
+            @Html.ActionLink("Entregar", "DeliverVehicle", new { id=item.Id }, new{@class="btn-success btn", @style="padding:2px"})
             
         </td>
     </tr>
