@@ -60,7 +60,9 @@ namespace CarRenting.Controllers
             List<SelectListItem> fuelList = new List<SelectListItem>
             {
                 new SelectListItem { Value = "Vazio", Text = "Vazio" },
-                new SelectListItem { Value = "Meio", Text = "Meio" },
+                new SelectListItem { Value = "Meio", Text = "Meio Vazio"},
+                new SelectListItem { Value = "Cheio", Text = "Meio" },
+                new SelectListItem { Value = "Meio", Text = "Meio Cheio"},
                 new SelectListItem { Value = "Cheio", Text = "Cheio" }
             };
             ViewBag.FuelLevels = fuelList;

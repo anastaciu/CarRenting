@@ -1,22 +1,40 @@
-﻿@using CarRenting.Models
+﻿@using System.Web.Configuration
+@using CarRenting.Models
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin
 
 @if (Request.IsAuthenticated)
 {
-    DashViewModel dashViewModel = (DashViewModel)Session["UserInfo"] ?? null;
+    var userId = User.Identity.GetUserId();
+    var userName = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(userId).Name ?? String.Format("Utilizador");
+    string companyName;
+    using (var db = new ApplicationDbContext())
+    {
+        companyName = db.Companies.SingleOrDefault(c => c.Employees.Any(e => e.ApplicationUserId == userId))?.CompanyName ?? string.Empty;
+    }
+
     <div class="full-width log-headers boxshadow">
-        @if (dashViewModel != null)
-        {
-            <h4 style="text-align: center">
+        <h4 style="text-align: center">
+            @userName -
+            @if (User.IsInRole(WebConfigurationManager.AppSettings["Cr"]))
+            {
+                @WebConfigurationManager.AppSettings["Cr"]
+            }
+            else if (User.IsInRole(WebConfigurationManager.AppSettings["Cn"]))
+            {
+                @WebConfigurationManager.AppSettings["Cn"]
+            }
+            else if (User.IsInRole(WebConfigurationManager.AppSettings["Ur"]))
+            {
+                @WebConfigurationManager.AppSettings["Ur"]
+            }
+            else if (User.IsInRole(WebConfigurationManager.AppSettings["An"]))
+            {
+                @WebConfigurationManager.AppSettings["An"]
+            }
+            @companyName
 
-                @dashViewModel.UserName,
-                @dashViewModel.Role
-                @if (dashViewModel.CompanyName != null)
-                {
-                    @dashViewModel.CompanyName
-                }
-
-            </h4>
-        }
+        </h4>
     </div>
 }
 

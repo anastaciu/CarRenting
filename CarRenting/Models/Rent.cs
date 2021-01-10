@@ -16,9 +16,11 @@ namespace CarRenting.Models
         public int Id { get; set; }
         [Required]
         [MinDate(ErrorMessage = "Datas inferiores à atual são inválidas")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         [Display(Name = "Data de início")]
         public DateTime Begin { get; set; }
         [Required]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         [Display(Name = "Data de fim")]
         public DateTime End { get; set; }
         [ForeignKey("ApplicationUser")] 
@@ -33,6 +35,7 @@ namespace CarRenting.Models
         public bool IsDelivered { get; set; }
         [Display(Name = "Devolvido pelo cliente")]
         public bool IsReceived { get; set; }
+        [Display(Name = "Verificação de entrega efetuada")]
         public bool IsChecked { get; set; }
         [Display(Name = "Defeitos na entrega")]
         public string DeliveryFaults { get; set; }
@@ -43,13 +46,6 @@ namespace CarRenting.Models
         [Display(Name = "Danos ao receber")]
         public bool IsDamaged { get; set; }
         public ICollection<DamageImage> DamageImages { get; set; }
-
-
-        public Rent()
-        {
-            Begin = DateTime.Now.AddDays(1);
-            End = DateTime.Now.AddDays(2);
-        }
 
     }
 }

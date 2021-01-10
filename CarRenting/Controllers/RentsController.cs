@@ -2,34 +2,51 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CarRenting.Models;
+using CarRenting.Utils;
 using Microsoft.AspNet.Identity;
+
 
 namespace CarRenting.Controllers
 {
     public class RentsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext _dbContext = new ApplicationDbContext();
+
+        // GET: Rents
+        [Authorize(Roles = "Empregado da Empresa")]
+        public async Task<ActionResult> Index(bool? isConfirmed)
+        {
+            var userId = User.Identity.GetUserId();
+            var companyRents = _dbContext.Rents.Where(r => r.Car.Company.Employees.Any(e => e.ApplicationUserId == userId)).Include(r => r.Car).Include(r => r.ApplicationUser);
+            ViewBag.IsConfirmed = isConfirmed != null;
+            return View(await companyRents.ToListAsync());
+        }
 
         // GET: Rents
         [Authorize(Roles = "Utilizador Registado")]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> UserRents()
         {
             var userId = User.Identity.GetUserId();
-            var rents = db.Rents.Include(r => r.ApplicationUser).Include(r => r.Car).Where(r=>r.ApplicationUserId == userId);
+            var rents = _dbContext.Rents.Include(r => r.ApplicationUser).Include(r => r.Car).Where(r => r.ApplicationUserId == userId);
             return View(await rents.ToListAsync());
         }
 
         [Authorize(Roles = "Utilizador Registado")]
-        public async Task<ActionResult> RentVehicle(int carId)
+        public async Task<ActionResult> RentVehicle(int? carId)
         {
             var userId = User.Identity.GetUserId();
-            Rent rent = new Rent {CarId = carId, ApplicationUserId = userId};
+            if (carId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Rent rent = new Rent { CarId = (int)carId, ApplicationUserId = userId };
             return View(await Task.FromResult(rent));
         }
 
@@ -43,16 +60,106 @@ namespace CarRenting.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Rents.Add(rent);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                if (rent.End.Day < rent.Begin.Day)
+                {
+                    ModelState.AddModelError(nameof(rent.End), string.Format(@"Data de fim não pode ser inferior à data de início"));
+                    return View(rent);
+                }
+                _dbContext.Rents.Add(rent);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction("UserRents");
             }
 
-            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Name", rent.ApplicationUserId);
-            ViewBag.CarId = new SelectList(db.Cars, "Id", "License", rent.CarId);
             return View(rent);
         }
 
+        [Authorize(Roles = "Empregado da Empresa")]
+        public async Task<ActionResult> ConfirmRent(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var rent = await _dbContext.Rents.FindAsync(id);
+            if (rent == null)
+            {
+                return HttpNotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                rent.IsConfirmed = true;
+                _dbContext.Entry(rent).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+            }
+            return RedirectToAction("Index", new { isConfirmed = true });
+        }
+
+
+        // GET: Rents
+        [Authorize(Roles = "Empregado da Empresa")]
+        public async Task<ActionResult> ListForDelivery(bool? isDelivered)
+        {
+            var userId = User.Identity.GetUserId();
+            var companyRents = _dbContext.Rents.Where(r => r.Car.Company.Employees.Any(e => e.ApplicationUserId == userId)).Include(r => r.Car).Include(r => r.ApplicationUser);
+            ViewBag.IsConfirmed = isDelivered != null;
+            return View(await companyRents.ToListAsync());
+        }
+
+        [Authorize(Roles = "Empregado da Empresa")]
+        public async Task<ActionResult> DeliverVehicle(int? id)
+        {
+            var rent = await _dbContext.Rents.FindAsync(id);
+            if (rent == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var fuelList = SelectLists.FuelLevelList();
+            ViewBag.FuelLevels = fuelList;
+            var deliveryModel = new DeliveryViewModel
+            {
+                Id = rent.Id,
+                DeliveryFaults = rent.DeliveryFaults,
+                KmsOut = rent.KmsOut
+            };
+
+            return View(deliveryModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Empregado da Empresa")]
+        public async Task<ActionResult> DeliverVehicle([Bind(Include = "Id,DeliveryFaults,KmsOut,FuelLevel")] DeliveryViewModel deliveryModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var rent = await _dbContext.Rents.FindAsync(deliveryModel.Id);
+                if (rent == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                rent.DeliveryFaults = deliveryModel.DeliveryFaults;
+                rent.KmsOut = deliveryModel.KmsOut;
+                rent.IsDelivered = true;
+                _dbContext.Entry(rent).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+                return RedirectToAction("Index", "CompanyUserArea", new { isDelivered = true });
+            }
+
+            var fuelList = SelectLists.FuelLevelList();
+            ViewBag.FuelLevels = fuelList;
+            return View(deliveryModel);
+        }
+
+        //public async Task<ActionResult> SaveVehicleDetails(int? id)
+        //{
+
+        //}
+
+        //[Authorize(Roles = "Empregado da Empresa")]
+        //public async Task<ActionResult> ReceiveVehicle(int rentId)
+        //{
+
+        //}
 
         // GET: Rents/Details/5
         public async Task<ActionResult> Details(int? id)
@@ -61,7 +168,7 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rent rent = await db.Rents.FindAsync(id);
+            Rent rent = await _dbContext.Rents.Include(r=>r.Car).Include(r=>r.ApplicationUser).FirstOrDefaultAsync(r=>r.Id == id);
             if (rent == null)
             {
                 return HttpNotFound();
@@ -72,8 +179,8 @@ namespace CarRenting.Controllers
         // GET: Rents/Create
         public ActionResult Create()
         {
-            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Name");
-            ViewBag.CarId = new SelectList(db.Cars, "Id", "License");
+            ViewBag.ApplicationUserId = new SelectList(_dbContext.Users, "Id", "Name");
+            ViewBag.CarId = new SelectList(_dbContext.Cars, "Id", "License");
             return View();
         }
 
@@ -86,13 +193,13 @@ namespace CarRenting.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Rents.Add(rent);
-                await db.SaveChangesAsync();
+                _dbContext.Rents.Add(rent);
+                await _dbContext.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Name", rent.ApplicationUserId);
-            ViewBag.CarId = new SelectList(db.Cars, "Id", "License", rent.CarId);
+            ViewBag.ApplicationUserId = new SelectList(_dbContext.Users, "Id", "Name", rent.ApplicationUserId);
+            ViewBag.CarId = new SelectList(_dbContext.Cars, "Id", "License", rent.CarId);
             return View(rent);
         }
 
@@ -103,13 +210,13 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rent rent = await db.Rents.FindAsync(id);
+            Rent rent = await _dbContext.Rents.FindAsync(id);
             if (rent == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Name", rent.ApplicationUserId);
-            ViewBag.CarId = new SelectList(db.Cars, "Id", "License", rent.CarId);
+            ViewBag.ApplicationUserId = new SelectList(_dbContext.Users, "Id", "Name", rent.ApplicationUserId);
+            ViewBag.CarId = new SelectList(_dbContext.Cars, "Id", "License", rent.CarId);
             return View(rent);
         }
 
@@ -122,12 +229,12 @@ namespace CarRenting.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(rent).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                _dbContext.Entry(rent).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.ApplicationUserId = new SelectList(db.Users, "Id", "Name", rent.ApplicationUserId);
-            ViewBag.CarId = new SelectList(db.Cars, "Id", "License", rent.CarId);
+            ViewBag.ApplicationUserId = new SelectList(_dbContext.Users, "Id", "Name", rent.ApplicationUserId);
+            ViewBag.CarId = new SelectList(_dbContext.Cars, "Id", "License", rent.CarId);
             return View(rent);
         }
 
@@ -138,7 +245,7 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rent rent = await db.Rents.FindAsync(id);
+            Rent rent = await _dbContext.Rents.FindAsync(id);
             if (rent == null)
             {
                 return HttpNotFound();
@@ -151,9 +258,9 @@ namespace CarRenting.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Rent rent = await db.Rents.FindAsync(id);
-            db.Rents.Remove(rent);
-            await db.SaveChangesAsync();
+            Rent rent = await _dbContext.Rents.FindAsync(id);
+            _dbContext.Rents.Remove(rent);
+            await _dbContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -161,7 +268,7 @@ namespace CarRenting.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _dbContext.Dispose();
             }
             base.Dispose(disposing);
         }

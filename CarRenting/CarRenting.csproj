@@ -182,7 +182,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Attributes\MinDateAttribute.cs" />
     <Compile Include="Attributes\UniqueCompany.cs" />
+    <Compile Include="Attributes\UniqueCompanyEmailAttribute.cs" />
     <Compile Include="Attributes\UniqueLicenseAttribute.cs" />
+    <Compile Include="Attributes\UniqueTypeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminAreaController.cs" />
     <Compile Include="Controllers\ApplicationUsersController.cs" />
@@ -317,14 +319,20 @@
     <Compile Include="Migrations\202101081233436_RentImages.Designer.cs">
       <DependentUpon>202101081233436_RentImages.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101101415318_EmptyType.cs" />
+    <Compile Include="Migrations\202101101415318_EmptyType.Designer.cs">
+      <DependentUpon>202101101415318_EmptyType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\Cars.cs" />
     <Compile Include="Models\CarType.cs" />
     <Compile Include="Models\Check.cs" />
+    <Compile Include="Models\ChecksViewModels.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\DamageImage.cs" />
+    <Compile Include="Models\RentViewModels.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -332,6 +340,7 @@
     <Compile Include="Models\Rent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils\SelectLists.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -340,7 +349,20 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\brands.css" />
+    <Content Include="Content\brands.min.css" />
+    <Content Include="Content\fontawesome-all.css" />
+    <Content Include="Content\fontawesome-all.min.css" />
+    <Content Include="Content\fontawesome.css" />
+    <Content Include="Content\fontawesome.min.css" />
     <Content Include="Content\img\pexels-pixabay-326259-min.jpg" />
+    <Content Include="Content\LICENSE.txt" />
+    <Content Include="Content\regular.css" />
+    <Content Include="Content\regular.min.css" />
+    <Content Include="Content\solid.css" />
+    <Content Include="Content\solid.min.css" />
+    <Content Include="Content\svg-with-js.css" />
+    <Content Include="Content\svg-with-js.min.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -384,6 +406,8 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
+    <Content Include="Content\v4-shims.css" />
+    <Content Include="Content\v4-shims.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -395,6 +419,20 @@
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
     <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\fontawesome\all.js" />
+    <Content Include="Scripts\fontawesome\all.min.js" />
+    <Content Include="Scripts\fontawesome\brands.js" />
+    <Content Include="Scripts\fontawesome\brands.min.js" />
+    <Content Include="Scripts\fontawesome\conflict-detection.js" />
+    <Content Include="Scripts\fontawesome\conflict-detection.min.js" />
+    <Content Include="Scripts\fontawesome\fontawesome.js" />
+    <Content Include="Scripts\fontawesome\fontawesome.min.js" />
+    <Content Include="Scripts\fontawesome\regular.js" />
+    <Content Include="Scripts\fontawesome\regular.min.js" />
+    <Content Include="Scripts\fontawesome\solid.js" />
+    <Content Include="Scripts\fontawesome\solid.min.js" />
+    <Content Include="Scripts\fontawesome\v4-shims.js" />
+    <Content Include="Scripts\fontawesome\v4-shims.min.js" />
     <Content Include="Scripts\index.js.flow" />
     <Content Include="Scripts\esm\popper.min.js.map" />
     <Content Include="Scripts\esm\popper.js.map" />
@@ -588,6 +626,25 @@
     <Content Include="Views\Rents\Edit.cshtml" />
     <Content Include="Views\Rents\Index.cshtml" />
     <Content Include="Views\Rents\RentVehicle.cshtml" />
+    <Content Include="Views\Rents\UserRents.cshtml" />
+    <Content Include="webfonts\fa-brands-400.svg" />
+    <Content Include="webfonts\fa-regular-400.svg" />
+    <Content Include="webfonts\fa-solid-900.svg" />
+    <Content Include="webfonts\fa-solid-900.woff2" />
+    <Content Include="webfonts\fa-solid-900.woff" />
+    <Content Include="webfonts\fa-solid-900.ttf" />
+    <Content Include="webfonts\fa-solid-900.eot" />
+    <Content Include="webfonts\fa-regular-400.woff2" />
+    <Content Include="webfonts\fa-regular-400.woff" />
+    <Content Include="webfonts\fa-regular-400.ttf" />
+    <Content Include="webfonts\fa-regular-400.eot" />
+    <Content Include="webfonts\fa-brands-400.woff2" />
+    <Content Include="webfonts\fa-brands-400.woff" />
+    <Content Include="webfonts\fa-brands-400.ttf" />
+    <Content Include="webfonts\fa-brands-400.eot" />
+    <Content Include="Views\Rents\ListForDelivery.cshtml" />
+    <Content Include="Views\Rents\DeliverVehicle.cshtml" />
+    <Content Include="Views\Checks\AssociateCarType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -689,6 +746,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101081233436_RentImages.resx">
       <DependentUpon>202101081233436_RentImages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101101415318_EmptyType.resx">
+      <DependentUpon>202101101415318_EmptyType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

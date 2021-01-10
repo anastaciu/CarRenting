@@ -53,7 +53,7 @@ h2, h4 {
 
 .jumbotron {
     background-color: goldenrod;
-    border-radius: 0px!important;
+    border-radius: 0px !important;
 }
 
 .boxshadow {
@@ -137,5 +137,10 @@ td, th {
 
 tr:nth-child(even) {
     background-color: #ffc107;
+}
+
+.fas:hover {
+    font-size: 150%;
+    transition: 200ms;
 }
 

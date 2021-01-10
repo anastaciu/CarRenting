@@ -60,6 +60,10 @@ namespace CarRenting.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (Request.IsAuthenticated)
+            {
+                RedirectToAction("Index", "Home");
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -75,7 +79,7 @@ namespace CarRenting.Controllers
             {
                 return View(model);
             }
-
+            
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -256,8 +260,7 @@ namespace CarRenting.Controllers
                             var currentUserId = User.Identity.GetUserId();
                             var emp = dbContext.Employees?.SingleOrDefault(e => e.ApplicationUserId == currentUserId);
                             if (emp != null)
-                                dbContext.Employees.Add(new Employee
-                                    {CompanyId = emp.CompanyId, ApplicationUserId = user.Id});
+                                dbContext.Employees.Add(new Employee {CompanyId = emp.CompanyId, ApplicationUserId = user.Id});
                             await dbContext.SaveChangesAsync();
                         }
                         
@@ -267,7 +270,7 @@ namespace CarRenting.Controllers
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                        return RedirectToAction("CompanyEmployees", "ApplicationUsers");
+                        return RedirectToAction("CompanyEmployees", "ApplicationUsers", new{isCreated = true});
                     }
                     else
                     {
@@ -326,9 +329,8 @@ namespace CarRenting.Controllers
                             }
                             catch (Exception exception)
                             {
-                                Debug.WriteLine(exception);
                                 await UserManager.DeleteAsync(user);
-                                ModelState.AddModelError("Erro: ", exception.Message);
+                                ModelState.AddModelError("", exception.Message);
                                 return View(model);
                             }
                             Employee emp = new Employee { ApplicationUserId = user.Id, Company = company };
@@ -339,10 +341,9 @@ namespace CarRenting.Controllers
                             }
                             catch (Exception exception)
                             {
-                                Debug.WriteLine(exception);
                                 await UserManager.DeleteAsync(user);
                                 db.Companies.Remove(company);
-                                ModelState.AddModelError("Erro: ", exception.Message);
+                                ModelState.AddModelError("", exception.Message);
                                 return View(model);
                             }
 

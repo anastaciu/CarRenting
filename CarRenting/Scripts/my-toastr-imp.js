@@ -1,8 +1,9 @@
-﻿$(document).ready(function () {
+﻿
 
-    //displayToastr();
-
+$(document).ready.click(function () {
+    displayToastr();
 });
+
 
 function displayToastr() {
     

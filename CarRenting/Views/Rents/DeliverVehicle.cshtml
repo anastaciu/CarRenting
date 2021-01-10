@@ -1,0 +1,45 @@
+﻿@model CarRenting.Models.DeliveryViewModel
+
+@{
+    ViewBag.Title = "Entregar Veículo";
+}
+
+<div class="boxshadow col-md-8 offset-md-2 log-headers-h2">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="jumbotron boxshadow col-md-8 offset-md-2">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group col-md-10 offset-md-1">
+            @Html.LabelFor(model => model.DeliveryFaults, htmlAttributes: new { @class = "col-form-label" })
+            @Html.EditorFor(model => model.DeliveryFaults, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DeliveryFaults, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-10 offset-md-1">
+            @Html.LabelFor(model => model.KmsOut, htmlAttributes: new { @class = "col-form-label" })
+            @Html.EditorFor(model => model.KmsOut, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.KmsOut, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group offset-1 col-md-10">
+            @Html.LabelFor(model => model.FuelLevel, htmlAttributes: new { @class = "col-form-label" })
+            @Html.DropDownListFor(m => m.FuelLevel, new SelectList(ViewBag.FuelLevels, "Value", "Text"), new { @class = "form-control" })
+        </div>
+        <br/>
+        <div class="form-group text-center">
+            @Html.ActionLink("Voltar", "ListForDelivery", null, new{@class="btn-danger btn"})
+            <input type="submit" value="Confirmar" class="btn btn-primary" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

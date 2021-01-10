@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
@@ -19,7 +20,7 @@ namespace CarRenting.Controllers
         // GET: Checks
         public async Task<ActionResult> Index()
         {
-            return View(await db.Checks.Include(c=>c.CarTypes).ToListAsync());
+            return View(await db.Checks.Include(c => c.CarTypes).ToListAsync());
         }
 
         // GET: Checks/Details/5
@@ -61,6 +62,74 @@ namespace CarRenting.Controllers
             }
 
             return View(check);
+        }
+
+
+        public async Task<ActionResult> AssociateCarType(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            var carTypes = db.CarTypes.ToList();
+            Check check = await db.Checks.FindAsync(id);
+            if (check == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            List<CheckBoxes> checkBoxes= new List<CheckBoxes>();
+            foreach (var carType in carTypes)
+            {
+                checkBoxes.Add(new CheckBoxes
+                {
+                    Id = carType.Id,
+                    Type = carType.Type
+                });
+            }
+
+            var associateViewModel = new AssociateViewModel
+            {
+                Id = check.Id,
+                Description = check.Description,
+                CarTypes = checkBoxes
+            };
+
+            return View(associateViewModel);
+        }
+
+        // POST: Checks/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AssociateCarType(AssociateViewModel associateViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var check = await db.Checks.FindAsync(associateViewModel.Id);
+                if (check == null)
+                {
+                    return HttpNotFound();
+                }
+                foreach (var carType in associateViewModel.CarTypes)
+                {
+                    if (carType.Add)
+                    {
+                        var type = await db.CarTypes.FindAsync(carType.Id);
+                        check.CarTypes.Add(type);
+                        Debug.WriteLine("Erro" + associateViewModel.Id);
+                    }
+                    else
+                    {
+                        var type = await db.CarTypes.FindAsync(carType.Id);
+                        check.CarTypes.Remove(type);
+                    }
+                }
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            return View(associateViewModel);
         }
 
         // GET: Checks/Edit/5

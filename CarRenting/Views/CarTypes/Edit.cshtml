@@ -17,6 +17,7 @@
             <div class="form-group offset-1 col-md-10">
                 @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "col-form-label " })
                 @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
             </div>
             <br />
             <div class="text-center">

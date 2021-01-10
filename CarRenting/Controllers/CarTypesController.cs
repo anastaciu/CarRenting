@@ -62,10 +62,10 @@ namespace CarRenting.Controllers
                 {
                     db.CarTypes.Add(carType);
                     await db.SaveChangesAsync();
+                    TempData["isCreated"] = true;
                     return RedirectToAction("Index");
                 }
             }
-            ModelState.AddModelError("carTypeError", "Já existe uma categoria com esse nome");
             return View(carType);
         }
 
@@ -98,9 +98,11 @@ namespace CarRenting.Controllers
             {
                 db.Entry(carType).State = EntityState.Modified;
                 await db.SaveChangesAsync();
+                TempData["isModified"] = true;
                 return RedirectToAction("Index");
             }
-            return View(carType);
+            TempData["isModified"] = false;
+            return RedirectToAction("Index");
         }
 
         // GET: CarTypes/Delete/5

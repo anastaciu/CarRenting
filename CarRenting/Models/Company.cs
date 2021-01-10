@@ -26,6 +26,7 @@ namespace CarRenting.Models
         [EmailAddress]
         [Required(ErrorMessage = "É necessário indicar o e-mail")]
         [Display(Name = "E-mail")]
+        [UniqueCompanyEmail(ErrorMessage = "Já existe uma empresa com o mesmo e-mail")]
         public string Email { get; set; }
         public virtual ICollection<Check> Checks { get; set; }
         public virtual ICollection<Employee> Employees { get; set; }
