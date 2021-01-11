@@ -42,6 +42,7 @@ namespace CarRenting.Models
         public DbSet<Employee> Employees { get; set; }
         public DbSet<CarType> CarTypes { get; set; }
         public DbSet<Check> Checks { get; set; }
-    
+        public DbSet<DamageImage> DamageImages { get; set; }
+
     }
 }

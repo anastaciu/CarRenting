@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
@@ -21,11 +23,10 @@ namespace CarRenting.Controllers
 
         // GET: Rents
         [Authorize(Roles = "Empregado da Empresa")]
-        public async Task<ActionResult> Index(bool? isConfirmed)
+        public async Task<ActionResult> Index()
         {
             var userId = User.Identity.GetUserId();
             var companyRents = _dbContext.Rents.Where(r => r.Car.Company.Employees.Any(e => e.ApplicationUserId == userId)).Include(r => r.Car).Include(r => r.ApplicationUser);
-            ViewBag.IsConfirmed = isConfirmed != null;
             return View(await companyRents.ToListAsync());
         }
 
@@ -91,24 +92,25 @@ namespace CarRenting.Controllers
                 _dbContext.Entry(rent).State = EntityState.Modified;
                 await _dbContext.SaveChangesAsync();
             }
-            return RedirectToAction("Index", new { isConfirmed = true });
+
+            TempData["isConfirmed"] = true;
+            return RedirectToAction("Index");
         }
 
 
         // GET: Rents
         [Authorize(Roles = "Empregado da Empresa")]
-        public async Task<ActionResult> ListForDelivery(bool? isDelivered)
+        public async Task<ActionResult> ListForDelivery()
         {
             var userId = User.Identity.GetUserId();
             var companyRents = _dbContext.Rents.Where(r => r.Car.Company.Employees.Any(e => e.ApplicationUserId == userId)).Include(r => r.Car).Include(r => r.ApplicationUser);
-            ViewBag.IsConfirmed = isDelivered != null;
             return View(await companyRents.ToListAsync());
         }
 
         [Authorize(Roles = "Empregado da Empresa")]
         public async Task<ActionResult> DeliverVehicle(int? id)
         {
-            var rent = await _dbContext.Rents.FindAsync(id);
+            var rent = await _dbContext.Rents.Include(r => r.Car).SingleOrDefaultAsync(r => r.Id == id);
             if (rent == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -119,7 +121,8 @@ namespace CarRenting.Controllers
             {
                 Id = rent.Id,
                 DeliveryFaults = rent.DeliveryFaults,
-                KmsOut = rent.KmsOut
+                KmsOut = rent.Car.Kms,
+                FuelLevel = rent.Car.FuelLevel
             };
 
             return View(deliveryModel);
@@ -128,11 +131,11 @@ namespace CarRenting.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Empregado da Empresa")]
-        public async Task<ActionResult> DeliverVehicle([Bind(Include = "Id,DeliveryFaults,KmsOut,FuelLevel")] DeliveryViewModel deliveryModel)
+        public async Task<ActionResult> DeliverVehicle(DeliveryViewModel deliveryModel)
         {
             if (ModelState.IsValid)
             {
-                var rent = await _dbContext.Rents.FindAsync(deliveryModel.Id);
+                var rent = await _dbContext.Rents.Include(r => r.Car).SingleOrDefaultAsync(r => r.Id == deliveryModel.Id);
                 if (rent == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -142,11 +145,14 @@ namespace CarRenting.Controllers
                 rent.IsDelivered = true;
                 _dbContext.Entry(rent).State = EntityState.Modified;
                 await _dbContext.SaveChangesAsync();
-                return RedirectToAction("Index", "CompanyUserArea", new { isDelivered = true });
+
+                TempData["isDelivered"] = true;
+                return RedirectToAction("Index", "CompanyUserArea");
             }
 
             var fuelList = SelectLists.FuelLevelList();
             ViewBag.FuelLevels = fuelList;
+
             return View(deliveryModel);
         }
 
@@ -155,11 +161,71 @@ namespace CarRenting.Controllers
 
         //}
 
-        //[Authorize(Roles = "Empregado da Empresa")]
-        //public async Task<ActionResult> ReceiveVehicle(int rentId)
-        //{
 
-        //}
+        [Authorize(Roles = "Empregado da Empresa")]
+        public async Task<ActionResult> ReceiveVehicle(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var rent = await _dbContext.Rents.Include(r => r.Car).SingleOrDefaultAsync(r => r.Id == id);
+            if (rent == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var fuelList = SelectLists.FuelLevelList();
+            ViewBag.FuelLevels = fuelList;
+            var receptionViewModel = new ReceptionViewModel()
+            {
+                Id = rent.Id,
+                KmsIn = rent.Car.Kms
+
+            };
+
+            return View(receptionViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Empregado da Empresa")]
+        public async Task<ActionResult> ReceiveVehicle(ReceptionViewModel receptionViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var rent = await _dbContext.Rents.FindAsync(receptionViewModel.Id);
+                if (rent == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                rent.IsChecked = true;
+                rent.KmsIn = receptionViewModel.KmsIn;
+                rent.IsReceived = true;
+
+                foreach (HttpPostedFileBase file in receptionViewModel.Files)
+                {
+                    if (file != null)
+                    {
+                        var fileName = Path.GetFileName(file.FileName);
+                        var path = Path.Combine(Server.MapPath("~/DamageImagesUpload/") + fileName);
+                        file.SaveAs(path);
+                        if (!_dbContext.DamageImages.Any(d => d.ImagePath == fileName))
+                        {
+                            _dbContext.DamageImages.Add(new DamageImage
+                                {ImagePath = fileName, RentId = receptionViewModel.Id});
+                        }
+                    }
+                }
+                _dbContext.Entry(rent).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+                TempData["isReceived"] = true;
+                return RedirectToAction("Index", "CompanyUserArea");
+            }
+
+            var fuelList = SelectLists.FuelLevelList();
+            ViewBag.FuelLevels = fuelList;
+            return View(receptionViewModel);
+        }
 
         // GET: Rents/Details/5
         public async Task<ActionResult> Details(int? id)
@@ -168,7 +234,7 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rent rent = await _dbContext.Rents.Include(r=>r.Car).Include(r=>r.ApplicationUser).FirstOrDefaultAsync(r=>r.Id == id);
+            Rent rent = await _dbContext.Rents.Include(r => r.Car).Include(r => r.ApplicationUser).FirstOrDefaultAsync(r => r.Id == id);
             if (rent == null)
             {
                 return HttpNotFound();

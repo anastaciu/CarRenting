@@ -31,6 +31,7 @@ namespace CarRenting.Models
         public int TypeId { get; set; }
         public CarType Type { get; set; }
         [Display(Name = "Preço/Dia")]
+        [DataType(DataType.Currency)]
         public double Price { get; set; }
         [Range(0, Int32.MaxValue)]
         public int Kms { get; set; }

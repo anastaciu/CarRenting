@@ -13,14 +13,17 @@ namespace CarRenting.Attributes
         {
             public override bool IsValid(object value)
             {
-                using (var dbContext = new ApplicationDbContext())
+                if (value != null)
                 {
-                    var companies = dbContext.Companies.ToList();
-                    foreach (var company in companies)
+                    using (var dbContext = new ApplicationDbContext())
                     {
-                        if (company.Email == value.ToString())
+                        var companies = dbContext.Companies.ToList();
+                        foreach (var company in companies)
                         {
-                            return false;
+                            if (company.Email == value.ToString())
+                            {
+                                return false;
+                            }
                         }
                     }
                 }

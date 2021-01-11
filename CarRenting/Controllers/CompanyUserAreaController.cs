@@ -12,9 +12,8 @@ namespace CarRenting.Controllers
     public class CompanyUserAreaController : Controller
     {
         // GET: CompanyUserArea
-        public ActionResult Index(bool? isDelivered)
+        public ActionResult Index()
         {
-            ViewBag.IsDelivered = isDelivered != null;
             return View();
         }
     }

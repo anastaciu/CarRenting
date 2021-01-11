@@ -3,13 +3,23 @@
     ViewBag.Title = "Company User Area";
 }
 
-@if (ViewBag.IsDelivered)
+@if (TempData["isDelivered"] as bool? == true)
 {
     <script type="text/javascript">
         $(document).ready(function () {
-            toastr.success('O veículo foi dado como entregue', 'Operação realizada');
+            toastr.success('O veículo foi dado como entregue');
         });
-        
+
+    </script>
+}
+
+@if (TempData["isReceived"] as bool? == true)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            toastr.success('O veículo foi dado como recebido');
+        });
+
     </script>
 }
 
@@ -34,17 +44,17 @@
             <div class="card-body text-center text-dark">
                 <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
                     <div class="d-flex">
-                        <i class="fas fa-check m-auto" style="font-size: 6vw"></i>
+                        <i class="fas fa-check-double m-auto" style="font-size: 6vw"></i>
                     </div>
-                    <h3>Entregar Veículo</h3>
-                    <p class="lead mb-0">Entregar veículo disponível para entrega</p>
+                    <h3>Entregar ou Receber Veículo</h3>
+                    <p class="lead mb-0">Entregar ou receber veículo reservado</p>
                 </div>
             </div>
         </a>
     </div>
 
     <div class="card bg-warning boxshadow btn-hover">
-        <a href="@Url.Action("RegisterInitCompanyAdmin", "Account")" style="text-decoration: none">
+        <a href="@Url.Action("ListForDelivery", "Rents")" style="text-decoration: none">
             <div class="card-body text-center text-dark">
                 <div class="mx-auto mb-0 mb-lg-3">
                     <div class="d-flex">

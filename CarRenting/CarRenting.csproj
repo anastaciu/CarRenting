@@ -183,6 +183,7 @@
     <Compile Include="Attributes\MinDateAttribute.cs" />
     <Compile Include="Attributes\UniqueCompany.cs" />
     <Compile Include="Attributes\UniqueCompanyEmailAttribute.cs" />
+    <Compile Include="Attributes\UniqueImagePathAttribute.cs" />
     <Compile Include="Attributes\UniqueLicenseAttribute.cs" />
     <Compile Include="Attributes\UniqueTypeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -645,9 +646,11 @@
     <Content Include="Views\Rents\ListForDelivery.cshtml" />
     <Content Include="Views\Rents\DeliverVehicle.cshtml" />
     <Content Include="Views\Checks\AssociateCarType.cshtml" />
+    <Content Include="Views\Rents\ReceiveVehicle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="DamageImagesUpload\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

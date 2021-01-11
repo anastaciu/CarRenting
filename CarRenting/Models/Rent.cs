@@ -35,7 +35,7 @@ namespace CarRenting.Models
         public bool IsDelivered { get; set; }
         [Display(Name = "Devolvido pelo cliente")]
         public bool IsReceived { get; set; }
-        [Display(Name = "Verificação de entrega efetuada")]
+        [Display(Name = "Verificações efetuadas")]
         public bool IsChecked { get; set; }
         [Display(Name = "Defeitos na entrega")]
         public string DeliveryFaults { get; set; }

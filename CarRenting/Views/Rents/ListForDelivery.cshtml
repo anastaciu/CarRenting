@@ -44,8 +44,9 @@
             @Html.DisplayFor(modelItem => item.End)
         </td>
         <td>
-            @Html.ActionLink("Entregar", "DeliverVehicle", new { id=item.Id }, new{@class="btn-success btn", @style="padding:2px"})
-            
+            @Html.ActionLink("Entregar", "DeliverVehicle", new { id = item.Id }, new { @class = "btn-success btn", @style = "padding:2px" })
+            @Html.ActionLink("Receber", "ReceiveVehicle", new { id = item.Id }, new { @class = "btn-primary btn", @style = "padding:2px" })
+
         </td>
     </tr>
 }

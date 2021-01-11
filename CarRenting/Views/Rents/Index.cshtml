@@ -5,11 +5,11 @@
 }
 
 
-@if (ViewBag.IsConfirmed)
+@if (TempData["isConfirmed"] as bool? == true)
 {
     <script type="text/javascript">
         $(document).ready(function () {
-            toastr.success('Aluguer Confirmado', 'Operação realizada');
+            toastr.success('Aluguer Confirmado');
         });
     </script>
 }
@@ -53,12 +53,12 @@
                 <td>
                     @if (!item.IsConfirmed)
                     {
-                        <a href="@Url.Action("ConfirmRent", "Rents", new { id = item.Id })" class="btn btn-success" style="padding: 1px 5px" title="Confirmar Reserva"><i class="fas fa-fw fa-sm fa-check-circle"></i></a>
+                        <a href="@Url.Action("ConfirmRent", "Rents", new { id = item.Id })" title="Confirmar Reserva"><i class="fas fa-fw fa-check-circle text-success"></i></a>
 
                     }
-                    <a href="@Url.Action("Edit", "Rents", new { id = item.Id })" class="btn btn-primary" style="padding: 1px 5px" title="Editar Reserva"><i class="fas text-center fa-fw fa-sm fa-edit"></i></a>
-                    <a href="@Url.Action("Details", "Rents", new { id = item.Id })" class="btn btn-info" style="padding: 1px 5px" title="Detalhes da Reserva"><i class="fas fa-sm fa-fw fa-info-circle "></i></a>
-                    <a href="@Url.Action("Delete", "Rents", new { id = item.Id })" class="btn btn-danger" style="padding: 1px 5px" title="Apagar Reserva"><i class="fas fa-fw fa-sm fa-trash-alt "></i></a>
+                    <a href="@Url.Action("Edit", "Rents", new { id = item.Id })"  title="Editar Reserva"><i class="fas text-center fa-fw fa-edit text-primary"></i></a>
+                    <a href="@Url.Action("Details", "Rents", new { id = item.Id })"  title="Detalhes da Reserva"><i class="fas fa-fw fa-info-circle text-info"></i></a>
+                    <a href="@Url.Action("Delete", "Rents", new { id = item.Id })"  title="Apagar Reserva"><i class="fas fa-fw fa-trash-alt text-danger"></i></a>
                 </td>
             </tr>
         }

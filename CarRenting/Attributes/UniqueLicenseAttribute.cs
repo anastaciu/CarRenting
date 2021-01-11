@@ -12,14 +12,17 @@ namespace CarRenting.Attributes
 
         public override bool IsValid(object value)
         {
-            using (var dbContext = new ApplicationDbContext())
+            if (value != null)
             {
-                var cars = dbContext.Cars.ToList();
-                foreach (var car in cars)
+                using (var dbContext = new ApplicationDbContext())
                 {
-                    if (car.License == value.ToString())
+                    var cars = dbContext.Cars.ToList();
+                    foreach (var car in cars)
                     {
-                        return false;
+                        if (car.License == value.ToString())
+                        {
+                            return false;
+                        }
                     }
                 }
             }

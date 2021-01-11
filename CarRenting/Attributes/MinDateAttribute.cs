@@ -10,9 +10,12 @@ namespace CarRenting.Attributes
     {
         public override bool IsValid(object value)
         {
-            DateTime date = Convert.ToDateTime(value);
-            return date.Day >= DateTime.Now.Day; 
-
+            if (value != null)
+            {
+                DateTime date = Convert.ToDateTime(value);
+                return date.Day >= DateTime.Now.Day;
+            }
+            return false;
         }
     }
 }

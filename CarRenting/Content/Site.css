@@ -90,28 +90,52 @@ h2, h4 {
 }
 
 
+.btn-hover {
+    
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+}
+
 .btn-hover:hover {
     background-color: goldenrod !important;
-    transition: 600ms;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
 }
 
 .nav.navbar-nav li a {
     color: white !important;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
 }
 
     .nav.navbar-nav li a:hover {
         color: #ffc107 !important;
-        transition: 600ms;
+        -webkit-transition: all 0.2s ease 0s;
+        -moz-transition: all 0.2s ease 0s;
+        -o-transition: all 0.2s ease 0s;
+        transition: all 0.2s ease 0s;
     }
 
 .nav.navbar-nav li.exit-btn a:hover {
     color: red !important;
-    transition: 600ms;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
 }
 
 .nav.navbar-nav li.user-logo a:hover {
     color: rgb(50, 255, 47) !important;
-    transition: 600ms;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
 }
 
 ul {
@@ -126,11 +150,12 @@ table {
     table-layout: fixed;
     word-break: break-word;
     overflow: hidden;
+    border: 2px solid goldenrod;
 }
 
 td, th {
     border-top: none !important;
-    border: 5px solid transparent;
+    border: none;
     text-align: center;
     padding: 8px;
 }
@@ -139,8 +164,35 @@ tr:nth-child(even) {
     background-color: #ffc107;
 }
 
-.fas:hover {
-    font-size: 150%;
-    transition: 200ms;
+.fas {
+    font-size: 100%;
+    -webkit-transition: all 0.2s ease 0s;
+    -moz-transition: all 0.2s ease 0s;
+    -o-transition: all 0.2s ease 0s;
+    transition: all 0.2s ease 0s;
 }
 
+    .fas:hover {
+        font-size: 120%;
+        -webkit-transition: all 0.2s ease 0s;
+        -moz-transition: all 0.2s ease 0s;
+        -o-transition: all 0.2s ease 0s;
+        transition: all 0.2s ease 0s;
+    }
+
+.toast {
+    opacity: 0.8 !important;
+    font-weight: bolder !important;
+    -webkit-transition: all 0.2s ease 0s;
+    -moz-transition: all 0.2s ease 0s;
+    -o-transition: all 0.2s ease 0s;
+    transition: all 0.2s ease 0s;
+}
+
+    .toast:hover {
+        opacity: 1 !important;
+        -webkit-transition: all 0.2s ease 0s;
+        -moz-transition: all 0.2s ease 0s;
+        -o-transition: all 0.2s ease 0s;
+        transition: all 0.2s ease 0s;
+    }
