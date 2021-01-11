@@ -22,7 +22,7 @@ namespace CarRenting.Controllers
         private readonly ApplicationDbContext _dbContext = new ApplicationDbContext();
 
         // GET: Rents
-        [Authorize(Roles = "Empregado da Empresa")]
+        [Authorize(Roles = "Utilizador da Empresa")]
         public async Task<ActionResult> Index()
         {
             var userId = User.Identity.GetUserId();
@@ -74,7 +74,7 @@ namespace CarRenting.Controllers
             return View(rent);
         }
 
-        [Authorize(Roles = "Empregado da Empresa")]
+        [Authorize(Roles = "Utilizador da Empresa")]
         public async Task<ActionResult> ConfirmRent(int? id)
         {
             if (id == null)
@@ -99,7 +99,7 @@ namespace CarRenting.Controllers
 
 
         // GET: Rents
-        [Authorize(Roles = "Empregado da Empresa")]
+        [Authorize(Roles = "Utilizador da Empresa")]
         public async Task<ActionResult> ListForDelivery()
         {
             var userId = User.Identity.GetUserId();
@@ -107,7 +107,7 @@ namespace CarRenting.Controllers
             return View(await companyRents.ToListAsync());
         }
 
-        [Authorize(Roles = "Empregado da Empresa")]
+        [Authorize(Roles = "Utilizador da Empresa")]
         public async Task<ActionResult> DeliverVehicle(int? id)
         {
             var rent = await _dbContext.Rents.Include(r => r.Car).SingleOrDefaultAsync(r => r.Id == id);
@@ -130,7 +130,7 @@ namespace CarRenting.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Empregado da Empresa")]
+        [Authorize(Roles = "Utilizador da Empresa")]
         public async Task<ActionResult> DeliverVehicle(DeliveryViewModel deliveryModel)
         {
             if (ModelState.IsValid)
@@ -162,7 +162,7 @@ namespace CarRenting.Controllers
         //}
 
 
-        [Authorize(Roles = "Empregado da Empresa")]
+        [Authorize(Roles = "Utilizador da Empresa")]
         public async Task<ActionResult> ReceiveVehicle(int? id)
         {
             if (id == null)
@@ -188,7 +188,7 @@ namespace CarRenting.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Empregado da Empresa")]
+        [Authorize(Roles = "Utilizador da Empresa")]
         public async Task<ActionResult> ReceiveVehicle(ReceptionViewModel receptionViewModel)
         {
             if (ModelState.IsValid)

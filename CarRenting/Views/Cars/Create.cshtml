@@ -3,79 +3,85 @@
 @{
     ViewBag.Title = "Adicionar Veículo";
 }
-<div class="container">
-    <div class="boxshadow log-headers-h2 offset-md-2 col-md-8">
-        <h2>@ViewBag.Title</h2>
-    </div>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="jumbotron boxshadow offset-md-2 col-md-8">
-            <div class="form-group offset-1 col-md-10">
-                @Html.LabelFor(model => model.License, htmlAttributes: new { @class = "col-form-label" })
-                @Html.EditorFor(model => model.License, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.License, "", new { @class = "text-danger" })
-
-            </div>
-            <div class="form-group offset-1 col-md-10">
-                @Html.LabelFor(model => model.Brand, htmlAttributes: new { @class = "col-form-label" })
-                @Html.EditorFor(model => model.Brand, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Brand, "", new { @class = "text-danger" })
-
-            </div>
-
-            <div class="form-group offset-1 col-md-10">
-                @Html.LabelFor(model => model.Model, htmlAttributes: new { @class = "col-form-label" })
-                @Html.EditorFor(model => model.Model, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Model, "", new { @class = "text-danger" })
-
-            </div>
-
-            <div class="form-group offset-1 col-md-10">
-                @Html.LabelFor(model => model.Fuel, htmlAttributes: new { @class = "col-form-label" })
-                @Html.EditorFor(model => model.Fuel, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Fuel, "", new { @class = "text-danger" })
-
-            </div>
-
-            <div class="form-group offset-1 col-md-10">
-                @Html.LabelFor(model => model.FuelLevel, htmlAttributes: new { @class = "col-form-label" })
-                @Html.DropDownListFor(m => m.FuelLevel, new SelectList(ViewBag.FuelLevels, "Value", "Text"), new { @class = "form-control" })
-            </div>
-
-            <div class="form-group offset-1 col-md-10">
-                @Html.LabelFor(model => model.Seats, htmlAttributes: new { @class = "col-form-label" })
-                @Html.EditorFor(model => model.Seats, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Seats, "", new { @class = "text-danger bg-warning" })
-
-            </div>
-
-            <div class="form-group offset-1 col-md-10">
-                @Html.LabelFor(model => model.Type.Type, htmlAttributes: new { @class = "col-form-label" })
-                @Html.DropDownList("TypeId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TypeId, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="form-group offset-1 col-md-10">
-                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "col-form-label" })
-                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-            </div>
-
-
-            <div class="form-group offset-1 col-md-10">
-                @Html.LabelFor(model => model.Kms, htmlAttributes: new { @class = "col-form-label" })
-                @Html.EditorFor(model => model.Kms, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Kms, "", new { @class = "text-danger" })
-            </div>
-            <br />
-            <div class="text-center">
-                @Html.ActionLink("Voltar", "CompanyCars", null, new { @class = "btn btn-danger" })
-                <input type="submit" value="Adicionar" class="btn btn-primary" />
-            </div>
-
-        </div>
-    }
+<div class="log-headers-h2 boxshadow offset-md-2 col-md-8">
+    <h2>@ViewBag.Title</h2>
 </div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="jumbotron boxshadow offset-md-2 col-md-8">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger bg-warning" })
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group offset-1 col-md-10">
+                    @Html.LabelFor(model => model.Brand, htmlAttributes: new { @class = "col-form-label" })
+                    @Html.EditorFor(model => model.Brand, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Brand, "", new { @class = "text-danger bg-warning" })
+
+                </div>
+                <div class="form-group offset-1 col-md-10">
+                    @Html.LabelFor(model => model.License, htmlAttributes: new { @class = "col-form-label" })
+                    @Html.EditorFor(model => model.License, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.License, "", new { @class = "text-danger bg-warning" })
+
+                </div>
+
+                <div class="form-group offset-1 col-md-10">
+                    @Html.LabelFor(model => model.Model, htmlAttributes: new { @class = "col-form-label" })
+                    @Html.EditorFor(model => model.Model, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Model, "", new { @class = "text-danger bg-warning" })
+
+                </div>
+
+                <div class="form-group offset-1 col-md-10">
+                    @Html.LabelFor(model => model.Fuel, htmlAttributes: new { @class = "col-form-label" })
+                    @Html.EditorFor(model => model.Fuel, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Fuel, "", new { @class = "text-danger bg-warning" })
+
+                </div>
+
+                <div class="form-group offset-1 col-md-10 offset-1 col-md-10">
+                    @Html.LabelFor(model => model.FuelLevel, htmlAttributes: new { @class = "col-form-label" })
+                    @Html.DropDownListFor(model => model.FuelLevel, new SelectList(ViewBag.FuelLevels, "Value", "Text"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.FuelLevel, "", new { @class = "text-danger bg-warning" })
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group offset-1 col-md-10">
+                    @Html.LabelFor(model => model.Seats, htmlAttributes: new { @class = "col-form-label" })
+                    @Html.EditorFor(model => model.Seats, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Seats, "", new { @class = "text-danger bg-warning" })
+
+                </div>
+
+                <div class="form-group offset-1 col-md-10">
+                    @Html.LabelFor(model => model.TypeId, "TypeId", htmlAttributes: new { @class = "col-form-label" })
+                    @Html.DropDownList("TypeId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TypeId, "", new { @class = "text-danger bg-warning" })
+
+                </div>
+
+                <div class="form-group offset-1 col-md-10">
+                    @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "col-form-label" })
+                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger bg-warning" })
+
+                </div>
+
+                <div class="form-group offset-1 col-md-10">
+                    @Html.LabelFor(model => model.Kms, htmlAttributes: new { @class = "col-form-label" })
+                    @Html.EditorFor(model => model.Kms, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Kms, "", new { @class = "text-danger bg-warning" })
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="form-group offset-1 col-md-10 text-center">
+            @Html.ActionLink("Voltar", "CompanyCars", null, new { @class = "btn btn-danger" })
+            <input type="submit" value="Guardar" class="btn btn-primary" />
+        </div>
+    </div>
+}

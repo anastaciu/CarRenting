@@ -5,108 +5,112 @@
     ViewBag.Title = "Details";
 }
 
-<div class="container">
-    <div class="log-headers-h2 boxshadow offset-2 col-8">
+
+    <div class="log-headers-h2 boxshadow container" style="margin-bottom: 1vh">
         <h2>Detalhes do Veículo</h2>
     </div>
-    <div class="jumbotron text-center boxshadow offset-2 col-8">
-        <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Company.CompanyName)
-                    </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Company.CompanyName)
-                    </dd>
+<div class="jumbotron boxshadow">
+    <div class="row">
+        <dl class="dl-horizontal col-md-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.Company.CompanyName)
+            </dt>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Type.Type)
-                    </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Company.CompanyName)
+            </dd>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Type.Type)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.License)
-                    </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Type.Type)
+            </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.License)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Brand)
-                    </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Type.Type)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.License)
+            </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Brand)
-                    </dd>
+            <dd>
+                @Html.DisplayFor(model => model.License)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Brand)
+            </dt>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Model)
-                    </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Brand)
+            </dd>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Model)
-                    </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Model)
+            </dt>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Fuel)
-                    </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Model)
+            </dd>
+        </dl>
+        <dl class="dl-horizontal col-md-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.Fuel)
+            </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Fuel)
-                    </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Fuel)
+            </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.FuelLevel)
-                    </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.FuelLevel)
+            </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.FuelLevel)
-                    </dd>
+            <dd>
+                @Html.DisplayFor(model => model.FuelLevel)
+            </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Seats)
-                    </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Seats)
+            </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Seats)
-                    </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Seats)
+            </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Price)
-                    </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Price)
-                    </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Kms)
-                    </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Kms)
+            </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Kms)
-                    </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Kms)
+            </dd>
+        </dl>
+    </div>
+    <br/>
+    <div class="text-center">
 
-                </dl>
-                <span class="text-center">
-                    @if (User.IsInRole(WebConfigurationManager.AppSettings.Get("Cn")))
-                    {
-                        @Html.ActionLink("Voltar", "CompanyCars", null, new {@class = "btn btn-danger"})
-                    }
-                    else if (!Request.IsAuthenticated)
-                    {
-                        @Html.ActionLink("Voltar", "Index", null, new {@class = "btn btn-danger"})
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Voltar", "Index", "Home", new {@class = "btn btn-danger"})
-                    }
-                    @Html.ActionLink("Editar", "Edit", new {id = Model.Id}, new {@class = "btn btn-primary"})
-                </span>
-                <br/>
-      
+        @if (User.IsInRole(WebConfigurationManager.AppSettings.Get("Cn")))
+        {
+            @Html.ActionLink("Voltar", "CompanyCars", null, new {@class = "btn btn-danger"})
+        }
+        else if (!Request.IsAuthenticated)
+        {
+            @Html.ActionLink("Voltar", "Index", null, new {@class = "btn btn-danger"})
+        }
+        else
+        {
+            @Html.ActionLink("Voltar", "Index", "Home", new {@class = "btn btn-danger"})
+        }
+
+        @Html.ActionLink("Editar", "Edit", new {id = Model.Id}, new {@class = "btn btn-primary"})
     </div>
 </div>
+
 

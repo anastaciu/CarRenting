@@ -33,6 +33,7 @@ namespace CarRenting
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/fontawesome-all.css",
                       "~/Content/Site.css",
                       "~/Content/toastr.css"));
 

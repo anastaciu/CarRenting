@@ -181,8 +181,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Attributes\MinDateAttribute.cs" />
-    <Compile Include="Attributes\UniqueCompany.cs" />
-    <Compile Include="Attributes\UniqueCompanyEmailAttribute.cs" />
     <Compile Include="Attributes\UniqueImagePathAttribute.cs" />
     <Compile Include="Attributes\UniqueLicenseAttribute.cs" />
     <Compile Include="Attributes\UniqueTypeAttribute.cs" />
@@ -323,6 +321,18 @@
     <Compile Include="Migrations\202101101415318_EmptyType.cs" />
     <Compile Include="Migrations\202101101415318_EmptyType.Designer.cs">
       <DependentUpon>202101101415318_EmptyType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101111631093_required_cars.cs" />
+    <Compile Include="Migrations\202101111631093_required_cars.Designer.cs">
+      <DependentUpon>202101111631093_required_cars.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101111811420_contribuinte.cs" />
+    <Compile Include="Migrations\202101111811420_contribuinte.Designer.cs">
+      <DependentUpon>202101111811420_contribuinte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101111911078_updt.cs" />
+    <Compile Include="Migrations\202101111911078_updt.Designer.cs">
+      <DependentUpon>202101111911078_updt.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -610,8 +620,6 @@
     <Content Include="Views\CarTypes\Index.cshtml" />
     <Content Include="Views\Checks\Create.cshtml" />
     <Content Include="Views\Checks\Delete.cshtml" />
-    <Content Include="Views\Checks\Details.cshtml" />
-    <Content Include="Views\Checks\Edit.cshtml" />
     <Content Include="Views\Checks\Index.cshtml" />
     <Content Include="Views\Cars\Create.cshtml" />
     <Content Include="Views\Cars\Delete.cshtml" />
@@ -647,6 +655,8 @@
     <Content Include="Views\Rents\DeliverVehicle.cshtml" />
     <Content Include="Views\Checks\AssociateCarType.cshtml" />
     <Content Include="Views\Rents\ReceiveVehicle.cshtml" />
+    <Content Include="Views\Shared\_NavbarPartial.cshtml" />
+    <Content Include="Views\Shared\_FooterPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -752,6 +762,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101101415318_EmptyType.resx">
       <DependentUpon>202101101415318_EmptyType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101111631093_required_cars.resx">
+      <DependentUpon>202101111631093_required_cars.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101111811420_contribuinte.resx">
+      <DependentUpon>202101111811420_contribuinte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101111911078_updt.resx">
+      <DependentUpon>202101111911078_updt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

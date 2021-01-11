@@ -13,8 +13,7 @@ namespace CarRenting.Attributes
         {
             using (var dbContext = new ApplicationDbContext())
             {
-                if (value != null)
-                {
+                
                     var imagePaths = dbContext.DamageImages.ToList();
                     foreach (var imagePath in imagePaths)
                     {
@@ -23,7 +22,7 @@ namespace CarRenting.Attributes
                             return false;
                         }
                     }
-                }
+                
                 return true;
             }
         }

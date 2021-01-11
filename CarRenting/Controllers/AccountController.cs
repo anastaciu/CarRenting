@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using CarRenting.Attributes;
 using CarRenting.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -24,6 +25,7 @@ namespace CarRenting.Controllers
         private ApplicationUserManager _userManager;
         private ApplicationRoleManager _roleManager;
 
+        private readonly ApplicationDbContext _dbContext = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -79,7 +81,7 @@ namespace CarRenting.Controllers
             {
                 return View(model);
             }
-            
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -89,7 +91,7 @@ namespace CarRenting.Controllers
                 case SignInStatus.Success:
                     {
                         var user = UserManager.Users.SingleOrDefault(u => u.Email == model.Email);
-                        
+
                         if (user == null)
                         {
                             ModelState.AddModelError("", "Dados incorretos!");
@@ -194,7 +196,7 @@ namespace CarRenting.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber};
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber };
                 var result = UserManager.Create(user, model.Password);
 
                 if (result.Succeeded)
@@ -242,11 +244,11 @@ namespace CarRenting.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddCompanyUser(AddCompanyUserViewModel model)
         {
-            
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber};
-                
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber };
+
                 var result = UserManager.Create(user, model.Password);
 
                 if (result.Succeeded)
@@ -260,17 +262,17 @@ namespace CarRenting.Controllers
                             var currentUserId = User.Identity.GetUserId();
                             var emp = dbContext.Employees?.SingleOrDefault(e => e.ApplicationUserId == currentUserId);
                             if (emp != null)
-                                dbContext.Employees.Add(new Employee {CompanyId = emp.CompanyId, ApplicationUserId = user.Id});
+                                dbContext.Employees.Add(new Employee { CompanyId = emp.CompanyId, ApplicationUserId = user.Id });
                             await dbContext.SaveChangesAsync();
                         }
-                        
+
                         // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
                         // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                        return RedirectToAction("CompanyEmployees", "ApplicationUsers", new{isCreated = true});
+                        return RedirectToAction("CompanyEmployees", "ApplicationUsers", new { isCreated = true });
                     }
                     else
                     {
@@ -310,7 +312,7 @@ namespace CarRenting.Controllers
             }
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber};
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber };
                 var result = UserManager.Create(user, model.Password);
 
                 if (result.Succeeded)
@@ -319,13 +321,23 @@ namespace CarRenting.Controllers
                     if (role.Succeeded)
                     {
                         var company = model.Company;
+                        
+                            if (_dbContext.Companies.Any(c => c.CompanyName == model.Company.CompanyName))
+                            {
+                                ModelState.AddModelError("CompanyName", @"Já existe uma empresa com o mesmo nome!");
+                                return View(model);
+                            }
 
-                        using (var db = new ApplicationDbContext())
-                        {
-                            db.Companies.Add(model.Company);
+                            if (_dbContext.Companies.Any(c => c.CompanyName == company.Email))
+                            {
+                                ModelState.AddModelError(nameof(model.Company.Email), @"Já existe uma empresa com o mesmo email!");
+                                return View(model);
+                            }
+
+                            _dbContext.Companies.Add(model.Company);
                             try
                             {
-                                await db.SaveChangesAsync();
+                                await _dbContext.SaveChangesAsync();
                             }
                             catch (Exception exception)
                             {
@@ -334,20 +346,20 @@ namespace CarRenting.Controllers
                                 return View(model);
                             }
                             Employee emp = new Employee { ApplicationUserId = user.Id, Company = company };
-                            db.Employees.Add(emp);
+                            _dbContext.Employees.Add(emp);
                             try
                             {
-                                await db.SaveChangesAsync();
+                                await _dbContext.SaveChangesAsync();
                             }
                             catch (Exception exception)
                             {
                                 await UserManager.DeleteAsync(user);
-                                db.Companies.Remove(company);
+                                _dbContext.Companies.Remove(company);
                                 ModelState.AddModelError("", exception.Message);
                                 return View(model);
                             }
 
-                        }
+                        
                         SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
 
                         // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

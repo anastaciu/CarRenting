@@ -13,12 +13,12 @@ namespace CarRenting.Controllers
 {
     public class CompaniesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext _dbContext = new ApplicationDbContext();
 
         // GET: Companies
         public async Task<ActionResult> Index()
         {
-            return View(await db.Companies.ToListAsync());
+            return View(await _dbContext.Companies.ToListAsync());
         }
 
         // GET: Companies/Details/5
@@ -28,7 +28,7 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company company = await db.Companies.FindAsync(id);
+            Company company = await _dbContext.Companies.FindAsync(id);
             if (company == null)
             {
                 return HttpNotFound();
@@ -51,8 +51,8 @@ namespace CarRenting.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Companies.Add(company);
-                await db.SaveChangesAsync();
+                _dbContext.Companies.Add(company);
+                await _dbContext.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +66,7 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company company = await db.Companies.FindAsync(id);
+            Company company = await _dbContext.Companies.FindAsync(id);
             if (company == null)
             {
                 return HttpNotFound();
@@ -83,8 +83,8 @@ namespace CarRenting.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(company).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                _dbContext.Entry(company).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(company);
@@ -97,7 +97,7 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company company = await db.Companies.FindAsync(id);
+            Company company = await _dbContext.Companies.FindAsync(id);
             if (company == null)
             {
                 return HttpNotFound();
@@ -110,9 +110,9 @@ namespace CarRenting.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Company company = await db.Companies.FindAsync(id);
-            db.Companies.Remove(company);
-            await db.SaveChangesAsync();
+            Company company = await _dbContext.Companies.FindAsync(id);
+            _dbContext.Companies.Remove(company);
+            await _dbContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -120,7 +120,7 @@ namespace CarRenting.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _dbContext.Dispose();
             }
             base.Dispose(disposing);
         }

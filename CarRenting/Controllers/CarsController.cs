@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using CarRenting.Models;
+using CarRenting.Utils;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
@@ -16,17 +17,16 @@ namespace CarRenting.Controllers
 {
     public class CarsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext _dbContext = new ApplicationDbContext();
 
         // GET: Cars
         public async Task<ActionResult> Index()
         {
-            
-            if (Request.IsAuthenticated && !User.IsInRole(WebConfigurationManager.AppSettings["Ur"]))
+            if (User.Identity.IsAuthenticated)
             {
                 RedirectToAction("Index", "Home");
             }
-            var cars = db.Cars.Include(c => c.Company).Include(c => c.Type);
+            var cars = _dbContext.Cars.Include(c => c.Company).Include(c => c.Type);
             return View(await cars.ToListAsync());
         }
 
@@ -34,8 +34,8 @@ namespace CarRenting.Controllers
         public async Task<ActionResult> CompanyCars()
         {
             var userId = User.Identity.GetUserId();
-            var employee = db.Employees.Include(e=>e.Company).SingleOrDefault(e => e.ApplicationUserId == userId);
-            var carsWithType = db.Cars.Where(c=>c.CompanyId == employee.CompanyId).Include(c=>c.Type);
+            var employee = _dbContext.Employees.Include(e=>e.Company).SingleOrDefault(e => e.ApplicationUserId == userId);
+            var carsWithType = _dbContext.Cars.Where(c=>c.CompanyId == employee.CompanyId).Include(c=>c.Type);
             return View(await carsWithType.ToListAsync());
         }
         // GET: Cars/Details/5
@@ -45,7 +45,7 @@ namespace CarRenting.Controllers
             {
                 return RedirectToAction("Index", "Error");
             }
-            Car car = await db.Cars.Include(c=>c.Type).Include(c=>c.Company).SingleOrDefaultAsync(c=>c.Id == id);
+            Car car = await _dbContext.Cars.Include(c=>c.Type).Include(c=>c.Company).SingleOrDefaultAsync(c=>c.Id == id);
 
             if (car == null)
             {
@@ -57,17 +57,8 @@ namespace CarRenting.Controllers
         [Authorize(Roles = "Administrador da Empresa")]
         public ActionResult Create()
         {
-            List<SelectListItem> fuelList = new List<SelectListItem>
-            {
-                new SelectListItem { Value = "Vazio", Text = "Vazio" },
-                new SelectListItem { Value = "Meio", Text = "Meio Vazio"},
-                new SelectListItem { Value = "Cheio", Text = "Meio" },
-                new SelectListItem { Value = "Meio", Text = "Meio Cheio"},
-                new SelectListItem { Value = "Cheio", Text = "Cheio" }
-            };
-            ViewBag.FuelLevels = fuelList;
-            ViewBag.TypeId = new SelectList(db.CarTypes, "Id", "Type");
-            
+            ViewBag.FuelLevels = SelectLists.FuelLevelList();
+            ViewBag.TypeId = new SelectList(_dbContext.CarTypes, "Id", "Type");
             return View();
         }
 
@@ -82,23 +73,17 @@ namespace CarRenting.Controllers
             if (ModelState.IsValid)
             {
                 var userId = User.Identity.GetUserId();
-                var employee = db.Employees.Include(e=>e.Company).SingleOrDefault(e => e.ApplicationUserId == userId);
+                var employee = _dbContext.Employees.Include(e=>e.Company).SingleOrDefault(e => e.ApplicationUserId == userId);
                 if (employee != null)
                 {
                     car.Company = employee.Company;
-                    db.Cars.Add(car);
-                    await db.SaveChangesAsync();
+                    _dbContext.Cars.Add(car);
+                    await _dbContext.SaveChangesAsync();
                     return RedirectToAction("CompanyCars");
                 }
             }
-            var fuelList = new List<SelectListItem>
-            {
-                new SelectListItem() { Value = "Vazio", Text = "Vazio" },
-                new SelectListItem() { Value = "Meio", Text = "Meio" },
-                new SelectListItem() { Value = "Cheio", Text = "Cheio" }
-            };
-            ViewBag.FuelLevels = fuelList;
-            ViewBag.TypeId = new SelectList(db.CarTypes, "Id", "Type", car.TypeId);
+            ViewBag.FuelLevels = SelectLists.FuelLevelList();
+            ViewBag.TypeId = new SelectList(_dbContext.CarTypes, "Id", "Type", car.TypeId);
             return View(car);
         }
 
@@ -110,19 +95,13 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Car car = await db.Cars.FindAsync(id);
+            Car car = await _dbContext.Cars.FindAsync(id);
             if (car == null)
             {
                 return HttpNotFound();
             }
-            var fuelList = new List<SelectListItem>
-            {
-                new SelectListItem() { Value = "Vazio", Text = "Vazio" },
-                new SelectListItem() { Value = "Meio", Text = "Meio" },
-                new SelectListItem() { Value = "Cheio", Text = "Cheio" }
-            };
-            ViewBag.FuelLevels = fuelList;
-            ViewBag.TypeId = new SelectList(db.CarTypes, "Id", "Type", car.TypeId);
+            ViewBag.FuelLevels = SelectLists.FuelLevelList();
+            ViewBag.TypeId = new SelectList(_dbContext.CarTypes, "Id", "Type", car.TypeId);
 
             return View(car);
         }
@@ -137,15 +116,16 @@ namespace CarRenting.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(car).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                _dbContext.Entry(car).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.CompanyId = new SelectList(db.Companies, "Id", "CompanyName", car.CompanyId);
-            ViewBag.TypeId = new SelectList(db.CarTypes, "Id", "Type", car.TypeId);
+            ViewBag.FuelLevels = SelectLists.FuelLevelList();
+            ViewBag.CompanyId = new SelectList(_dbContext.Companies, "Id", "CompanyName", car.CompanyId);
+            ViewBag.TypeId = new SelectList(_dbContext.CarTypes, "Id", "Type", car.TypeId);
+
             return View(car);
         }
-
 
         // GET: Cars/Delete/5
         [Authorize(Roles = "Administrador da Empresa")]
@@ -155,7 +135,7 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Car car = await db.Cars.FindAsync(id);
+            Car car = await _dbContext.Cars.FindAsync(id);
             if (car == null)
             {
                 return HttpNotFound();
@@ -170,9 +150,9 @@ namespace CarRenting.Controllers
         
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Car car = await db.Cars.FindAsync(id);
-            db.Cars.Remove(car);
-            await db.SaveChangesAsync();
+            Car car = await _dbContext.Cars.FindAsync(id);
+            _dbContext.Cars.Remove(car);
+            await _dbContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -180,7 +160,7 @@ namespace CarRenting.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _dbContext.Dispose();
             }
             base.Dispose(disposing);
         }

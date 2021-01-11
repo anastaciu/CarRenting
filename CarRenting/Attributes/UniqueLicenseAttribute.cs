@@ -12,8 +12,7 @@ namespace CarRenting.Attributes
 
         public override bool IsValid(object value)
         {
-            if (value != null)
-            {
+           
                 using (var dbContext = new ApplicationDbContext())
                 {
                     var cars = dbContext.Cars.ToList();
@@ -25,7 +24,7 @@ namespace CarRenting.Attributes
                         }
                     }
                 }
-            }
+            
             return true;
         }
 

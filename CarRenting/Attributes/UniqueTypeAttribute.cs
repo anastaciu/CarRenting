@@ -13,15 +13,12 @@ namespace CarRenting.Attributes
         {
             using (var dbContext = new ApplicationDbContext())
             {
-                if (value != null)
+                var carTypes = dbContext.CarTypes.ToList();
+                foreach (var carType in carTypes)
                 {
-                    var carTypes = dbContext.CarTypes.ToList();
-                    foreach (var carType in carTypes)
+                    if (carType.Type.ToString() == value.ToString())
                     {
-                        if (carType.Type.ToString() == value.ToString())
-                        {
-                            return false;
-                        }
+                        return false;
                     }
                 }
                 return true;

@@ -15,27 +15,12 @@ namespace CarRenting.Controllers
 {
     public class ChecksController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext _dbContext = new ApplicationDbContext();
 
         // GET: Checks
         public async Task<ActionResult> Index()
         {
-            return View(await db.Checks.Include(c => c.CarTypes).ToListAsync());
-        }
-
-        // GET: Checks/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Check check = await db.Checks.FindAsync(id);
-            if (check == null)
-            {
-                return HttpNotFound();
-            }
-            return View(check);
+            return View(await _dbContext.Checks.Include(c => c.CarTypes).ToListAsync());
         }
 
         // GET: Checks/Create
@@ -54,10 +39,10 @@ namespace CarRenting.Controllers
             if (ModelState.IsValid)
             {
                 var userId = User.Identity.GetUserId();
-                var company = db.Companies.SingleOrDefault(c => c.Employees.Any(e => e.ApplicationUserId == userId));
+                var company = _dbContext.Companies.SingleOrDefault(c => c.Employees.Any(e => e.ApplicationUserId == userId));
                 check.Company = company;
-                db.Checks.Add(check);
-                await db.SaveChangesAsync();
+                _dbContext.Checks.Add(check);
+                await _dbContext.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
@@ -71,8 +56,8 @@ namespace CarRenting.Controllers
             {
                 return HttpNotFound();
             }
-            var carTypes = db.CarTypes.ToList();
-            Check check = await db.Checks.FindAsync(id);
+            var carTypes = _dbContext.CarTypes.ToList();
+            Check check = await _dbContext.Checks.FindAsync(id);
             if (check == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -106,7 +91,7 @@ namespace CarRenting.Controllers
         {
             if (ModelState.IsValid)
             {
-                var check = await db.Checks.FindAsync(associateViewModel.Id);
+                var check = await _dbContext.Checks.FindAsync(associateViewModel.Id);
                 if (check == null)
                 {
                     return HttpNotFound();
@@ -115,52 +100,21 @@ namespace CarRenting.Controllers
                 {
                     if (carType.Add)
                     {
-                        var type = await db.CarTypes.FindAsync(carType.Id);
+                        var type = await _dbContext.CarTypes.FindAsync(carType.Id);
                         check.CarTypes.Add(type);
                         Debug.WriteLine("Erro" + associateViewModel.Id);
                     }
                     else
                     {
-                        var type = await db.CarTypes.FindAsync(carType.Id);
+                        var type = await _dbContext.CarTypes.FindAsync(carType.Id);
                         check.CarTypes.Remove(type);
                     }
                 }
-                await db.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
             return View(associateViewModel);
-        }
-
-        // GET: Checks/Edit/5
-        public async Task<ActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Check check = await db.Checks.FindAsync(id);
-            if (check == null)
-            {
-                return HttpNotFound();
-            }
-            return View(check);
-        }
-
-        // POST: Checks/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Description")] Check check)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(check).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return View(check);
         }
 
         // GET: Checks/Delete/5
@@ -170,7 +124,7 @@ namespace CarRenting.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Check check = await db.Checks.FindAsync(id);
+            Check check = await _dbContext.Checks.FindAsync(id);
             if (check == null)
             {
                 return HttpNotFound();
@@ -183,9 +137,9 @@ namespace CarRenting.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Check check = await db.Checks.FindAsync(id);
-            db.Checks.Remove(check);
-            await db.SaveChangesAsync();
+            Check check = await _dbContext.Checks.FindAsync(id);
+            _dbContext.Checks.Remove(check);
+            await _dbContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -193,7 +147,7 @@ namespace CarRenting.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _dbContext.Dispose();
             }
             base.Dispose(disposing);
         }

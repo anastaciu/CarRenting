@@ -41,7 +41,7 @@ h2, h4 {
 .log-headers {
     background-color: #343a40;
     color: #ffc107;
-    margin-top: 5vh;
+
 }
 
 .log-headers-h2 {
@@ -63,7 +63,8 @@ h2, h4 {
 }
 
 .backimg {
-    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0%, rgba(255,255,255,0.5) 50%, rgba(240, 173, 78, 0.5) 100%), url("img/pexels-pixabay-326259-min.jpg");
+    background: rgb(91,85,85);
+    background: radial-gradient(circle, rgba(91,85,85,0.13487401796656162) 59%, rgba(255,193,7,1) 100%);
     background-repeat: no-repeat;
     position: fixed;
     left: 0;

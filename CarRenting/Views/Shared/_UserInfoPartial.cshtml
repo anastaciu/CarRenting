@@ -8,13 +8,13 @@
     var userId = User.Identity.GetUserId();
     var userName = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(userId).Name ?? String.Format("Utilizador");
     string companyName;
-    using (var db = new ApplicationDbContext())
+    using (var _dbContext = new ApplicationDbContext())
     {
-        companyName = db.Companies.SingleOrDefault(c => c.Employees.Any(e => e.ApplicationUserId == userId))?.CompanyName ?? string.Empty;
+        companyName = _dbContext.Companies.SingleOrDefault(c => c.Employees.Any(e => e.ApplicationUserId == userId))?.CompanyName ?? string.Empty;
     }
 
-    <div class="full-width log-headers boxshadow">
-        <h4 style="text-align: center">
+    <div class="full-width log-headers boxshadow" style="margin-top: 20px">
+        <h4>
             @userName -
             @if (User.IsInRole(WebConfigurationManager.AppSettings["Cr"]))
             {

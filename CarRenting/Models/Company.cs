@@ -15,8 +15,10 @@ namespace CarRenting.Models
         public int Id { get; set; }
         [Display(Name = "Empresa")]
         [Required(ErrorMessage = "É necessário indicar o nome da empresa")]
-        [UniqueCompany(ErrorMessage = "Já existe uma empresa com o mesmo nome")]
         public string CompanyName { get; set; }
+        [Required]
+        [Display(Name = "Contribuinte")]
+        public string NiF { get; set; }
         [Display(Name = "Telefone")]
         [Phone]
         public string CompanyPhoneNumber { get; set; }        
@@ -24,9 +26,8 @@ namespace CarRenting.Models
         [Phone]
         public string CompanyCellNumber { get; set; }
         [EmailAddress]
-        [Required(ErrorMessage = "É necessário indicar o e-mail")]
-        [Display(Name = "E-mail")]
-        [UniqueCompanyEmail(ErrorMessage = "Já existe uma empresa com o mesmo e-mail")]
+        [Required]
+        [Display(Name = "Email")]
         public string Email { get; set; }
         public virtual ICollection<Check> Checks { get; set; }
         public virtual ICollection<Employee> Employees { get; set; }

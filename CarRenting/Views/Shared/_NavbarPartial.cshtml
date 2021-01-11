@@ -1,0 +1,48 @@
+﻿@using System.Web.Configuration
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark boxshadow">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        @Html.ActionLink("eRenting", "Index", "Home", null, new { @class = "navbar-brand", @style = "color: gold;font-weight:bold;font-size:160%" })
+        <div class="navbar-collapse collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav">
+
+                <li>@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+
+                @if (User.IsInRole(WebConfigurationManager.AppSettings["Cn"]))
+                {
+
+                    <li>@Html.ActionLink("Gerir Checklists", "Index", "Checks", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                    <li>@Html.ActionLink("Gerir Veículos", "CompanyCars", "Cars", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                    <li>@Html.ActionLink("Gerir Utilizadores", "CompanyEmployees", "ApplicationUsers", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+
+                }
+                else if (User.IsInRole(WebConfigurationManager.AppSettings["Ur"]))
+                {
+
+                }
+                else if ((User.IsInRole(WebConfigurationManager.AppSettings["Cr"])))
+                {
+                    <li>@Html.ActionLink("Gerir Reservas", "Index", "Rents", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                    <li>@Html.ActionLink("Entregar Veículo", "ListForDelivery", "Rents", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+
+                }
+                else if ((User.IsInRole(WebConfigurationManager.AppSettings["An"])))
+                {
+
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Ver Viaturas", "Index", "Cars", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                    <li>@Html.ActionLink("Particulares", "RegisterUser", "Account", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                    <li>@Html.ActionLink("Empresas", "RegisterInitCompanyAdmin", "Account", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+
+                }
+            </ul>
+            @Html.Partial("_LoginPartial")
+
+        </div>
+    </div>
+</nav>
