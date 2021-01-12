@@ -1,15 +1,23 @@
 ﻿@model IEnumerable<CarRenting.Models.Company>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Gerir Empresas";
 }
 
-<h2>Index</h2>
+@if (TempData["companyEdited"] as bool? == true)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            toastr.success('Alterações guardadas');
+        });
+    </script>
+}
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<div class="log-headers-h2 boxshadow">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+<table class="table boxshadow">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.CompanyName)
@@ -23,23 +31,24 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CompanyName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CompanyPhoneNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CompanyCellNumber)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyPhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyCellNumber)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", new { id = item.Id })"  title="Editar Dados da Empresa"><i class="fas text-center fa-fw fa-edit text-primary"></i></a>
+                <a href="@Url.Action("Details", new { id = item.Id })"  title="Detalhes da Empresa"><i class="fas fa-fw fa-info-circle text-info"></i></a>
+                <a href="@Url.Action("Delete", new { id = item.Id })"  title="Apagar Empresa"><i class="fas fa-fw fa-trash-alt text-danger"></i></a>
+            </td>
+        </tr>
+    }
 
 </table>

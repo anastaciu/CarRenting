@@ -1,31 +1,32 @@
-﻿@using System.Web.Configuration
-@using System.Web.UI.WebControls
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Renting</title>
+    <title>eRenting</title>
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700%7CRoboto%7CJosefin+Sans:100,300,400,500" rel="stylesheet" type="text/css">
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
 </head>
 <body>
 
     <div class="backimg"></div>
-
-    @Html.Partial("_NavbarPartial")
-
-    <div class="container body-content" style="min-height: 88vh">
-        @Html.Partial("_UserInfoPartial")
-        @RenderBody()
+    <div id="wrapper">
+        <div id="header">
+            @Html.Partial("_NavbarPartial")
+        </div>
+        <div id="content" class="container body-content" style="min-height: 90vh">
+            @Html.Partial("_UserInfoPartial")
+            @RenderBody()
+        </div>
+        <div id="footer">
+            @Html.Partial("_FooterPartial")
+        </div>
     </div>
-
-    @Html.Partial("_FooterPartial")
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/toastr")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

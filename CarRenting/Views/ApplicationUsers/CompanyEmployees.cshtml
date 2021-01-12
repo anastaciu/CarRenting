@@ -6,11 +6,11 @@
 @{
     ViewBag.Title = "Gestão de Utilizadores";
 }
-@if (ViewBag.IsCreated)
+@if (TempData["isCreated"] as bool? == true)
 {
     <script type="text/javascript">
         $(document).ready(function () {
-            toastr.success('Novo utilizador adicionado', 'Operação realizada');
+            toastr.success('Novo utilizador adicionado');
         });
     </script>
 }

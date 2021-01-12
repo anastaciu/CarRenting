@@ -11,9 +11,10 @@ using CarRenting.Models;
 
 namespace CarRenting.Controllers
 {
+    [Authorize(Roles = "Administrador do Site")]
     public class CompaniesController : Controller
     {
-        private ApplicationDbContext _dbContext = new ApplicationDbContext();
+        private readonly ApplicationDbContext  _dbContext = new ApplicationDbContext();
 
         // GET: Companies
         public async Task<ActionResult> Index()
@@ -79,12 +80,13 @@ namespace CarRenting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,CompanyName,CompanyPhoneNumber,CompanyCellNumber")] Company company)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Nif,Email,CompanyName,CompanyPhoneNumber,CompanyCellNumber")] Company company)
         {
             if (ModelState.IsValid)
             {
                 _dbContext.Entry(company).State = EntityState.Modified;
                 await _dbContext.SaveChangesAsync();
+                TempData["companyEdited"] = true;
                 return RedirectToAction("Index");
             }
             return View(company);

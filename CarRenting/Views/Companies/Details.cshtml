@@ -1,42 +1,58 @@
 ﻿@model CarRenting.Models.Company
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Informação da Empresa";
 }
 
-<h2>Details</h2>
+<div class="container">
+    <div class="boxshadow log-headers-h2 col-md-8 offset-md-2">
+        <h2>@ViewBag.Title</h2>
+    </div>
+    <div class="log-headers col-md-8 offset-md-2 boxshadow">
+        <h4>@Model.CompanyName</h4>
+    </div>
+    <div class="jumbotron col-md-8 offset-md-2 boxshadow">
+        <div class="row">
+            <dl class="dl-horizontal col-md-6">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.NiF)
+                </dt>
 
-<div>
-    <h4>Company</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CompanyName)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.NiF)
+                </dd>
+            </dl>
+            <dl class="dl-horizontal col-md-6">
+                <dt>
+                    @Html.DisplayNameFor(model => model.CompanyPhoneNumber)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CompanyName)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.CompanyPhoneNumber)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CompanyPhoneNumber)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CompanyCellNumber)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CompanyPhoneNumber)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.CompanyCellNumber)
+                </dd>
+            </dl>
+        </div>
+      
+        <br/>
+        <div class="text-center">
+            @Html.ActionLink("Voltar", "Index", null, new { @class = "btn-danger btn" })
+            @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn-primary btn" })
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CompanyCellNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CompanyCellNumber)
-        </dd>
-
-    </dl>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+

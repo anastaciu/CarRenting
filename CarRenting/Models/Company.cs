@@ -14,7 +14,7 @@ namespace CarRenting.Models
     {
         public int Id { get; set; }
         [Display(Name = "Empresa")]
-        [Required(ErrorMessage = "É necessário indicar o nome da empresa")]
+        [Required]
         public string CompanyName { get; set; }
         [Required]
         [Display(Name = "Contribuinte")]

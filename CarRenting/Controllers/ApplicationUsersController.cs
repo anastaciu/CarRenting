@@ -59,7 +59,7 @@ namespace CarRenting.Controllers
 
         // GET: ApplicationUsers
         [Authorize(Roles = "Administrador da Empresa")]
-        public ActionResult CompanyEmployees(bool? isCreated)
+        public ActionResult CompanyEmployees()
         {
             var userId = User.Identity.GetUserId();
             var employees = dbContext.Companies.Include(c=>c.Employees).SingleOrDefault(c => c.Employees.Any(e => e.ApplicationUserId == userId))?.Employees; 
@@ -82,7 +82,6 @@ namespace CarRenting.Controllers
                     }
                 }
             }
-            ViewBag.IsCreated = isCreated != null;
             return View(empList);
         }
 
@@ -92,7 +91,7 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return HttpNotFound();
             }
             ApplicationUser applicationUser = await Task.FromResult(dbContext.Users.Find(id));
             if (applicationUser == null)
@@ -111,7 +110,7 @@ namespace CarRenting.Controllers
             }
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index", "Home");
             }
             ApplicationUser applicationUser = dbContext.Users.Find(id);
             if (applicationUser == null)
@@ -137,7 +136,7 @@ namespace CarRenting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Email,PhoneNumber,Role")] UserViewModel applicationUser)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Email,PhoneNumber,Role")] UserViewModel applicationUser)
         {
             var user = dbContext.Users.Find(applicationUser.Id);
             SelectList roles;
@@ -169,9 +168,8 @@ namespace CarRenting.Controllers
                     user.PhoneNumber = applicationUser.PhoneNumber;
                     user.UserName = applicationUser.Email;
                     user.Name = applicationUser.Name;
-                    user.Email = applicationUser.Email;
                     dbContext.Entry(user).State = EntityState.Modified;
-                    dbContext.SaveChanges();
+                    await dbContext.SaveChangesAsync();
               
                     return RedirectToAction("CompanyEmployees");
                 }

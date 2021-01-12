@@ -3,94 +3,97 @@
     ViewBag.Title = "Registar Empresa";
 }
 
-@using (Html.BeginForm("RegisterInitCompanyAdmin", "Account", FormMethod.Post, new { @role = "form" }))
-{
+<div class="container">
 
-    @Html.AntiForgeryToken()
+    @using (Html.BeginForm("RegisterInitCompanyAdmin", "Account", FormMethod.Post, new { @role = "form" }))
+    {
 
-    <div class="log-headers-h2 boxshadow container" style="margin-bottom: 1vh">
-        <h2 class="text-center">@ViewBag.Title</h2>
-    </div>
+        @Html.AntiForgeryToken()
 
-    <div class=" jumbotron boxshadow">
-        <div class="row">
-            <div class="col-md-6">
-                
-                <div class="log-headers boxshadow offset-md-1 col-md-10">
-                    <h4>Dados da Empresa</h4>
-                </div>
-                <div class="form-group offset-1 col-md-10">
-                    @Html.LabelFor(m => m.Company.CompanyName, new {@class = "col-form-label"})
-                    @Html.TextBoxFor(m => m.Company.CompanyName, new {@class = "form-control "})
-                </div>
-                <div class="form-group offset-1 col-md-10">
-                    @Html.LabelFor(m => m.Company.Email, new {@class = "col-form-label"})
-                    @Html.TextBoxFor(m => m.Company.Email, new {@class = "form-control"})
-                </div>
-                <div class="form-group offset-1 col-md-10">
-                    @Html.LabelFor(m => m.Company.NiF, new {@class = "col-form-label"})
-                    @Html.TextBoxFor(m => m.Company.NiF, new {@class = "form-control "})
-                </div>
-
-                <div class="form-group offset-1 col-md-10">
-                    @Html.LabelFor(m => m.Company.CompanyCellNumber, new {@class = "col-form-label"})
-                    @Html.TextBoxFor(m => m.Company.CompanyCellNumber, new {@class = "form-control"})
-                </div>
-
-
-                <div class="form-group offset-1 col-md-10">
-                    @Html.LabelFor(m => m.Company.CompanyPhoneNumber, new {@class = "col-form-label"})
-                    @Html.TextBoxFor(m => m.Company.CompanyPhoneNumber, new {@class = "form-control"})
-                </div>
-
-            </div>
-            <div class="col-md-6">
-                <div class="log-headers boxshadow offset-md-1 col-md-10">
-                    <h4>Dados do Administrador</h4>
-                </div>
-                <div>
-                    <div class="form-group offset-1 col-md-10">
-                        @Html.LabelFor(m => m.Name, new { @class = "col-form-label" })
-                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group offset-1 col-md-10">
-                        @Html.LabelFor(m => m.Email, new { @class = "col-form-label" })
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group offset-1 col-md-10">
-                        @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-form-label" })
-                        @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
-                    </div>
-                    <div class=" form-group offset-1 col-md-10">
-                        @Html.LabelFor(m => m.Password, new { @class = "col-form-label" })
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group offset-1 col-md-10">
-                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-form-label" })
-                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-         
-                    </div>
-                </div>
-            </div>
+        <div class="log-headers-h2 boxshadow container" style="margin-bottom: 1vh">
+            <h2 class="text-center">@ViewBag.Title</h2>
         </div>
-        <div class="row">
-            <div class="col-md-10 offset-md-1">
-                @Html.ValidationSummary("", new { @class = "text-danger bg-warning" })
+
+        <div class=" jumbotron boxshadow">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="log-headers boxshadow offset-md-1 col-md-10">
+                        <h4>Dados da Empresa</h4>
+                    </div>
+                    <div class="form-group offset-1 col-md-10">
+                        @Html.LabelFor(m => m.Company.CompanyName, new { @class = "col-form-label" })
+                        @Html.TextBoxFor(m => m.Company.CompanyName, new { @class = "form-control " })
+                    </div>
+                    <div class="form-group offset-1 col-md-10">
+                        @Html.LabelFor(m => m.Company.Email, new { @class = "col-form-label" })
+                        @Html.TextBoxFor(m => m.Company.Email, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group offset-1 col-md-10">
+                        @Html.LabelFor(m => m.Company.NiF, new { @class = "col-form-label" })
+                        @Html.TextBoxFor(m => m.Company.NiF, new { @class = "form-control " })
+                    </div>
+
+                    <div class="form-group offset-1 col-md-10">
+                        @Html.LabelFor(m => m.Company.CompanyCellNumber, new { @class = "col-form-label" })
+                        @Html.TextBoxFor(m => m.Company.CompanyCellNumber, new { @class = "form-control" })
+                    </div>
+
+
+                    <div class="form-group offset-1 col-md-10">
+                        @Html.LabelFor(m => m.Company.CompanyPhoneNumber, new { @class = "col-form-label" })
+                        @Html.TextBoxFor(m => m.Company.CompanyPhoneNumber, new { @class = "form-control" })
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="log-headers boxshadow offset-md-1 col-md-10">
+                        <h4>Dados do Administrador</h4>
+                    </div>
+                    <div>
+                        <div class="form-group offset-1 col-md-10">
+                            @Html.LabelFor(m => m.Name, new { @class = "col-form-label" })
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group offset-1 col-md-10">
+                            @Html.LabelFor(m => m.Email, new { @class = "col-form-label" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group offset-1 col-md-10">
+                            @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-form-label" })
+                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+                        </div>
+                        <div class=" form-group offset-1 col-md-10">
+                            @Html.LabelFor(m => m.Password, new { @class = "col-form-label" })
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group offset-1 col-md-10">
+                            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-form-label" })
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <br />
-        <div>
-            <div class="text-center">
-                @Html.ActionLink("Já tenho uma conta", "Login", null, new { @class = "text-white" })
+            <div class="row">
+                <div class="col-md-10 offset-md-1">
+                    @Html.ValidationSummary("", new { @class = "text-danger bg-warning" })
+                </div>
             </div>
             <br />
-            <div class="text-center">
-                @Html.ActionLink("Cancelar", "Index", "Home", null, new { @class = "btn btn-danger" })
-                <input type="submit" class="btn btn-primary" value="Registar" />
+            <div>
+                <div class="text-center">
+                    @Html.ActionLink("Já tenho uma conta", "Login", null, new { @class = "text-white" })
+                </div>
+                <br />
+                <div class="text-center">
+                    @Html.ActionLink("Cancelar", "Index", "Home", null, new { @class = "btn btn-danger" })
+                    <input type="submit" class="btn btn-primary" value="Registar" />
+                </div>
             </div>
         </div>
-    </div>
-}
+    }
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

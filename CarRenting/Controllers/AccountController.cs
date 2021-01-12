@@ -125,7 +125,7 @@ namespace CarRenting.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Dados incorretos!");
+                    ModelState.AddModelError("", @"Dados incorretos!");
                     return View(model);
             }
         }
@@ -271,8 +271,8 @@ namespace CarRenting.Controllers
                         // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                        return RedirectToAction("CompanyEmployees", "ApplicationUsers", new { isCreated = true });
+                        TempData["isCreated"] = true;
+                        return RedirectToAction("CompanyEmployees", "ApplicationUsers");
                     }
                     else
                     {
@@ -312,7 +312,25 @@ namespace CarRenting.Controllers
             }
             if (ModelState.IsValid)
             {
+                var company = model.Company;
+
+                if (_dbContext.Companies.Any(c => c.CompanyName == model.Company.CompanyName))
+                {
+                    ModelState.AddModelError(nameof(company.CompanyName), @"Já existe uma empresa com o mesmo nome!");
+                    return View(model);
+                }
+                if (_dbContext.Companies.Any(c => c.Email== company.Email))
+                {
+                    ModelState.AddModelError(nameof(company.Email), @"Já existe uma empresa com o mesmo email!");
+                    return View(model);
+                }
+                if (_dbContext.Companies.Any(c => c.NiF == company.Email))
+                {
+                    ModelState.AddModelError(nameof(company.NiF), @"Já existe uma empresa com o mesmo contribuinte!");
+                    return View(model);
+                }
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, PhoneNumber = model.PhoneNumber };
+
                 var result = UserManager.Create(user, model.Password);
 
                 if (result.Succeeded)
@@ -320,46 +338,33 @@ namespace CarRenting.Controllers
                     var role = UserManager.AddToRole(user.Id, WebConfigurationManager.AppSettings["Cn"]);
                     if (role.Succeeded)
                     {
-                        var company = model.Company;
-                        
-                            if (_dbContext.Companies.Any(c => c.CompanyName == model.Company.CompanyName))
-                            {
-                                ModelState.AddModelError("CompanyName", @"Já existe uma empresa com o mesmo nome!");
-                                return View(model);
-                            }
 
-                            if (_dbContext.Companies.Any(c => c.CompanyName == company.Email))
-                            {
-                                ModelState.AddModelError(nameof(model.Company.Email), @"Já existe uma empresa com o mesmo email!");
-                                return View(model);
-                            }
+                        _dbContext.Companies.Add(model.Company);
+                        try
+                        {
+                            await _dbContext.SaveChangesAsync();
+                        }
+                        catch (Exception exception)
+                        {
+                            await UserManager.DeleteAsync(user);
+                            ModelState.AddModelError("", exception.Message);
+                            return View(model);
+                        }
+                        Employee emp = new Employee { ApplicationUserId = user.Id, Company = company };
+                        _dbContext.Employees.Add(emp);
+                        try
+                        {
+                            await _dbContext.SaveChangesAsync();
+                        }
+                        catch (Exception exception)
+                        {
+                            await UserManager.DeleteAsync(user);
+                            _dbContext.Companies.Remove(company);
+                            ModelState.AddModelError("", exception.Message);
+                            return View(model);
+                        }
 
-                            _dbContext.Companies.Add(model.Company);
-                            try
-                            {
-                                await _dbContext.SaveChangesAsync();
-                            }
-                            catch (Exception exception)
-                            {
-                                await UserManager.DeleteAsync(user);
-                                ModelState.AddModelError("", exception.Message);
-                                return View(model);
-                            }
-                            Employee emp = new Employee { ApplicationUserId = user.Id, Company = company };
-                            _dbContext.Employees.Add(emp);
-                            try
-                            {
-                                await _dbContext.SaveChangesAsync();
-                            }
-                            catch (Exception exception)
-                            {
-                                await UserManager.DeleteAsync(user);
-                                _dbContext.Companies.Remove(company);
-                                ModelState.AddModelError("", exception.Message);
-                                return View(model);
-                            }
 
-                        
                         SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
 
                         // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -367,7 +372,7 @@ namespace CarRenting.Controllers
                         //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                        TempData["isRegistered"] = true;
                         return RedirectToAction("Index", "CompanyAdminArea");
                     }
                     else

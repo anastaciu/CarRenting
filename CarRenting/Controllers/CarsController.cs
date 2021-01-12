@@ -17,12 +17,12 @@ namespace CarRenting.Controllers
 {
     public class CarsController : Controller
     {
-        private ApplicationDbContext _dbContext = new ApplicationDbContext();
+        private readonly ApplicationDbContext _dbContext = new ApplicationDbContext();
 
         // GET: Cars
         public async Task<ActionResult> Index()
         {
-            if (User.Identity.IsAuthenticated)
+            if (Request.IsAuthenticated)
             {
                 RedirectToAction("Index", "Home");
             }
@@ -35,9 +35,10 @@ namespace CarRenting.Controllers
         {
             var userId = User.Identity.GetUserId();
             var employee = _dbContext.Employees.Include(e=>e.Company).SingleOrDefault(e => e.ApplicationUserId == userId);
-            var carsWithType = _dbContext.Cars.Where(c=>c.CompanyId == employee.CompanyId).Include(c=>c.Type);
-            return View(await carsWithType.ToListAsync());
+            var cars = _dbContext.Cars.Where(c=>c.CompanyId == employee.CompanyId).Include(c=>c.Type);
+            return View(await cars.ToListAsync());
         }
+
         // GET: Cars/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -72,6 +73,14 @@ namespace CarRenting.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                var repeat = _dbContext.Cars.Any(c => c.License == car.License);
+                {
+                    ModelState.AddModelError("License", @"Matrícula já esta registada");
+                }
+                var cars = _dbContext.Cars.ToList();
+                
+
                 var userId = User.Identity.GetUserId();
                 var employee = _dbContext.Employees.Include(e=>e.Company).SingleOrDefault(e => e.ApplicationUserId == userId);
                 if (employee != null)
@@ -79,6 +88,7 @@ namespace CarRenting.Controllers
                     car.Company = employee.Company;
                     _dbContext.Cars.Add(car);
                     await _dbContext.SaveChangesAsync();
+                    TempData["carCreated"] = true;
                     return RedirectToAction("CompanyCars");
                 }
             }
@@ -114,6 +124,7 @@ namespace CarRenting.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Brand,Model,Fuel,FuelLevel,Seats,TypeId,Price,Kms,CompanyId")] Car car)
         {
+
             if (ModelState.IsValid)
             {
                 _dbContext.Entry(car).State = EntityState.Modified;

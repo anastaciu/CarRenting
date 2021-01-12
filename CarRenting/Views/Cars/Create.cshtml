@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-group offset-1 col-md-10">
                     @Html.LabelFor(model => model.License, htmlAttributes: new { @class = "col-form-label" })
-                    @Html.EditorFor(model => model.License, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.License, new { htmlAttributes = new { @class = "form-control", @placeholder = "XX-XX-XX" } })
                     @Html.ValidationMessageFor(model => model.License, "", new { @class = "text-danger bg-warning" })
 
                 </div>
@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="form-group offset-1 col-md-10">
-                    @Html.LabelFor(model => model.TypeId, "TypeId", htmlAttributes: new { @class = "col-form-label" })
+                    @Html.LabelFor(model => model.TypeId, htmlAttributes: new { @class = "col-form-label" })
                     @Html.DropDownList("TypeId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.TypeId, "", new { @class = "text-danger bg-warning" })
 
@@ -66,7 +66,7 @@
 
                 <div class="form-group offset-1 col-md-10">
                     @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "col-form-label" })
-                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @placeholder="00,00" } })
                     @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger bg-warning" })
 
                 </div>

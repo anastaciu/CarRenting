@@ -14,7 +14,6 @@ namespace CarRenting.Models
         public int Id { get; set; }
         [Display(Name = "Matrícula")]
         [Required]
-        [UniqueLicense(ErrorMessage = "A matrícula já está registada")]
         public string License { get; set; }
         [Display(Name = "Marca")]
         [Required]
@@ -33,7 +32,9 @@ namespace CarRenting.Models
         [Required]
         public int Seats { get; set; }
         [ForeignKey("Type")]
+        [Display(Name = "Categoria")]
         public int TypeId { get; set; }
+        [Display(Name = "Categoria")]
         public CarType Type { get; set; }
         [Display(Name = "Preço/Dia")]
         [Required]

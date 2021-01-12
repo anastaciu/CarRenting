@@ -1,4 +1,14 @@
-﻿<div class="card-deck" style="padding-top: 20vh">
+﻿
+@if (TempData["isRegistered"] as bool? == true)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            toastr.success('Bem vindo à eRenting', 'Registo efectuado');
+        });
+    </script>
+}
+
+<div class="card-deck" style="padding-top: 20vh">
 
     <div class="card bg-warning boxshadow btn-hover">
         <a href="@Url.Action("CompanyEmployees", "ApplicationUsers")" style="text-decoration: none">
@@ -13,7 +23,7 @@
             </div>
         </a>
     </div>
-   
+
     <div class="card bg-warning boxshadow btn-hover">
         <a href="@Url.Action("CompanyCars", "Cars")" style="text-decoration: none">
             <div class="card-body text-center text-dark">
@@ -27,7 +37,7 @@
             </div>
         </a>
     </div>
-    
+
     <div class="card bg-warning boxshadow btn-hover">
         <a href="@Url.Action("Index", "Checks")" style="text-decoration: none">
             <div class="card-body text-center text-dark">

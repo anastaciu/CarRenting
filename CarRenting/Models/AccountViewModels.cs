@@ -104,7 +104,7 @@ namespace CarRenting.Models
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Confirmar password")]
         [Compare("Password", ErrorMessage = "A palavra passe e a confirmação não coincidem!")]
         public string ConfirmPassword { get; set; }
 

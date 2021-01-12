@@ -4,6 +4,9 @@
 @{
     ViewBag.Title = "Adicionar Utilizador";
 }
+
+
+
 <div class="container">
     <div class="log-headers-h2 boxshadow offset-md-2 col-md-8">
         <h2>@ViewBag.Title</h2>
@@ -13,42 +16,39 @@
     {
         @Html.AntiForgeryToken()
         <div class="offset-md-2 col-md-8 jumbotron boxshadow">
-            <div class="bg-warning offset-1 col-md-10">
+            <div class="bg-warning offset-md-1 col-md-10">
                 @Html.ValidationSummary("", new { @class = "text-danger" })
             </div>
             <div class="form-group offset-1 col-md-10">
-                @Html.LabelFor(m => m.Name, new {@class = "col-form-label"})
-
-                @Html.TextBoxFor(m => m.Name, new {@class = "form-control", @placeholder="Nome Apelido"})
+                @Html.LabelFor(m => m.Name, new { @class = "col-form-label" })
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Nome Apelido" })
             </div>
             <div class="form-group offset-1 col-md-10">
-                @Html.LabelFor(m => m.Email, new {@class = "col-form-label"})
-
-                @Html.TextBoxFor(m => m.Email, new {@class = "form-control", @placeholder = "email@email.com" })
+                @Html.LabelFor(m => m.Email, new { @class = "col-form-label" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "email@email.com" })
 
             </div>
             <div class="form-group offset-1 col-md-10">
-                @Html.LabelFor(m => m.PhoneNumber, new {@class = "col-form-label"})
+                @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-form-label" })
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", @placeholder = "912345678" })
+            </div>
+            <div class="form-group offset-1 col-md-10">
+                @Html.LabelFor(m => m.Password, new { @class = "col-form-label" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
 
-                @Html.TextBoxFor(m => m.PhoneNumber, new {@class = "form-control", @placeholder = "912345678" })
             </div>
             <div class="form-group offset-1 col-md-10">
-                @Html.LabelFor(m => m.Password, new {@class = "col-form-label"})
-                @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
-
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-form-label" })
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
             </div>
             <div class="form-group offset-1 col-md-10">
-                @Html.LabelFor(m => m.ConfirmPassword, new {@class = "col-form-label"})
-                @Html.PasswordFor(m => m.ConfirmPassword, new {@class = "form-control"})
+                @Html.LabelFor(m => m.RoleName, new { @class = "col-form-label" })
+                @Html.DropDownListFor(m => m.RoleName, new SelectList(ViewBag.Roles, "Value", "Text"), new { @class = "form-control" })
             </div>
-            <div class="form-group offset-1 col-md-10">
-                @Html.LabelFor(m => m.RoleName, new {@class = "col-form-label"})
-                @Html.DropDownListFor(m => m.RoleName, new SelectList(ViewBag.Roles, "Value", "Text"), new {@class = "form-control"})
-            </div>
-            <br/>
+            <br />
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    @Html.ActionLink("Cancelar", "CompanyEmployees", "ApplicationUsers", null, new {@class = "btn btn-danger"})
+                    @Html.ActionLink("Cancelar", "CompanyEmployees", "ApplicationUsers", null, new { @class = "btn btn-danger" })
                     <button type="submit" class="btn btn-primary" Style="width: 100px;">Registar</button>
                 </div>
             </div>

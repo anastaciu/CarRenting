@@ -18,8 +18,8 @@ namespace CarRenting.Models
         }
         public int Id { get; set; }
         [Display(Name = "Categoria")]
+        [Required]
         [UniqueType(ErrorMessage = "Já existe uma categoria com o mesmo nome")]
-        [Required(AllowEmptyStrings = false)]
         public string Type { get; set; }
         public virtual ICollection<Car> Cars { get; set; }
         public virtual ICollection<Check> Checks { get; set; }
