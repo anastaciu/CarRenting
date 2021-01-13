@@ -3,12 +3,12 @@
 
 <div class="container">
 
-    <h2 class="log-headers-h2 boxshadow" style="margin-top: 10vh">
+    <h2 class="log-headers-h2 boxshadow col-md-12" style="margin-top: 10vh">
         Lista de Veículos
     </h2>
 
     <div>
-        <table class="table boxshadow">
+        <table class="table boxshadow col-md-12">
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Company.CompanyName)
@@ -66,7 +66,7 @@
                     </td>
                     <td>
 
-                        @Html.ActionLink("Reservar", "RentVehicle", "Rents", new { carId = item.Id }, new { @class = "btn btn-primary", @style = "padding:2px" })
+                        @Html.ActionLink("Reservar", "RentVehicle", "Rents", new {carId = item.Id}, new {@class = "btn btn-primary", @style = "padding:2px"})
                     </td>
                 </tr>
             }

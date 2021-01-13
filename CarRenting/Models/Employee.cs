@@ -9,6 +9,7 @@ namespace CarRenting.Models
     {
         public int Id { get; set; }
         [Required]
+        [Index(IsUnique = true)]
         [ForeignKey("ApplicationUser")]
         public string ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }

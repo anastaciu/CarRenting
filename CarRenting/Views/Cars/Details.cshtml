@@ -5,10 +5,9 @@
     ViewBag.Title = "Details";
 }
 
-
-    <div class="log-headers-h2 boxshadow container" style="margin-bottom: 1vh">
-        <h2>Detalhes do Veículo</h2>
-    </div>
+<div class="log-headers-h2 boxshadow container" style="margin-bottom: 1vh">
+    <h2>Detalhes do Veículo</h2>
+</div>
 
 <div class="jumbotron boxshadow">
     <div class="row">
@@ -93,23 +92,28 @@
             </dd>
         </dl>
     </div>
-    <br/>
+    <br />
     <div class="text-center">
 
         @if (User.IsInRole(WebConfigurationManager.AppSettings.Get("Cn")))
         {
-            @Html.ActionLink("Voltar", "CompanyCars", null, new {@class = "btn btn-danger"})
+            @Html.ActionLink("Voltar", "CompanyCars", null, new { @class = "btn btn-danger" })
+            @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+        }
+        else if (User.IsInRole(WebConfigurationManager.AppSettings.Get("An")))
+        {
+            @Html.ActionLink("Voltar", "Catalog", new{id = Model.Company.Id}, new { @class = "btn btn-danger" })
         }
         else if (!Request.IsAuthenticated)
         {
-            @Html.ActionLink("Voltar", "Index", null, new {@class = "btn btn-danger"})
+            @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-danger" })
         }
         else
         {
-            @Html.ActionLink("Voltar", "Index", "Home", new {@class = "btn btn-danger"})
+            @Html.ActionLink("Voltar", "Index", "Home", new { @class = "btn btn-danger" })
         }
 
-        @Html.ActionLink("Editar", "Edit", new {id = Model.Id}, new {@class = "btn btn-primary"})
+
     </div>
 </div>
 

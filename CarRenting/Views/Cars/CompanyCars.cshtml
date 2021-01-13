@@ -1,10 +1,13 @@
-﻿@model IEnumerable<CarRenting.Models.Car>
+﻿@using System.Web.Configuration
+@model IEnumerable<CarRenting.Models.Car>
 
 
 @{
-    ViewBag.Title = "Gestão de Frota";
+    var isCompanyAdmin = User.IsInRole(WebConfigurationManager.AppSettings["Cn"]);
 }
-
+@{
+    ViewBag.Title = isCompanyAdmin ? "Gestão de Frota" : "Catálogo de Veículos";
+}
 @if (TempData["carCreated"] as bool? == true)
 {
     <script type="text/javascript">
@@ -17,6 +20,15 @@
 <div class="log-headers-h2 boxshadow">
     <h2>@ViewBag.Title</h2>
 </div>
+
+@if (!isCompanyAdmin && Model.Any())
+{
+    <div class="log-headers boxshadow">
+        <h4>
+            @Html.DisplayTextFor(model => model.SingleOrDefault().Company.CompanyName)
+        </h4>
+    </div>
+}
 
 <table class="table boxshadow">
     <tr>
@@ -69,14 +81,26 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn-primary btn", @style = "padding:2px" })
+                @if (isCompanyAdmin)
+                {
+                    @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn-primary btn", @style = "padding:2px" })
+                }
                 @Html.ActionLink("Ver", "Details", new { id = item.Id }, new { @class = "btn-info btn", @style = "padding:2px" })
             </td>
         </tr>
     }
 </table>
-<p class="text-center">
-    @Html.ActionLink("Voltar", "Index", "CompanyAdminArea", null, new { @class = "btn btn-danger" })
-    @Html.ActionLink("Adicionar Novo Veículo", "Create", null, new { @class = "btn btn-primary" })
 
-</p>
+<div class="text-center">
+    @if (isCompanyAdmin)
+    {
+      
+        @Html.ActionLink("Voltar", "Index", "CompanyAdminArea", null, new { @class = "btn btn-danger" })
+        @Html.ActionLink("Adicionar Novo Veículo", "Create", null, new { @class = "btn btn-primary" })
+
+    }
+    else
+    {
+        @Html.ActionLink("Voltar", "Index", "Companies", null, new { @class = "btn btn-danger" })
+    }
+</div>

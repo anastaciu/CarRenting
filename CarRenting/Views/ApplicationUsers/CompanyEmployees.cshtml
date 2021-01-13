@@ -15,6 +15,16 @@
     </script>
 }
 
+@if (TempData["isChanged"] as bool? == true)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            toastr.success('Alterações guardadas');
+        });
+
+    </script>
+}
+
 <div class="log-headers-h2 boxshadow">
     <h2>@ViewBag.Title</h2>
 </div>

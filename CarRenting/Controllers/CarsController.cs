@@ -39,6 +39,24 @@ namespace CarRenting.Controllers
             return View(await cars.ToListAsync());
         }
 
+
+
+
+        [Authorize(Roles = "Administrador do Site")]
+        // GET: Cars/Details/5
+        public async Task<ActionResult> Catalog(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            var cars = _dbContext.Cars.Where(c => c.CompanyId == id);
+            
+            return View("CompanyCars", await _dbContext.Cars.Include(c=>c.Company).Include(c=>c.Type).Where(c => c.CompanyId == id).ToListAsync());
+        }
+
+
+
         // GET: Cars/Details/5
         public async Task<ActionResult> Details(int? id)
         {

@@ -21,7 +21,7 @@
     {
         <script type="text/javascript">
             $(document).ready(function() {
-                toastr.error('Categoria Não Modificada', 'Operação não realizada');
+                toastr.error('Categoria Não Modificada');
             });
         </script>
     }
@@ -32,13 +32,13 @@
 {
 <script type="text/javascript">
     $(document).ready(function() {
-        toastr.success('Categoria Criada', 'Operação realizada');
+        toastr.success('Categoria Criada');
     });
 </script>
 }
 
 
-<div class="log-headers boxshadow">
+<div class="log-headers-h2 boxshadow">
     <h2>@ViewBag.Title</h2>
 </div>
 
@@ -47,7 +47,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Type)
         </th>
-        <th></th>
     </tr>
 
     @foreach (var item in Model) {

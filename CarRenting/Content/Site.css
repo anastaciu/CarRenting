@@ -181,7 +181,7 @@ tr:nth-child(even) {
 
 .toast {
     opacity: 0.8 !important;
-    font-weight: bolder !important;
+    font-weight: bold !important;
     -webkit-transition: all 0.2s ease 0s;
     -moz-transition: all 0.2s ease 0s;
     -o-transition: all 0.2s ease 0s;
@@ -195,5 +195,4 @@ tr:nth-child(even) {
         -o-transition: all 0.2s ease 0s;
         transition: all 0.2s ease 0s;
     }
-
 

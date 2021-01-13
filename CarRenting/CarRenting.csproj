@@ -366,6 +366,7 @@
     <Content Include="Content\fontawesome.css" />
     <Content Include="Content\fontawesome.min.css" />
     <Content Include="Content\img\pexels-pixabay-326259-min.jpg" />
+    <Content Include="Content\img\search.png" />
     <Content Include="Content\LICENSE.txt" />
     <Content Include="Content\regular.css" />
     <Content Include="Content\regular.min.css" />
