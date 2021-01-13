@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.Diagnostics;
+﻿using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CarRenting.Models;
@@ -42,11 +36,11 @@ namespace CarRenting.Controllers
         [Authorize(Roles = "Utilizador Registado")]
         public async Task<ActionResult> RentVehicle(int? carId)
         {
-            var userId = User.Identity.GetUserId();
             if (carId == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(400, NoRent());
             }
+            var userId = User.Identity.GetUserId();
             Rent rent = new Rent { CarId = (int)carId, ApplicationUserId = userId };
             return View(await Task.FromResult(rent));
         }
@@ -63,14 +57,13 @@ namespace CarRenting.Controllers
             {
                 if (rent.End.Day < rent.Begin.Day)
                 {
-                    ModelState.AddModelError(nameof(rent.End), string.Format(@"Data de fim não pode ser inferior à data de início"));
+                    ModelState.AddModelError(nameof(rent.End), @"Data de fim não pode ser inferior à data de início");
                     return View(rent);
                 }
                 _dbContext.Rents.Add(rent);
                 await _dbContext.SaveChangesAsync();
                 return RedirectToAction("UserRents");
             }
-
             return View(rent);
         }
 
@@ -79,12 +72,12 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(400, NoRent());
             }
             var rent = await _dbContext.Rents.FindAsync(id);
             if (rent == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoRentFound());
             }
             if (ModelState.IsValid)
             {
@@ -96,7 +89,6 @@ namespace CarRenting.Controllers
             TempData["isConfirmed"] = true;
             return RedirectToAction("Index");
         }
-
 
         // GET: Rents
         [Authorize(Roles = "Utilizador da Empresa")]
@@ -110,10 +102,14 @@ namespace CarRenting.Controllers
         [Authorize(Roles = "Utilizador da Empresa")]
         public async Task<ActionResult> DeliverVehicle(int? id)
         {
+            if (id == null)
+            {
+                throw new HttpException(400, NoRent());
+            }
             var rent = await _dbContext.Rents.Include(r => r.Car).SingleOrDefaultAsync(r => r.Id == id);
             if (rent == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(404, NoRentFound());
             }
             var fuelList = SelectLists.FuelLevelList();
             ViewBag.FuelLevels = fuelList;
@@ -138,7 +134,7 @@ namespace CarRenting.Controllers
                 var rent = await _dbContext.Rents.Include(r => r.Car).SingleOrDefaultAsync(r => r.Id == deliveryModel.Id);
                 if (rent == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    throw new HttpException(404, NoRentFound());
                 }
                 rent.DeliveryFaults = deliveryModel.DeliveryFaults;
                 rent.KmsOut = deliveryModel.KmsOut;
@@ -149,10 +145,8 @@ namespace CarRenting.Controllers
                 TempData["isDelivered"] = true;
                 return RedirectToAction("Index", "CompanyUserArea");
             }
-
             var fuelList = SelectLists.FuelLevelList();
             ViewBag.FuelLevels = fuelList;
-
             return View(deliveryModel);
         }
 
@@ -167,12 +161,12 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(400, NoRent());
             }
             var rent = await _dbContext.Rents.Include(r => r.Car).SingleOrDefaultAsync(r => r.Id == id);
             if (rent == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(404, NoRentFound());
             }
             var fuelList = SelectLists.FuelLevelList();
             ViewBag.FuelLevels = fuelList;
@@ -180,9 +174,7 @@ namespace CarRenting.Controllers
             {
                 Id = rent.Id,
                 KmsIn = rent.Car.Kms
-
             };
-
             return View(receptionViewModel);
         }
 
@@ -196,7 +188,7 @@ namespace CarRenting.Controllers
                 var rent = await _dbContext.Rents.FindAsync(receptionViewModel.Id);
                 if (rent == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    throw new HttpException(404, NoRentFound());
                 }
                 rent.IsChecked = true;
                 rent.KmsIn = receptionViewModel.KmsIn;
@@ -232,12 +224,12 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(400, NoRent());
             }
             Rent rent = await _dbContext.Rents.Include(r => r.Car).Include(r => r.ApplicationUser).FirstOrDefaultAsync(r => r.Id == id);
             if (rent == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoRentFound());
             }
             return View(rent);
         }
@@ -274,12 +266,12 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(400, NoRent());
             }
             Rent rent = await _dbContext.Rents.FindAsync(id);
             if (rent == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoRentFound());
             }
             ViewBag.ApplicationUserId = new SelectList(_dbContext.Users, "Id", "Name", rent.ApplicationUserId);
             ViewBag.CarId = new SelectList(_dbContext.Cars, "Id", "License", rent.CarId);
@@ -309,12 +301,12 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(400, NoRent());
             }
             Rent rent = await _dbContext.Rents.FindAsync(id);
             if (rent == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoRentFound());
             }
             return View(rent);
         }
@@ -322,9 +314,17 @@ namespace CarRenting.Controllers
         // POST: Rents/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int? id)
         {
+            if (id == null)
+            {
+                throw new HttpException(400, NoRent());
+            }
             Rent rent = await _dbContext.Rents.FindAsync(id);
+            if (rent == null)
+            {
+                throw new HttpException(404, NoRentFound());
+            }
             _dbContext.Rents.Remove(rent);
             await _dbContext.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -337,6 +337,15 @@ namespace CarRenting.Controllers
                 _dbContext.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private string NoRent()
+        {
+            return @"É necessário indicar uma reserva";
+        }
+        private string NoRentFound()
+        {
+            return @"A Reserva não existe ou não foi encontrada";
         }
     }
 }

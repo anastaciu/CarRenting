@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Net;
 using System.Web;
-using System.Web.Configuration;
 using System.Web.Mvc;
 using CarRenting.Models;
 using CarRenting.Utils;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 
 namespace CarRenting.Controllers
 {
@@ -51,6 +45,11 @@ namespace CarRenting.Controllers
                 return HttpNotFound();
             }
             var cars = _dbContext.Cars.Where(c => c.CompanyId == id);
+
+            if (cars == null)
+            {
+                throw new HttpException(404, NoCarFound());
+            }
             
             return View("CompanyCars", await _dbContext.Cars.Include(c=>c.Company).Include(c=>c.Type).Where(c => c.CompanyId == id).ToListAsync());
         }
@@ -62,13 +61,13 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return RedirectToAction("Index", "Error");
+                throw new HttpException(400, NoCar());
             }
             Car car = await _dbContext.Cars.Include(c=>c.Type).Include(c=>c.Company).SingleOrDefaultAsync(c=>c.Id == id);
 
             if (car == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoCarFound());
             }
             return View(car);
         }
@@ -93,12 +92,14 @@ namespace CarRenting.Controllers
             {
 
                 var repeat = _dbContext.Cars.Any(c => c.License == car.License);
+                if(repeat)
                 {
                     ModelState.AddModelError("License", @"Matrícula já esta registada");
+                    ViewBag.FuelLevels = SelectLists.FuelLevelList();
+                    ViewBag.TypeId = new SelectList(_dbContext.CarTypes, "Id", "Type", car.TypeId);
+                    return View(car);
                 }
-                var cars = _dbContext.Cars.ToList();
                 
-
                 var userId = User.Identity.GetUserId();
                 var employee = _dbContext.Employees.Include(e=>e.Company).SingleOrDefault(e => e.ApplicationUserId == userId);
                 if (employee != null)
@@ -121,12 +122,12 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(400, NoCar());
             }
             Car car = await _dbContext.Cars.FindAsync(id);
             if (car == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoCarFound());
             }
             ViewBag.FuelLevels = SelectLists.FuelLevelList();
             ViewBag.TypeId = new SelectList(_dbContext.CarTypes, "Id", "Type", car.TypeId);
@@ -162,12 +163,12 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(400, NoCar());
             }
             Car car = await _dbContext.Cars.FindAsync(id);
             if (car == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoCarFound());
             }
             return View(car);
         }
@@ -180,7 +181,7 @@ namespace CarRenting.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Car car = await _dbContext.Cars.FindAsync(id);
-            _dbContext.Cars.Remove(car);
+            _dbContext.Cars.Remove(car ?? throw new HttpException(404, NoCarFound()));
             await _dbContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -192,6 +193,16 @@ namespace CarRenting.Controllers
                 _dbContext.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private string NoCar()
+        {
+            return @"É necessário indicar uma viatura";
+        }
+
+        private string NoCarFound()
+        {
+            return @"A viatura não existe ou foi encontrada";
         }
 
 

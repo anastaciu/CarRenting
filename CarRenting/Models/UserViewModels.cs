@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CarRenting.Models
 {
@@ -23,7 +18,6 @@ namespace CarRenting.Models
         [Required]
         public string Name { get; set; }
         [Display(Name = "Telefone/Telemóvel")]
-        [Required]
         public string PhoneNumber { get; set; }
         [Display(Name = "Permissões")]
         [Required]
@@ -32,7 +26,8 @@ namespace CarRenting.Models
         [EmailAddress]
         [Required]
         public string Email { get; set; }
-
+        [Display(Name = "Empresa")]
+        public string CompanyName { get; set; }
     }
 
 

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CarRenting.Models;
@@ -54,13 +51,13 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return HttpNotFound();
+                throw new HttpException(400, NoCheck());
             }
             var carTypes = _dbContext.CarTypes.ToList();
             Check check = await _dbContext.Checks.FindAsync(id);
             if (check == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                 throw new HttpException(404, NoCheckFound());
             }
             List<CheckBoxes> checkBoxes= new List<CheckBoxes>();
             foreach (var carType in carTypes)
@@ -94,7 +91,8 @@ namespace CarRenting.Controllers
                 var check = await _dbContext.Checks.FindAsync(associateViewModel.Id);
                 if (check == null)
                 {
-                    return HttpNotFound();
+                    throw new HttpException(404, NoCheckFound());
+
                 }
                 foreach (var carType in associateViewModel.CarTypes)
                 {
@@ -122,12 +120,14 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(400, NoCheck());
+
             }
             Check check = await _dbContext.Checks.FindAsync(id);
             if (check == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoCheckFound());
+
             }
             return View(check);
         }
@@ -135,9 +135,17 @@ namespace CarRenting.Controllers
         // POST: Checks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int? id)
         {
+            if (id == null)
+            {
+                throw new HttpException(400, NoCheck());
+            }
             Check check = await _dbContext.Checks.FindAsync(id);
+            if (check == null)
+            {
+                throw new HttpException(404, NoCheckFound());
+            }
             _dbContext.Checks.Remove(check);
             await _dbContext.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -150,6 +158,15 @@ namespace CarRenting.Controllers
                 _dbContext.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private string NoCheck()
+        {
+            return @"É necessário indicar uma verificação";
+        }
+        private string NoCheckFound()
+        {
+            return @"A verificação não existe ou foi encontrada";
         }
     }
 }

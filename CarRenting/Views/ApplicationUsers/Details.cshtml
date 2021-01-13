@@ -4,43 +4,69 @@
     ViewBag.Title = "Dados de Cliente";
 }
 
-<div>
-    <h2>@ViewBag.Tilte</h2>
-    <h4>@Html.DisplayFor(model => model.Name)</h4>
-    <div>
-     
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Email)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Email)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.PhoneNumber)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Role)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Role)
-            </dd>
-        </dl>
+<div class="container col-md-8 offset-md-2">
+    <div class="log-headers-h2 boxshadow">
+        <h2>@ViewBag.Title</h2>
     </div>
-    <div>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
+    <div class="log-headers boxshadow">
+        <h4>@Html.DisplayFor(model => model.Name)</h4>
+    </div>
+    <div class="jumbotron boxshadow">
+        <div class="row">
+            <dl class="dl-horizontal col-md-6">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </dt>
+                <dd>
+                    @if (!Model.PhoneNumber.IsEmpty())
+                    {
+                        @Html.DisplayFor(model => model.PhoneNumber)
+                    }
+                    else
+                    {
+                        @:N/A
+                    }
+                </dd>
+            </dl>
+            <dl id="top-dl" class="dl-horizontal col-md-6">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Role)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Role)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CompanyName)
+                </dt>
+                <dd>
+                    @if (!Model.CompanyName.IsEmpty())
+                    {
+                        @Html.DisplayFor(model => model.CompanyName)
+                    }
+                    else
+                    {
+                        @:N/A
+                    }
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="text-center">
+        @Html.ActionLink("Atrás", "Index", null, new { @class = "btn-danger btn" })
+        @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn-primary btn" })
     </div>
 </div>

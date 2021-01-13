@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
 using CarRenting.Models;
 
 namespace CarRenting.Attributes
@@ -13,16 +10,16 @@ namespace CarRenting.Attributes
         {
             using (var dbContext = new ApplicationDbContext())
             {
-                
-                    var imagePaths = dbContext.DamageImages.ToList();
-                    foreach (var imagePath in imagePaths)
+
+                var imagePaths = dbContext.DamageImages.ToList();
+                foreach (var imagePath in imagePaths)
+                {
+                    if (imagePath.ImagePath == value.ToString())
                     {
-                        if (imagePath.ImagePath.ToString() == value.ToString())
-                        {
-                            return false;
-                        }
+                        return false;
                     }
-                
+                }
+
                 return true;
             }
         }

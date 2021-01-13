@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CarRenting.Models;
@@ -45,7 +44,22 @@ namespace CarRenting.Controllers
         [Authorize(Roles = "Administrador do Site")]
         public async Task<ActionResult> Index()
         {
-            return View(await _dbContext.Users.ToListAsync());
+            var users = await _dbContext.Users.Include(u=>u.Roles).ToListAsync();
+            var userList = new List<UserViewModel>();
+            foreach (var user in users)
+            {
+                var roleId =  user.Roles.SingleOrDefault()?.RoleId;
+                var role = await RoleManager.FindByIdAsync(roleId);
+                
+                userList.Add(new UserViewModel
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Email = user.Email,
+                    Role = role.Name
+                });
+            }
+            return View(userList);
         }
 
         // GET: ApplicationUsers
@@ -55,6 +69,10 @@ namespace CarRenting.Controllers
             var userId = User.Identity.GetUserId();
             var employees = _dbContext.Companies.Include(c => c.Employees).SingleOrDefault(c => c.Employees.Any(e => e.ApplicationUserId == userId))?.Employees;
             var users = _dbContext.Users.ToList();
+            if (users == null)
+            {
+                throw new HttpException(404, NoUserFound());
+            }
 
             ICollection<UserViewModel> empList = new List<UserViewModel>();
 
@@ -82,22 +100,27 @@ namespace CarRenting.Controllers
         // GET: ApplicationUsers/Details/5
         public async Task<ActionResult> Details(string id)
         {
-            if (string.IsNullOrEmpty(id)) throw new ArgumentException(@"Valor não pode ser nulo", nameof(id));
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException(NoUser(), nameof(id));
             
-            ApplicationUser applicationUser = await Task.FromResult(_dbContext.Users.Find(id));
+            ApplicationUser applicationUser =_dbContext.Users.Find(id);
+
             if (applicationUser == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoUserFound());
             }
 
             var roleId = applicationUser.Roles.SingleOrDefault()?.RoleId;
-            var roleName = await RoleManager.FindByIdAsync(roleId);
+            var company = await _dbContext.Companies.SingleOrDefaultAsync(c => c.Employees.Any(e => e.ApplicationUserId == applicationUser.Id));
+            var role = await RoleManager.FindByIdAsync(roleId);
             var userViewModel = new UserViewModel
             {
+                Id = applicationUser.Id,
                 Email = applicationUser.Email,
                 Name = applicationUser.Name,
-                Role = roleName.Name,
-                PhoneNumber = applicationUser.PhoneNumber
+                Role = role.Name,
+                PhoneNumber = applicationUser.PhoneNumber,
+                CompanyName = company?.CompanyName
+                
             };
 
             return View(userViewModel);
@@ -107,12 +130,13 @@ namespace CarRenting.Controllers
         [Authorize(Roles = "Administrador da Empresa, Administrador do Site")]
         public async Task<ActionResult> Edit(string id)
         {
-            if (string.IsNullOrEmpty(id)) throw new ArgumentException(@"Valor não pode ser nulo", nameof(id));
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException(NoUser(), nameof(id));
             
             ApplicationUser applicationUser = _dbContext.Users.Find(id);
+
             if (applicationUser == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoUserFound());
             }
 
             ViewBag.Roles = new SelectList(_dbContext.Roles.Where(r => r.Name.Contains("Empresa")), "Name", "Name");
@@ -182,12 +206,12 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(400, NoUser());
             }
             ApplicationUser applicationUser = await Task.FromResult(_dbContext.Users.Find(id));
             if (applicationUser == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoUserFound());
             }
             return View(applicationUser);
         }
@@ -200,6 +224,7 @@ namespace CarRenting.Controllers
         {
 
             ApplicationUser applicationUser = await Task.FromResult(_dbContext.Users.Find(id));
+
             _dbContext.Users.Remove(applicationUser);
             await _dbContext.SaveChangesAsync();
             return RedirectToAction("Index", "Home");
@@ -214,6 +239,16 @@ namespace CarRenting.Controllers
                 _dbContext.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private string NoUserFound()
+        {
+            return @"O utilizador não existe ou foi encontrado";
+        }
+
+        private string NoUser()
+        {
+            return @"É necessário indicar um utilizador";
         }
     }
 }

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CarRenting.Models;
-using Microsoft.Ajax.Utilities;
 
 namespace CarRenting.Controllers
 {
@@ -30,12 +25,12 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(404, NoCarTypes());
             }
             CarType carType = await _dbContext.CarTypes.FindAsync(id);
             if (carType == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoCarTypesFound());
             }
             return View(carType);
         }
@@ -75,12 +70,12 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(400, NoCarTypes());
             }
             CarType carType = await _dbContext.CarTypes.FindAsync(id);
             if (carType == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoCarTypesFound());
             }
             return View(carType);
         }
@@ -111,12 +106,12 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(400, NoCarTypes());
             }
             CarType carType = await _dbContext.CarTypes.FindAsync(id);
             if (carType == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoCarTypesFound());
             }
             return View(carType);
         }
@@ -125,9 +120,17 @@ namespace CarRenting.Controllers
        
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int? id)
         {
+            if (id == null)
+            {
+                throw new HttpException(400, NoCarTypes());
+            }
             CarType carType = await _dbContext.CarTypes.FindAsync(id);
+            if (carType == null)
+            {
+                throw new HttpException(404, NoCarTypesFound());
+            }
             _dbContext.CarTypes.Remove(carType);
             await _dbContext.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -140,6 +143,15 @@ namespace CarRenting.Controllers
                 _dbContext.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public string NoCarTypes()
+        {
+            return @"E necessário indicar uma categoria";
+        }
+        public string NoCarTypesFound()
+        {
+            return @"A categoria não existe ou não foi encontrada";
         }
     }
 }

@@ -31,7 +31,9 @@
                 }
                 else if ((User.IsInRole(WebConfigurationManager.AppSettings["An"])))
                 {
-
+                    <li>@Html.ActionLink("Empresas", "Index", "Companies", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                    <li>@Html.ActionLink("Utilizadores", "Index", "ApplicationUsers", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                    <li>@Html.ActionLink("Categorias", "Index", "CarTypes", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
                 }
                 else
                 {

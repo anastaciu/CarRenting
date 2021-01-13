@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CarRenting.Models;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 
 namespace CarRenting.Controllers
 {
@@ -32,12 +27,14 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(400, NoUser());
+
             }
             Employee employee = await dbContext.Employees.FindAsync(id);
             if (employee == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoUserFound());
+
             }
             return View(employee);
         }
@@ -71,12 +68,14 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(400, NoUser());
+
             }
             Employee employee = await dbContext.Employees.FindAsync(id);
             if (employee == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoUserFound());
+
             }
             return View(employee);
         }
@@ -102,12 +101,14 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(400, NoUser());
+
             }
             Employee employee = await dbContext.Employees.FindAsync(id);
             if (employee == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoUserFound());
+
             }
             return View(employee);
         }
@@ -115,9 +116,17 @@ namespace CarRenting.Controllers
         // POST: Employees/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int? id)
         {
+            if (id == null)
+            {
+                throw new HttpException(400, NoUser());
+            }
             Employee employee = await dbContext.Employees.FindAsync(id);
+            if (employee == null)
+            {
+                throw new HttpException(404, NoUserFound());
+            }
             dbContext.Employees.Remove(employee);
             await dbContext.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -130,6 +139,16 @@ namespace CarRenting.Controllers
                 dbContext.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private string NoUserFound()
+        {
+            return @"O utilizador não existe ou foi encontrado";
+        }
+
+        private string NoUser()
+        {
+            return @"É necessário indicar um utilizador";
         }
     }
 }

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Data.Entity;
 using System.Threading.Tasks;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CarRenting.Models;
@@ -27,12 +22,14 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(400, NoCompany());
+
             }
             Company company = await _dbContext.Companies.FindAsync(id);
             if (company == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoCompanyFound());
+
             }
             return View(company);
         }
@@ -65,12 +62,14 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(400, NoCompany());
+
             }
             Company company = await _dbContext.Companies.FindAsync(id);
             if (company == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoCompanyFound());
+
             }
             return View(company);
         }
@@ -97,12 +96,14 @@ namespace CarRenting.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                throw new HttpException(400, NoCompany());
+
             }
             Company company = await _dbContext.Companies.FindAsync(id);
             if (company == null)
             {
-                return HttpNotFound();
+                throw new HttpException(404, NoCompanyFound());
+
             }
             return View(company);
         }
@@ -112,8 +113,8 @@ namespace CarRenting.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Company company = await _dbContext.Companies.FindAsync(id);
-            _dbContext.Companies.Remove(company);
+            var company = await _dbContext.Companies.FindAsync(id);
+            _dbContext.Companies.Remove(company ?? throw new HttpException(400, NoCompanyFound()));
             await _dbContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -125,6 +126,16 @@ namespace CarRenting.Controllers
                 _dbContext.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private string NoCompanyFound()
+        {
+            return @"A empresa não existe ou foi encontrada";
+        }
+
+        private string NoCompany()
+        {
+            return @"É necessário indicar uma empresa";
         }
     }
 }

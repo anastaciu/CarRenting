@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
-using CarRenting.Attributes;
 using CarRenting.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CarRenting.Controllers
 {
@@ -94,7 +88,7 @@ namespace CarRenting.Controllers
 
                         if (user == null)
                         {
-                            ModelState.AddModelError("", "Dados incorretos!");
+                            ModelState.AddModelError("", @"Dados incorretos!");
                             return View(model);
                         }
                         var role = UserManager.GetRoles(user.Id).SingleOrDefault();
@@ -168,7 +162,7 @@ namespace CarRenting.Controllers
                     return View("Lockout");
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid code.");
+                    ModelState.AddModelError("", @"Código inválido");
                     return View(model);
             }
         }

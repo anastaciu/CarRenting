@@ -196,3 +196,20 @@ tr:nth-child(even) {
         transition: all 0.2s ease 0s;
     }
 
+
+dt {
+    color: white;
+}
+
+dd {
+    border-bottom: 1px solid white
+}
+
+
+@media (max-width: 768px) {
+    #top-dl {
+        margin-top: -16px;
+    }
+        
+    
+}
