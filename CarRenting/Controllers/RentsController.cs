@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -60,9 +61,29 @@ namespace CarRenting.Controllers
                     ModelState.AddModelError(nameof(rent.End), @"Data de fim não pode ser inferior à data de início");
                     return View(rent);
                 }
-                _dbContext.Rents.Add(rent);
-                await _dbContext.SaveChangesAsync();
-                return RedirectToAction("UserRents");
+
+                var car = _dbContext.Cars.Include(c => c.Rents).SingleOrDefault(c => c.Id == rent.CarId);
+                if (car == null)
+                {
+                    throw new HttpException(404, @"O veículo não existe ou não foi encontrado");
+                }
+                Debug.WriteLine(rent.Begin.Day + "merda");
+                var exists = car.Rents.Any(r => rent.Begin.Day >= r.Begin.Day && rent.Begin.Day <= r.End.Day);
+
+                if (!exists)
+                {
+                    _dbContext.Rents.Add(rent);
+                    await _dbContext.SaveChangesAsync();
+                    return RedirectToAction("UserRents");
+                }
+
+                var cars = _dbContext.Cars.Include(c => c.Rents).Select(c =>
+                      c.Rents.Where(r => rent.End.Day < r.Begin.Day || rent.Begin.Day > r.End.Day));
+
+                TempData["newCarList"] = true;
+                return RedirectToAction("Index", "Cars", cars);
+
+
             }
             return View(rent);
         }
@@ -204,7 +225,7 @@ namespace CarRenting.Controllers
                         if (!_dbContext.DamageImages.Any(d => d.ImagePath == fileName))
                         {
                             _dbContext.DamageImages.Add(new DamageImage
-                                {ImagePath = fileName, RentId = receptionViewModel.Id});
+                            { ImagePath = fileName, RentId = receptionViewModel.Id });
                         }
                     }
                 }
@@ -234,6 +255,7 @@ namespace CarRenting.Controllers
             return View(rent);
         }
 
+        [Authorize(Roles = "Utilizador Registado")]
         // GET: Rents/Create
         public ActionResult Create()
         {
@@ -245,6 +267,7 @@ namespace CarRenting.Controllers
         // POST: Rents/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Utilizador Registado")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,Begin,End,ApplicationUserId,CarId,IsConfirmed,IsDelivered,IsReceived,IsChecked,DeliveryFaults,KmsIn,KmsOut,IsDamaged")] Rent rent)
@@ -262,6 +285,7 @@ namespace CarRenting.Controllers
         }
 
         // GET: Rents/Edit/5
+        [Authorize(Roles = "Utilizador da Empresa")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -281,6 +305,7 @@ namespace CarRenting.Controllers
         // POST: Rents/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Utilizador da Empresa")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Begin,End,ApplicationUserId,CarId,IsConfirmed,IsDelivered,IsReceived,IsChecked,DeliveryFaults,KmsIn,KmsOut,IsDamaged")] Rent rent)
@@ -297,6 +322,7 @@ namespace CarRenting.Controllers
         }
 
         // GET: Rents/Delete/5
+        [Authorize(Roles = "Utilizador da Empresa")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -312,6 +338,7 @@ namespace CarRenting.Controllers
         }
 
         // POST: Rents/Delete/5
+        [Authorize(Roles = "Utilizador da Empresa")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int? id)

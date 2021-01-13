@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace CarRenting.Attributes
 {
@@ -13,7 +10,7 @@ namespace CarRenting.Attributes
             if (value != null)
             {
                 DateTime date = Convert.ToDateTime(value);
-                return date.Day >= DateTime.Now.Day;
+                return date >= DateTime.Now;
             }
             return false;
         }

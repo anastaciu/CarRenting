@@ -1,6 +1,35 @@
 ﻿@model IEnumerable<CarRenting.Models.Car>
 
 
+@if (TempData["newCarList"] as bool? == true)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#newCarList').modal('show');
+        });
+    </script>
+}
+
+<div class="modal fade" id="newCarList" tabindex="-1" role="dialog" aria-labelledby="label" aria-hidden="false">
+    <div class="modal-dialog modal-dialog-centered" role="document"> 
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-light">
+                <h5 class="modal-title" id="label">Veículo indisponível</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>O veículo que escolheu já está reservado.</p>
+                <p>Foi carregada uma lista de veículos disponíveis na data indicada.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Ver veículos</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container">
 
     <h2 class="log-headers-h2 boxshadow col-md-12" style="margin-top: 10vh">
@@ -11,9 +40,6 @@
         <table class="table boxshadow col-md-12">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Company.CompanyName)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.Type.Type)
                 </th>
                 <th>
@@ -23,16 +49,10 @@
                     @Html.DisplayNameFor(model => model.Model)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Fuel)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.Seats)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Price)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Kms)
                 </th>
                 <th></th>
             </tr>
@@ -40,9 +60,6 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Company.CompanyName)
-                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Type.Type)
                     </td>
@@ -53,20 +70,16 @@
                         @Html.DisplayFor(modelItem => item.Model)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Fuel)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.Seats)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Price)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Kms)
-                    </td>
-                    <td>
 
-                        @Html.ActionLink("Reservar", "RentVehicle", "Rents", new {carId = item.Id}, new {@class = "btn btn-primary", @style = "padding:2px"})
+                        @Html.ActionLink("Reservar", "RentVehicle", "Rents", new { carId = item.Id }, new { @class = "btn btn-primary", @style = "padding:2px" })
+                        @Html.ActionLink("Ver", "Details", "Cars", new { id = item.Id }, new { @class = "btn btn-info", @style = "padding:2px" })
+
                     </td>
                 </tr>
             }
@@ -74,3 +87,5 @@
         </table>
     </div>
 </div>
+
+

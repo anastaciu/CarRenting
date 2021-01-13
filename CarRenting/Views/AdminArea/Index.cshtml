@@ -1,51 +1,40 @@
 ﻿
-
 @{
     ViewBag.Title = "Administração da plataforma";
 }
 
 <div class="card-deck" style="padding-top: 20vh">
-
-    <div class="card bg-warning boxshadow btn-hover">
-        <a href="@Url.Action("Index", "Companies")" style="text-decoration: none">
-            <div class="card-body text-center text-dark">
-                <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
-                    <div class="d-flex">
-                        <i class="fas fa-building m-auto" style="font-size: 5em"></i>
-                    </div>
-                    <h3>Empresas</h3>
-                    <p class="lead mb-0">Gestão e consulta de dados de empresas de Renting presentes na plataforma</p>
+    <a class="card bg-warning boxshadow btn-hover" href="@Url.Action("Index", "Companies")" style="text-decoration: none">
+        <div class="card-body text-center text-dark">
+            <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
+                <div class="d-flex">
+                    <i class="fas fa-building m-auto" style="font-size: 5em"></i>
                 </div>
+                <h3>Empresas</h3>
+                <p class="lead mb-0">Gestão e consulta de dados de empresas de Renting presentes na plataforma</p>
             </div>
-        </a>
-    </div>
-
-    <div class="card bg-warning boxshadow btn-hover">
-        <a href="@Url.Action("Index", "CarTypes")" style="text-decoration: none">
-            <div class="card-body text-center text-dark">
-                <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
-                    <div class="d-flex">
-                        <i class="fas fa-car-side m-auto" style="font-size: 5em"></i>
-                    </div>
-                    <h3>Categorias de Veículos</h3>
-                    <p class="lead mb-0">Gestão dos tipos de veículos permitidos na plataforma</p>
+        </div>
+    </a>
+    <a class="card bg-warning boxshadow btn-hover" href="@Url.Action("Index", "CarTypes")" style="text-decoration: none">
+        <div class="card-body text-center text-dark">
+            <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
+                <div class="d-flex">
+                    <i class="fas fa-car-side m-auto" style="font-size: 5em"></i>
                 </div>
+                <h3>Categorias de Veículos</h3>
+                <p class="lead mb-0">Gestão dos tipos de veículos permitidos na plataforma</p>
             </div>
-        </a>
-    </div>
-    
-    <div class="card bg-warning boxshadow btn-hover">
-        <a href="@Url.Action("Index", "ApplicationUsers")" style="text-decoration: none">
-            <div class="card-body text-center text-dark">
-                <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
-                    <div class="d-flex">
-                        <i class="fas fa-users m-auto" style="font-size: 5em"></i>
-                    </div>
-                    <h3>Utilizadores</h3>
-                    <p class="lead mb-0">Gestão e consulta de clientes inscritos na plataforma, empresas e particulares</p>
+        </div>
+    </a>
+    <a class="card bg-warning boxshadow btn-hover" href="@Url.Action("Index", "ApplicationUsers")" style="text-decoration: none">
+        <div class="card-body text-center text-dark">
+            <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
+                <div class="d-flex">
+                    <i class="fas fa-users m-auto" style="font-size: 5em"></i>
                 </div>
+                <h3>Utilizadores</h3>
+                <p class="lead mb-0">Gestão e consulta de clientes inscritos na plataforma, empresas e particulares</p>
             </div>
-        </a>
-    </div>
-
+        </div>
+    </a>
 </div>

@@ -5,11 +5,12 @@
     ViewBag.Title = "Details";
 }
 
-<div class="log-headers-h2 boxshadow container" style="margin-bottom: 1vh">
+<div class="log-headers-h2 boxshadow container col-md-8 offset-md-2" style="margin-bottom: 1vh">
     <h2>Detalhes do Veículo</h2>
 </div>
+@Html.HiddenFor(model => model.Id)
 
-<div class="jumbotron boxshadow">
+<div class="jumbotron boxshadow col-md-8 offset-md-2">
     <div class="row">
         <dl class="dl-horizontal col-md-6">
             <dt>
@@ -50,7 +51,7 @@
                 @Html.DisplayFor(model => model.Model)
             </dd>
         </dl>
-        <dl class="dl-horizontal col-md-6">
+        <dl id="top-dl" class="dl-horizontal col-md-6">
             <dt>
                 @Html.DisplayNameFor(model => model.Fuel)
             </dt>
@@ -97,23 +98,22 @@
 
         @if (User.IsInRole(WebConfigurationManager.AppSettings.Get("Cn")))
         {
-            @Html.ActionLink("Voltar", "CompanyCars", null, new { @class = "btn btn-danger" })
-            @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+            <div>
+                @Html.ActionLink("Voltar", "CompanyCars", null, new { @class = "btn btn-danger" })
+                @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+            </div>
         }
         else if (User.IsInRole(WebConfigurationManager.AppSettings.Get("An")))
         {
-            @Html.ActionLink("Voltar", "Catalog", new{id = Model.Company.Id}, new { @class = "btn btn-danger" })
+            @Html.ActionLink("Voltar", "Catalog", new { id = Model.Company.Id }, new { @class = "btn btn-danger" })
         }
-        else if (!Request.IsAuthenticated)
+        else if (User.IsInRole(WebConfigurationManager.AppSettings.Get("Ur")) || !Request.IsAuthenticated)
         {
-            @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-danger" })
+            <div>
+                @Html.ActionLink("Reservar", "RentVehicle", "Rents", new { carId = Model.Id }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Voltar", "Index", "Home", new { @class = "btn btn-danger" })
+            </div>
         }
-        else
-        {
-            @Html.ActionLink("Voltar", "Index", "Home", new { @class = "btn btn-danger" })
-        }
-
-
     </div>
 </div>
 

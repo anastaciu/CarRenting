@@ -94,13 +94,15 @@
 <div class="text-center">
     @if (isCompanyAdmin)
     {
-      
+    <div>
         @Html.ActionLink("Voltar", "Index", "CompanyAdminArea", null, new { @class = "btn btn-danger" })
         @Html.ActionLink("Adicionar Novo Veículo", "Create", null, new { @class = "btn btn-primary" })
-
+    </div>
     }
     else
     {
-        @Html.ActionLink("Voltar", "Index", "Companies", null, new { @class = "btn btn-danger" })
+<div>
+    @Html.ActionLink("Voltar", "Index", "Companies", null, new { @class = "btn btn-danger" })
+</div>
     }
 </div>

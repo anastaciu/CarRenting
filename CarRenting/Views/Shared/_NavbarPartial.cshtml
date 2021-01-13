@@ -21,7 +21,8 @@
                 }
                 else if (User.IsInRole(WebConfigurationManager.AppSettings["Ur"]))
                 {
-
+                    <li>@Html.ActionLink("Reservar", "Index", "Cars", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                    <li>@Html.ActionLink("Lista de Reservas", "UserRents", "Rents", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
                 }
                 else if ((User.IsInRole(WebConfigurationManager.AppSettings["Cr"])))
                 {

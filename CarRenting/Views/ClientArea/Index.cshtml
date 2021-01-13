@@ -1,4 +1,15 @@
 ﻿
+
+@if (TempData["successRegister"] as bool? == true)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            toastr.success('Bem vindo à eRenting', 'Registo efectuado');
+        });
+    </script>
+}
+
+
 <div class="card-deck" style="padding-top: 20vh">
 
     <div class="card bg-warning boxshadow btn-hover">

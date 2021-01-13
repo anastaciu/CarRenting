@@ -17,7 +17,9 @@ namespace CarRenting.Controllers
         // GET: Checks
         public async Task<ActionResult> Index()
         {
-            return View(await _dbContext.Checks.Include(c => c.CarTypes).ToListAsync());
+            var userId = User.Identity.GetUserId();
+            var company = _dbContext.Companies.SingleOrDefault(c => c.Employees.Any(e => e.ApplicationUserId == userId));
+            return View(await _dbContext.Checks.Include(c => c.CarTypes).Where(c=>c.CompanyId == company.Id).ToListAsync());
         }
 
         // GET: Checks/Create

@@ -56,8 +56,11 @@ h2, h4 {
 }
 
 .boxshadow {
+    -webkit-box-shadow: 5px 5px 7px -1px #000000;
     -webkit-box-shadow: 5px 5px 7px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 5px 5px 7px -1px #000000;
     -moz-box-shadow: 5px 5px 7px -1px rgba(0,0,0,0.75);
+    box-shadow: 5px 5px 7px -1px #000000;
     box-shadow: 5px 5px 7px -1px rgba(0,0,0,0.75);
 }
 
