@@ -12,7 +12,7 @@ namespace CarRenting.Models
         
         public int Id { get; set; }
         [Required]
-        [MinDate(ErrorMessage = "Datas inferiores à atual são inválidas")]
+        [MinDate(ErrorMessage = "Só pode fazer reservas a partir de amanhã")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
         [Display(Name = "Data de início")]
         public DateTime Begin { get; set; }

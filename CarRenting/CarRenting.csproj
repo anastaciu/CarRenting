@@ -365,8 +365,6 @@
     <Content Include="Content\fontawesome-all.min.css" />
     <Content Include="Content\fontawesome.css" />
     <Content Include="Content\fontawesome.min.css" />
-    <Content Include="Content\img\pexels-pixabay-326259-min.jpg" />
-    <Content Include="Content\img\search.png" />
     <Content Include="Content\LICENSE.txt" />
     <Content Include="Content\regular.css" />
     <Content Include="Content\regular.min.css" />
@@ -462,7 +460,7 @@
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
     <None Include="Scripts\jquery-3.5.1.intellisense.js" />
-    <Content Include="Scripts\my-toastr-imp.js" />
+    <Content Include="Scripts\my-scripts.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\jquery-3.5.1.min.js" />
     <Content Include="Scripts\jquery-3.5.1.slim.js" />
@@ -657,6 +655,7 @@
     <Content Include="Views\Rents\ReceiveVehicle.cshtml" />
     <Content Include="Views\Shared\_NavbarPartial.cshtml" />
     <Content Include="Views\Shared\_FooterPartial.cshtml" />
+    <Content Include="Views\Rents\DetailsAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

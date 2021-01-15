@@ -21,7 +21,7 @@ namespace CarRenting
 
             bundles.Add(new ScriptBundle("~/bundles/toastr").Include(
                 "~/Scripts/toastr.js*", 
-                "~/Scripts/my-toastr-imp.js"));
+                "~/Scripts/my-scripts.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
@@ -33,6 +33,7 @@ namespace CarRenting
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/fontawesome-all.css",
+                      "~/Content/themes/base/jquery-ui.css",
                       "~/Content/Site.css",
                       "~/Content/toastr.css"));
 

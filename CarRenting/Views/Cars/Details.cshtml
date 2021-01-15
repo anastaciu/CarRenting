@@ -110,8 +110,9 @@
         else if (User.IsInRole(WebConfigurationManager.AppSettings.Get("Ur")) || !Request.IsAuthenticated)
         {
             <div>
-                @Html.ActionLink("Reservar", "RentVehicle", "Rents", new { carId = Model.Id }, new { @class = "btn btn-primary" })
                 @Html.ActionLink("Voltar", "Index", "Home", new { @class = "btn btn-danger" })
+                @Html.ActionLink("Reservar", "RentVehicle", "Rents", new {carId = Model.Id}, new {@class = "btn btn-primary"})
+
             </div>
         }
     </div>

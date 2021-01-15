@@ -1,4 +1,5 @@
-﻿body {
+﻿
+body {
     padding-top: 50px;
     padding-bottom: 20px;
     font-family: Poppins;
@@ -11,14 +12,10 @@
     padding-right: 15px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
 .dl-horizontal dt {
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
@@ -92,7 +89,6 @@ h2, h4 {
     margin-right: -48vw;
 }
 
-
 .btn-hover {
     -webkit-transition: all 0.3s ease 0s;
     -moz-transition: all 0.3s ease 0s;
@@ -153,13 +149,13 @@ table {
     word-break: break-word;
     overflow: hidden;
     border: 2px solid goldenrod;
+    vertical-align: middle;
 }
 
 td, th {
     border-top: none !important;
     border: none;
     text-align: center;
-    padding: 8px;
 }
 
 tr:nth-child(even) {
@@ -213,6 +209,8 @@ dd {
     #top-dl {
         margin-top: -16px;
     }
-        
-    
+}
+
+.modal-footer {
+    border-top: 0 none;
 }

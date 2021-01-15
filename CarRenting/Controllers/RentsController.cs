@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -67,25 +68,45 @@ namespace CarRenting.Controllers
                 {
                     throw new HttpException(404, @"O veículo não existe ou não foi encontrado");
                 }
-                Debug.WriteLine(rent.Begin.Day + "merda");
-                var exists = car.Rents.Any(r => rent.Begin.Day >= r.Begin.Day && rent.Begin.Day <= r.End.Day);
+                var dateAvailable = car.Rents.Any(r => rent.Begin >= r.Begin && rent.Begin <= r.End);
 
-                if (!exists)
+                if (!dateAvailable)
                 {
                     _dbContext.Rents.Add(rent);
                     await _dbContext.SaveChangesAsync();
+                    TempData["rentSuccess"] = true;
                     return RedirectToAction("UserRents");
                 }
 
-                var cars = _dbContext.Cars.Include(c => c.Rents).Select(c =>
-                      c.Rents.Where(r => rent.End.Day < r.Begin.Day || rent.Begin.Day > r.End.Day));
-
+                var unavailableCars = _dbContext.Cars.Where(c =>
+                      c.Rents.Any(r => !(rent.End < r.Begin || rent.Begin > r.End)));
+                var carList = _dbContext.Cars.Where(c=>c.TypeId == car.TypeId).Include(c=>c.Type).Include(c=>c.Company).Except(unavailableCars);
                 TempData["newCarList"] = true;
-                return RedirectToAction("Index", "Cars", cars);
-
+                TempData["begin"] = rent.Begin;
+                TempData["end"] = rent.End;
+                return View("~/Views/Cars/Index.cshtml", carList);
 
             }
             return View(rent);
+        }
+
+
+        public async Task<ActionResult> RentValidDate([Bind(Include = "Id,Begin,End,ApplicationUserId,CarId")] Rent rent)
+        {
+            if (ModelState.IsValid)
+            {
+                var car = _dbContext.Cars.Include(c => c.Rents).SingleOrDefault(c => c.Id == rent.CarId);
+                if (car == null)
+                {
+                    throw new HttpException(404, @"O veículo não existe ou não foi encontrado");
+                }
+                
+                _dbContext.Rents.Add(rent);
+                await _dbContext.SaveChangesAsync();
+                TempData["rentSuccess"] = true;
+                return RedirectToAction("UserRents");
+            }
+            return RedirectToAction("UserRents");
         }
 
         [Authorize(Roles = "Utilizador da Empresa")]
@@ -239,9 +260,50 @@ namespace CarRenting.Controllers
             ViewBag.FuelLevels = fuelList;
             return View(receptionViewModel);
         }
+        [Authorize(Roles = "Utilizador Registado")]
+        public async Task<ActionResult> RentVehicleValidDate(int carId, DateTime begin, DateTime end)
+        {
+            if (ModelState.IsValid)
+            {
+                var car = _dbContext.Cars.Include(c => c.Rents).SingleOrDefault(c => c.Id ==  carId);
+                if (car == null)
+                {
+                    throw new HttpException(404, @"O veículo não existe ou não foi encontrado");
+                }
+
+                var rent = new Rent
+                {
+                    CarId = carId,
+                    Begin = begin,
+                    End =  end,
+                    ApplicationUserId = User.Identity.GetUserId()
+                };
+                _dbContext.Rents.Add(rent);
+                await _dbContext.SaveChangesAsync();
+                TempData["rentSuccess"] = true;
+                return RedirectToAction("UserRents");
+            }
+            return RedirectToAction("Index", "Cars");
+        }
 
         // GET: Rents/Details/5
+        [Authorize(Roles = "Utilizador Registado")]
         public async Task<ActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                throw new HttpException(400, NoRent());
+            }
+            Rent rent = await _dbContext.Rents.Include(r => r.Car.Type).Include(r => r.ApplicationUser).FirstOrDefaultAsync(r => r.Id == id);
+            if (rent == null)
+            {
+                throw new HttpException(404, NoRentFound());
+            }
+            return View(rent);
+        }
+
+        [Authorize(Roles = "Utilizador da Empresa")]
+        public async Task<ActionResult> DetailsAdmin(int? id)
         {
             if (id == null)
             {
@@ -374,5 +436,6 @@ namespace CarRenting.Controllers
         {
             return @"A Reserva não existe ou não foi encontrada";
         }
+
     }
 }

@@ -4,9 +4,8 @@
 
 @{
     var isCompanyAdmin = User.IsInRole(WebConfigurationManager.AppSettings["Cn"]);
-}
-@{
     ViewBag.Title = isCompanyAdmin ? "Gestão de Frota" : "Catálogo de Veículos";
+    var company = Model.ElementAt(0)?.Company.CompanyName ?? string.Empty;
 }
 @if (TempData["carCreated"] as bool? == true)
 {
@@ -25,7 +24,7 @@
 {
     <div class="log-headers boxshadow">
         <h4>
-            @Html.DisplayTextFor(model => model.SingleOrDefault().Company.CompanyName)
+            @company
         </h4>
     </div>
 }
@@ -83,9 +82,9 @@
             <td>
                 @if (isCompanyAdmin)
                 {
-                    @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn-primary btn", @style = "padding:2px" })
+                    <a href="@Url.Action("Edit", new { id = item.Id })" title="Editar Veículo"><i class="fas text-center fa-fw fa-edit text-primary"></i></a>
                 }
-                @Html.ActionLink("Ver", "Details", new { id = item.Id }, new { @class = "btn-info btn", @style = "padding:2px" })
+                <a href="@Url.Action("Details", new { id = item.Id })" title="Detalhes do Veículo"><i class="fas fa-fw fa-info-circle text-info"></i></a>
             </td>
         </tr>
     }

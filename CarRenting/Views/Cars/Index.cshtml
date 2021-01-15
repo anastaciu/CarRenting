@@ -11,7 +11,7 @@
 }
 
 <div class="modal fade" id="newCarList" tabindex="-1" role="dialog" aria-labelledby="label" aria-hidden="false">
-    <div class="modal-dialog modal-dialog-centered" role="document"> 
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header bg-danger text-light">
                 <h5 class="modal-title" id="label">Veículo indisponível</h5>
@@ -20,8 +20,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>O veículo que escolheu já está reservado.</p>
-                <p>Foi carregada uma lista de veículos disponíveis na data indicada.</p>
+                <p class="text-danger">O veículo que escolheu já está reservado durante a data indicada.</p>
+                <p class="text-success">Foi carregada uma lista de veículos da mesma categoria disponíveis na data pedida.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Ver veículos</button>
@@ -76,16 +76,136 @@
                         @Html.DisplayFor(modelItem => item.Price)
                     </td>
                     <td>
+                        <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-info">
+                                        <h5 class="modal-title" id="detailsLabel">Detalhes do Veículo</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body bg-warning">
+                                        <div class="row">
+                                            <dl class="dl-horizontal col-md-6">
+                                                <dt>
+                                                    @Html.LabelFor(modelItem => item.Company.CompanyName, htmlAttributes: new { @class = "text-light" })
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(modelItem => item.Company.CompanyName)
+                                                </dd>
 
-                        @Html.ActionLink("Reservar", "RentVehicle", "Rents", new { carId = item.Id }, new { @class = "btn btn-primary", @style = "padding:2px" })
-                        @Html.ActionLink("Ver", "Details", "Cars", new { id = item.Id }, new { @class = "btn btn-info", @style = "padding:2px" })
+                                                <dt>
+                                                    @Html.LabelFor(modelItem => item.Type.Type, htmlAttributes: new { @class = "text-light" })
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(modelItem => item.Type.Type)
+                                                </dd>
+                                                <dt>
+                                                    @Html.LabelFor(modelItem => item.License, htmlAttributes: new { @class = "text-light" })
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(modelItem => item.License)
+                                                </dd>
+                                                <dt>
+                                                    @Html.LabelFor(modelItem => item.Brand, htmlAttributes: new { @class = "text-light" })
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(modelItem => item.Brand)
+                                                </dd>
+                                                <dt>
+                                                    @Html.LabelFor(modelItem => item.Model, htmlAttributes: new { @class = "text-light" })
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(modelItem => item.Model)
+                                                </dd>
+                                            </dl>
+                                            <dl id="top-dl" class="dl-horizontal col-md-6">
+                                                <dt>
+                                                    @Html.LabelFor(modelItem => item.Fuel, htmlAttributes: new { @class = "text-light" })
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(modelItem => item.Fuel)
+                                                </dd>
+                                                <dt>
+                                                    @Html.LabelFor(modelItem => item.FuelLevel, htmlAttributes: new { @class = "text-light" })
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(modelItem => item.FuelLevel)
+                                                </dd>
+                                                <dt>
+                                                    @Html.LabelFor(modelItem => item.Seats, htmlAttributes: new { @class = "text-light" })
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(modelItem => item.Seats)
+                                                </dd>
+                                                <dt>
+                                                    @Html.LabelFor(modelItem => item.Price, htmlAttributes: new { @class = "text-light" })
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(modelItem => item.Price)
+                                                </dd>
+                                                <dt>
+                                                    @Html.LabelFor(modelItem => item.Kms, htmlAttributes: new { @class = "text-light" })
+                                                </dt>
+                                                <dd>
+                                                    @Html.DisplayFor(modelItem => item.Kms)
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer bg-warning">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @if (TempData["newCarList"] as bool? == true)
+                        {
+                            <i type="button" class="fas fa-fw fa-shopping-cart text-primary" data-toggle="modal" data-target="#confirmModal" title="Reservar Veículo"></i>
+                            <i type="button" class="fas fa-fw fa-info text-info" data-toggle="modal" data-target="#detailsModal"></i>
+
+                            <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title bg-primary" id="confirmTitle">Reservar Veículo?</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Tem a certeza que pretende reservar este veículo de @($"{TempData["begin"]:dd/MM/yyyy}") a @($"{TempData["end"]:dd/mm/yyyy}")?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                            @Html.ActionLink("Confirmar", "RentVehicleValidDate", "Rents", new { carId = item.Id, begin = (DateTime)TempData["begin"], end = (DateTime)TempData["end"] }, new{@class="btn-primary btn"})
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                <a href="@Url.Action("RentVehicle", "Rents", new { carId = item.Id })"  title="Reservar Veículo"><i class="fas text-center fa-fw fa-shopping-cart text-primary"></i></a>
+                                <a href="@Url.Action("Details", "Cars", new { id = item.Id })"  title="Detalhes do Veículo"><i class="fas fa-fw fa-info text-info"></i></a>
+                            </div>
+                        }
                     </td>
                 </tr>
             }
 
         </table>
+        <div class="text-center">
+            @Html.ActionLink("Atrás", "Index", "Home", null, new { @class = "btn btn-danger" })
+        </div>
     </div>
 </div>
+
+
+
 
 

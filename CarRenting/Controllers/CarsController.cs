@@ -20,7 +20,7 @@ namespace CarRenting.Controllers
             return View(await cars.ToListAsync());
         }
 
-        [Authorize(Roles = "Administrador da Empresa")]
+        [Authorize(Roles = "Administrador da Empresa, Administrador do Site")]
         public async Task<ActionResult> CompanyCars()
         {
             var userId = User.Identity.GetUserId();
@@ -49,8 +49,6 @@ namespace CarRenting.Controllers
             
             return View("CompanyCars", await _dbContext.Cars.Include(c=>c.Company).Include(c=>c.Type).Where(c => c.CompanyId == id).ToListAsync());
         }
-
-
 
         // GET: Cars/Details/5
         public async Task<ActionResult> Details(int? id)

@@ -1,0 +1,114 @@
+﻿@model CarRenting.Models.Rent
+
+@{
+    ViewBag.Title = "DetailsAdmin";
+}
+
+<h2>DetailsAdmin</h2>
+
+<div>
+    <h4>Rent</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Car.License)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Car.License)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Begin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Begin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.End)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.End)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsConfirmed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsConfirmed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDelivered)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDelivered)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsReceived)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsReceived)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsChecked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsChecked)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliveryFaults)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeliveryFaults)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KmsIn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KmsIn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KmsOut)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KmsOut)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDamaged)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDamaged)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

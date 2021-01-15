@@ -1,124 +1,113 @@
-﻿@model CarRenting.Models.Rent
+﻿@using System.Diagnostics
+@model CarRenting.Models.Rent
 
 @{
     ViewBag.Title = "Detalhes da Reserva";
+    var isConfirmed = Model.IsConfirmed ? @"Sim" : @"Não";
+    var isDelivered = Model.IsDelivered ? @"Sim" : @"Não";
+    var isReceived = Model.IsReceived ? @"Sim" : @"Não";
+    double value;
+    try
+    {
+        value = Model.Car.Price * (Model.End.ToOADate() - Model.Begin.ToOADate() + 1);
+    }
+    catch (Exception e)
+    {
+        Debug.WriteLine(e.Message);
+        value = Double.MaxValue;
+    }
 }
-<div class="row">
-    <div class="log-headers-h2 boxshadow container" style="margin-bottom: 1vh">
+<div class="container">
+
+    <div class="log-headers-h2 boxshadow container col-md-10 offset-md-1" style="margin-bottom: 1vh">
         <h2 class="text-center">@ViewBag.Title</h2>
     </div>
+    <div class="boxshadow jumbotron col-md-10 offset-md-1">
+        <div class="row">
+            <dl class="dl-horizontal col-md-6">
+                <dt>
+                    @Html.DisplayNameFor(model => model.ApplicationUser.Name)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ApplicationUser.Name)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ApplicationUser.Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ApplicationUser.Email)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Car.License)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Car.License)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Car.Brand)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Car.Brand)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Car.Model)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Car.Model)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Car.Type.Type)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Car.Type.Type)
+                </dd>
+            </dl>
+
+            <dl id="top-dl" class="dl-horizontal col-md-6">
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsConfirmed)
+                </dt>
+                <dd>
+                    @isConfirmed
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsDelivered)
+                </dt>
+                <dd>
+                    @isDelivered
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsReceived)
+                </dt>
+                <dd>
+                    @isReceived
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Begin)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Begin)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.End)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.End)
+                </dd>
+                <dt>
+                    Preço Total
+                </dt>
+                <dd>
+                    @value €
+                </dd>
+
+            </dl>
+        </div>
+        <div class="text-center">
+            @Html.ActionLink("Voltar", "UserRents", null, new{@class="btn-danger btn"})
+        </div>
+    </div>
 </div>
-
-<div class="jumbotron boxshadow row">
-    
-    <dl class="dl-horizontal col-md-6">
-        <dt>
-            @Html.DisplayNameFor(model => model.ApplicationUser.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ApplicationUser.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ApplicationUser.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ApplicationUser.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Car.License)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Car.License)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Begin)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Begin)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.End)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.End)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IsConfirmed)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsConfirmed)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsDelivered)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsDelivered)
-        </dd>
-    </dl>
-
-    <dl class="dl-horizontal col-md-6">
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsReceived)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsReceived)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsChecked)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsChecked)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DeliveryFaults)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DeliveryFaults)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.KmsIn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.KmsIn)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.KmsOut)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.KmsOut)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsDamaged)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsDamaged)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
