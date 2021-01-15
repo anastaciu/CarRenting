@@ -42,6 +42,7 @@ namespace CarRenting.Models
         public int KmsOut { get; set; }
         [Display(Name = "Danos ao receber")]
         public bool IsDamaged { get; set; }
+        [Display(Name = "Imagens dos danos")]
         public ICollection<DamageImage> DamageImages { get; set; }
 
     }

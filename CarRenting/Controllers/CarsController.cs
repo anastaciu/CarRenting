@@ -142,13 +142,14 @@ namespace CarRenting.Controllers
             {
                 _dbContext.Entry(car).State = EntityState.Modified;
                 await _dbContext.SaveChangesAsync();
-                return RedirectToAction("Index");
+                TempData["edited"] = true;
+                return RedirectToAction("CompanyCars");
             }
             ViewBag.FuelLevels = SelectLists.FuelLevelList();
             ViewBag.CompanyId = new SelectList(_dbContext.Companies, "Id", "CompanyName", car.CompanyId);
             ViewBag.TypeId = new SelectList(_dbContext.CarTypes, "Id", "Type", car.TypeId);
-
-            return View(car);
+            TempData["edited"] = false;
+            return RedirectToAction("CompanyCars");
         }
 
         // GET: Cars/Delete/5

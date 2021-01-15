@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using CarRenting.Models;
 using Microsoft.AspNet.Identity;
@@ -138,14 +139,24 @@ namespace CarRenting.Controllers
             {
                 throw new HttpException(404, NoUserFound());
             }
-
             ViewBag.Roles = new SelectList(_dbContext.Roles.Where(r => r.Name.Contains("Empresa")), "Name", "Name");
+            string currentRoleName = null;
+            try
+            {
+                var currentRole = await RoleManager.FindByIdAsync(applicationUser.Roles.SingleOrDefault()?.RoleId);
+                currentRoleName = currentRole.Name;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+
             UserViewModel userViewModel = new UserViewModel
             {
                 Id = applicationUser.Id,
                 Name = applicationUser.Name,
                 PhoneNumber = applicationUser.PhoneNumber,
-                Role = null,
+                Role = currentRoleName,
                 Email = applicationUser.Email
             };
             return View(await Task.FromResult(userViewModel));
@@ -187,12 +198,20 @@ namespace CarRenting.Controllers
 
                     user.Id = applicationUser.Id;
                     user.PhoneNumber = applicationUser.PhoneNumber;
+                    user.Email = applicationUser.Email;
                     user.UserName = applicationUser.Email;
                     user.Name = applicationUser.Name;
                     _dbContext.Entry(user).State = EntityState.Modified;
                     await _dbContext.SaveChangesAsync();
                     TempData["isChanged"] = true;
-                    return RedirectToAction("CompanyEmployees");
+                    if (User.IsInRole(WebConfigurationManager.AppSettings["Cn"]))
+                    {
+                        return RedirectToAction("CompanyEmployees");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
                 }
             }
             roles = new SelectList(_dbContext.Roles.Where(r => r.Name.Contains("Empresa")), "Name", "Name");

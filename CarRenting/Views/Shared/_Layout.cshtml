@@ -5,19 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>eRenting</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700%7CRoboto%7CJosefin+Sans:100,300,400,500" rel="stylesheet" type="text/css">
-    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet" type="text/css">
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryui")
 </head>
 <body>
-
-    <div class="backimg"></div>
+<div class="backimg"></div>
     <div id="wrapper">
         <div id="header">
             @Html.Partial("_NavbarPartial")
         </div>
-        <div id="content" class="container body-content" style="min-height: 90vh">
+        <div id="content" class="container body-content">
             @Html.Partial("_UserInfoPartial")
             @RenderBody()
         </div>
@@ -29,8 +28,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/toastr")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+@RenderSection("scripts", required: false)
 
 </body>
 </html>

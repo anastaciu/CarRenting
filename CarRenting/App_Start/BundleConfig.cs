@@ -20,18 +20,22 @@ namespace CarRenting
                         "~/Scripts/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/toastr").Include(
-                "~/Scripts/toastr.js*", 
-                "~/Scripts/my-scripts.js"));
+                        "~/Scripts/toastr.js*",
+                        "~/Scripts/my-scripts.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                     "~/Scripts/umd/popper.js",
+                      "~/Scripts/bootstrap.js",
+                     "~/Scripts/bootstrap.min.js"
+                     ));
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap.min.css", 
                       "~/Content/fontawesome-all.css",
                       "~/Content/themes/base/jquery-ui.css",
                       "~/Content/Site.css",

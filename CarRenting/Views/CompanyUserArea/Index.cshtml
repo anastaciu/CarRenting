@@ -25,45 +25,27 @@
 
 <div class="card-deck" style="padding-top: 20vh">
 
-    <div class="card bg-warning boxshadow btn-hover">
-        <a href="@Url.Action("Index", "Rents")" style="text-decoration: none" click="displayToastr()">
-            <div class="card-body text-center text-dark">
-                <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
-                    <div class="d-flex">
-                        <i class="fas fa-key m-auto" style="font-size: 6vw"></i>
-                    </div>
-                    <h3>Gerir Reservas</h3>
-                    <p class="lead mb-0">Gestão de reservas efetuadas na plataforma por utilizadores particulares</p>
+    <a href="@Url.Action("Index", "Rents")" class="card bg-warning boxshadow btn-hover text-decoration-none">
+        <div class="card-body text-center text-dark">
+            <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
+                <div class="d-flex">
+                    <i class="fas fa-key m-auto" style="font-size: 6em"></i>
                 </div>
+                <h3>Gerir Reservas</h3>
+                <p class="lead mb-0">Ver, editar ou confirmar reservas reservas de viaturas da empresa</p>
             </div>
-        </a>
-    </div>
+        </div>
+    </a>
 
-    <div class="card bg-warning boxshadow btn-hover">
-        <a href="@Url.Action("ListForDelivery", "Rents")" style="text-decoration: none">
-            <div class="card-body text-center text-dark">
-                <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
-                    <div class="d-flex">
-                        <i class="fas fa-check-double m-auto" style="font-size: 6vw"></i>
-                    </div>
-                    <h3>Entregar ou Receber Veículo</h3>
-                    <p class="lead mb-0">Entregar ou receber veículo reservado</p>
+    <a href="@Url.Action("ListForDelivery", "Rents")" class="card bg-warning boxshadow btn-hover text-decoration-none">
+        <div class="card-body text-center text-dark">
+            <div class="mx-auto mb-5 mb-lg-0 mb-lg-3">
+                <div class="d-flex">
+                    <i class="fas fa-check-double m-auto" style="font-size: 6em"></i>
                 </div>
+                <h3>Entregar ou Receber Veículo</h3>
+                <p class="lead mb-0">Entregar ou receber veículo reservado</p>
             </div>
-        </a>
-    </div>
-
-    <div class="card bg-warning boxshadow btn-hover">
-        <a href="@Url.Action("ListForDelivery", "Rents")" style="text-decoration: none">
-            <div class="card-body text-center text-dark">
-                <div class="mx-auto mb-0 mb-lg-3">
-                    <div class="d-flex">
-                        <i class="fas fa-check-double m-auto" style="font-size: 6vw"></i>
-                    </div>
-                    <h3>Receber veículo</h3>
-                    <p class="lead mb-0">Receber veículo devolvido pelo cliente</p>
-                </div>
-            </div>
-        </a>
-    </div>
+        </div>
+    </a>
 </div>

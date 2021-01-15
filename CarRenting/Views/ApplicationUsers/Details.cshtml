@@ -1,4 +1,5 @@
-﻿@model CarRenting.Models.UserViewModel
+﻿@using System.Web.Configuration
+@model CarRenting.Models.UserViewModel
 
 @{
     ViewBag.Title = "Dados de Cliente";
@@ -66,7 +67,14 @@
     </div>
 
     <div class="text-center">
-        @Html.ActionLink("Atrás", "Index", null, new { @class = "btn-danger btn" })
+        @if (User.IsInRole(WebConfigurationManager.AppSettings["Cn"]))
+        {
+            @Html.ActionLink("Atrás", "CompanyEmployees", null, new { @class = "btn-danger btn" })
+        }
+        else
+        {
+            @Html.ActionLink("Atrás", "Index", null, new {@class = "btn-danger btn"})
+        }
         @Html.ActionLink("Editar", "Edit", new { id = Model.Id }, new { @class = "btn-primary btn" })
     </div>
 </div>

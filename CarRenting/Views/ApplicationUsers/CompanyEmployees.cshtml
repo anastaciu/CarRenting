@@ -57,7 +57,17 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
+                @{
+                    var nullPhone = item.PhoneNumber.IsEmpty();
+                }
+                @if (!nullPhone)
+                {
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                }
+                else
+                {
+                    @:N/A
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Role)
@@ -70,8 +80,9 @@
                 else
                 {
                     <span>
-                        @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-dark", @style = "padding:2px!important" })
-                        @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-danger", @style = "padding:2px!important" })
+                        <a href="@Url.Action("Edit", new { id = item.Id })"  title="Editar Utilizador"><i class="fas text-center fa-fw fa-edit text-primary"></i></a>
+                        <a href="@Url.Action("Details", new { id = item.Id })"  title="Detalhes da Utilizador"><i class="fas fa-fw fa-info-circle text-info"></i></a>
+                        <a href="@Url.Action("Delete", new { id = item.Id })"  title="Apagar Utilizador"><i class="fas fa-fw fa-trash-alt text-danger"></i></a>
                     </span>
                 }
             </td>

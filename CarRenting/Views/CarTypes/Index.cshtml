@@ -13,7 +13,7 @@
     {
         <script type="text/javascript">
             $(document).ready(function() {
-                toastr.success('Categoria Modificada', 'Operação realizada');
+                toastr.success('Categoria Modificada');
             });
         </script>
     }
@@ -37,33 +37,35 @@
 </script>
 }
 
+<div class="container">
+    <div class="log-headers-h2 boxshadow offset-md-2 col-md-8">
+        <h2>@ViewBag.Title</h2>
+    </div>
 
-<div class="log-headers-h2 boxshadow">
-    <h2>@ViewBag.Title</h2>
-</div>
-
-<table class="table boxshadow">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Type)
-        </th>
-    </tr>
-
-    @foreach (var item in Model) {
+    <table class="table boxshadow offset-md-2 col-md-8">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { id=item.Id }, new {@class="btn btn-dark", @style="padding:2px"})
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.Id })" title="Editar Reserva"><i class="fas text-center fa-fw fa-edit text-primary"></i></a>
+                </td>
+            </tr>
+        }
 
-<div class="text-center">
-    @Html.ActionLink("Voltar", "Index", "AdminArea", null, new { @class = "btn btn-danger" })
-    @Html.ActionLink("Adicionar nova categoria", "Create", null, new { @class = "btn btn-primary" })
+    </table>
 
+    <div class="text-center">
+        @Html.ActionLink("Voltar", "Index", "AdminArea", null, new { @class = "btn btn-danger" })
+        @Html.ActionLink("Adicionar nova categoria", "Create", null, new { @class = "btn btn-primary" })
+
+    </div>
 </div>

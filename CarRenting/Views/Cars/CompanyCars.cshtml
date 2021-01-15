@@ -5,7 +5,15 @@
 @{
     var isCompanyAdmin = User.IsInRole(WebConfigurationManager.AppSettings["Cn"]);
     ViewBag.Title = isCompanyAdmin ? "Gestão de Frota" : "Catálogo de Veículos";
-    var company = Model.ElementAt(0)?.Company.CompanyName ?? string.Empty;
+    string company;
+    if (Model.Any())
+    {
+        company = Model.ElementAt(0)?.Company.CompanyName;
+    }
+    else
+    {
+        company = string.Empty;
+    }
 }
 @if (TempData["carCreated"] as bool? == true)
 {
@@ -15,13 +23,30 @@
         });
     </script>
 }
+@if (TempData["edited"] as bool? == true)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            toastr.success('O veículo alterado');
+        });
+    </script>
+}
+else if(TempData["edited"] as bool? == false)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            toastr.error('O veículo não alterado');
+        });
+    </script>
+}
 
 <div class="log-headers-h2 boxshadow">
     <h2>@ViewBag.Title</h2>
 </div>
 
-@if (!isCompanyAdmin && Model.Any())
+@if (Model.Any())
 {
+    company = Model.ElementAt(0)?.Company.CompanyName;
     <div class="log-headers boxshadow">
         <h4>
             @company
@@ -93,15 +118,15 @@
 <div class="text-center">
     @if (isCompanyAdmin)
     {
-    <div>
-        @Html.ActionLink("Voltar", "Index", "CompanyAdminArea", null, new { @class = "btn btn-danger" })
-        @Html.ActionLink("Adicionar Novo Veículo", "Create", null, new { @class = "btn btn-primary" })
-    </div>
+        <div>
+            @Html.ActionLink("Voltar", "Index", "CompanyAdminArea", null, new { @class = "btn btn-danger" })
+            @Html.ActionLink("Adicionar Novo Veículo", "Create", null, new { @class = "btn btn-primary" })
+        </div>
     }
     else
     {
-<div>
-    @Html.ActionLink("Voltar", "Index", "Companies", null, new { @class = "btn btn-danger" })
-</div>
+        <div>
+            @Html.ActionLink("Voltar", "Index", "Companies", null, new { @class = "btn btn-danger" })
+        </div>
     }
 </div>

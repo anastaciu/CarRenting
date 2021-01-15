@@ -2,6 +2,7 @@
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: Alata;
     font-family: Poppins;
     overflow: auto;
 }
@@ -62,7 +63,7 @@ h2, h4 {
 }
 
 .backimg {
-    background: rgb(91,85,85);
+    background: rgb(185, 176, 176);
     background: radial-gradient(circle, rgba(91,85,85,0.13487401796656162) 59%, rgba(255,193,7,1) 100%);
     background-repeat: no-repeat;
     position: fixed;
@@ -162,39 +163,21 @@ tr:nth-child(even) {
     background-color: #ffc107;
 }
 
-.fas {
-    font-size: 100%;
+.fa-fw {
+    transform: scale(1.2);
     -webkit-transition: all 0.2s ease 0s;
     -moz-transition: all 0.2s ease 0s;
     -o-transition: all 0.2s ease 0s;
     transition: all 0.2s ease 0s;
 }
 
-    .fas:hover {
-        font-size: 120%;
+    .fa-fw:hover {
+        transform: scale(1.7);
         -webkit-transition: all 0.2s ease 0s;
         -moz-transition: all 0.2s ease 0s;
         -o-transition: all 0.2s ease 0s;
         transition: all 0.2s ease 0s;
     }
-
-.toast {
-    opacity: 0.8 !important;
-    font-weight: bold !important;
-    -webkit-transition: all 0.2s ease 0s;
-    -moz-transition: all 0.2s ease 0s;
-    -o-transition: all 0.2s ease 0s;
-    transition: all 0.2s ease 0s;
-}
-
-    .toast:hover {
-        opacity: 1 !important;
-        -webkit-transition: all 0.2s ease 0s;
-        -moz-transition: all 0.2s ease 0s;
-        -o-transition: all 0.2s ease 0s;
-        transition: all 0.2s ease 0s;
-    }
-
 
 dt {
     color: white;
@@ -204,7 +187,6 @@ dd {
     border-bottom: 1px solid white
 }
 
-
 @media (max-width: 768px) {
     #top-dl {
         margin-top: -16px;
@@ -213,4 +195,12 @@ dd {
 
 .modal-footer {
     border-top: 0 none;
+}
+
+#content {
+    min-height: 90vh;
+}
+
+.tooltip {
+    font-weight: bold;
 }

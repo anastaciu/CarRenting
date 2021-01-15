@@ -16,7 +16,7 @@
 
                     <li>@Html.ActionLink("Gerir Checklists", "Index", "Checks", null, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Gerir Veículos", "CompanyCars", "Cars", null, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Gerir Utilizadores", "CompanyEmployees", "ApplicationUsers", null, new { @class = "nav-link"})</li>
+                    <li>@Html.ActionLink("Gerir Utilizadores", "CompanyEmployees", "ApplicationUsers", null, new { @class = "nav-link" })</li>
 
                 }
                 else if (User.IsInRole(WebConfigurationManager.AppSettings["Ur"]))
@@ -26,7 +26,7 @@
                 }
                 else if ((User.IsInRole(WebConfigurationManager.AppSettings["Cr"])))
                 {
-                    <li>@Html.ActionLink("Gerir Reservas", "Index", "Rents", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                    <li>@Html.ActionLink("Gerir Reservas", "Index", "Rents", null, new { @class = "nav-link", @style = "margin-right:10px;", @title = @"Ver, editar ou confirmar reservas de viaturas da empresa" })</li>
                     <li>@Html.ActionLink("Entregar ou Receber Veículo", "ListForDelivery", "Rents", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
 
                 }

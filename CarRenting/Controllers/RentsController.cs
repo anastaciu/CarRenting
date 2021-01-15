@@ -116,21 +116,33 @@ namespace CarRenting.Controllers
             {
                 throw new HttpException(400, NoRent());
             }
-            var rent = await _dbContext.Rents.FindAsync(id);
+            var rent = await _dbContext.Rents.Include(r=>r.Car).Include(r=>r.ApplicationUser).Include(r=>r.Car.Type).SingleOrDefaultAsync(r=>r.Id == id);
             if (rent == null)
             {
                 throw new HttpException(404, NoRentFound());
             }
+            return View(rent);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Utilizador da Empresa")]
+        public async Task<ActionResult> ConfirmRent([Bind(Include = "Id,Begin,End,ApplicationUserId,CarId,IsConfirmed,IsDelivered,IsReceived,IsChecked,DeliveryFaults,KmsIn,KmsOut,IsDamaged")] Rent rent)
+        {
+
             if (ModelState.IsValid)
             {
                 rent.IsConfirmed = true;
                 _dbContext.Entry(rent).State = EntityState.Modified;
                 await _dbContext.SaveChangesAsync();
+                TempData["isConfirmed"] = true;
+                return RedirectToAction("Index");
             }
-
-            TempData["isConfirmed"] = true;
+            TempData["isConfirmed"] = false;
             return RedirectToAction("Index");
         }
+
+
 
         // GET: Rents
         [Authorize(Roles = "Utilizador da Empresa")]
@@ -205,17 +217,25 @@ namespace CarRenting.Controllers
             {
                 throw new HttpException(400, NoRent());
             }
-            var rent = await _dbContext.Rents.Include(r => r.Car).SingleOrDefaultAsync(r => r.Id == id);
+            var rent = await _dbContext.Rents.Include(r => r.Car.Type.Checks).SingleOrDefaultAsync(r => r.Id == id);
             if (rent == null)
             {
                 throw new HttpException(404, NoRentFound());
             }
+            var checks = rent.Car.Type.Checks.Where(c => c.CompanyId == rent.Car.CompanyId);
             var fuelList = SelectLists.FuelLevelList();
             ViewBag.FuelLevels = fuelList;
-            var receptionViewModel = new ReceptionViewModel()
+            
+            var receptionViewModel = new ReceptionViewModel
             {
                 Id = rent.Id,
-                KmsIn = rent.Car.Kms
+                KmsIn = rent.Car.Kms,
+                CarBrand = rent.Car.Brand,
+                CarLicense = rent.Car.License,
+                CarModel = rent.Car.Model,
+                Checks = checks.ToList()
+                
+
             };
             return View(receptionViewModel);
         }
@@ -232,24 +252,27 @@ namespace CarRenting.Controllers
                 {
                     throw new HttpException(404, NoRentFound());
                 }
-                rent.IsChecked = true;
+                rent.IsChecked = receptionViewModel.IsChecked;
                 rent.KmsIn = receptionViewModel.KmsIn;
                 rent.IsReceived = true;
+                rent.IsDamaged = receptionViewModel.IsDamaged;
 
                 foreach (HttpPostedFileBase file in receptionViewModel.Files)
                 {
                     if (file != null)
                     {
                         var fileName = Path.GetFileName(file.FileName);
+                        var relativePath = "~/DamageImagesUpload/" + fileName;
                         var path = Path.Combine(Server.MapPath("~/DamageImagesUpload/") + fileName);
                         file.SaveAs(path);
                         if (!_dbContext.DamageImages.Any(d => d.ImagePath == fileName))
                         {
                             _dbContext.DamageImages.Add(new DamageImage
-                            { ImagePath = fileName, RentId = receptionViewModel.Id });
+                            { ImagePath = relativePath, RentId = receptionViewModel.Id });
                         }
                     }
                 }
+
                 _dbContext.Entry(rent).State = EntityState.Modified;
                 await _dbContext.SaveChangesAsync();
                 TempData["isReceived"] = true;
@@ -309,7 +332,7 @@ namespace CarRenting.Controllers
             {
                 throw new HttpException(400, NoRent());
             }
-            Rent rent = await _dbContext.Rents.Include(r => r.Car).Include(r => r.ApplicationUser).FirstOrDefaultAsync(r => r.Id == id);
+            Rent rent = await _dbContext.Rents.Include(r => r.Car.Type).Include(r => r.ApplicationUser).Include(r=>r.DamageImages).FirstOrDefaultAsync(r => r.Id == id);
             if (rent == null)
             {
                 throw new HttpException(404, NoRentFound());

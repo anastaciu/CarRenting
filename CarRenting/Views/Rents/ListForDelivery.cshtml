@@ -44,9 +44,25 @@
             @Html.DisplayFor(modelItem => item.End)
         </td>
         <td>
-            @Html.ActionLink("Entregar", "DeliverVehicle", new { id = item.Id }, new { @class = "btn-success btn", @style = "padding:2px" })
-            @Html.ActionLink("Receber", "ReceiveVehicle", new { id = item.Id }, new { @class = "btn-primary btn", @style = "padding:2px" })
-
+            @if (item.IsConfirmed)
+            {
+                if (!item.IsDelivered)
+                {
+                    <a href="@Url.Action("DeliverVehicle", new {id = item.Id})" title="Entregar Veículo"><i class="far text-center fa-fw fa-check-circle text-primary"></i></a>
+                }
+                if (!item.IsReceived && item.IsDelivered)
+                {
+                    <a href="@Url.Action("ReceiveVehicle", new {id = item.Id})" title="Receber Veículo"><i class="fas fa-fw fa-check-circle text-success"></i></a>
+                }
+                if (item.IsDelivered && item.IsReceived)
+                {
+                    <span class="text-success">Finalizada</span>
+                }
+            }
+            else
+            {
+                <span class="text-danger">Não confirmada</span>
+            }
         </td>
     </tr>
 }

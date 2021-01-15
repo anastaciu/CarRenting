@@ -37,6 +37,7 @@
 
         @foreach (var item in Model)
         {
+            @Html.HiddenFor(modelItem=>item.Id)
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.ApplicationUser.Name)
@@ -53,15 +54,23 @@
                 <td>
                     @if (!item.IsConfirmed)
                     {
-                        <a href="@Url.Action("ConfirmRent", "Rents", new { id = item.Id })" title="Confirmar Reserva"><i class="fas fa-fw fa-check-circle text-success"></i></a>
+                        <a href="@Url.Action("ConfirmRent", new { id = item.Id })" title="Confirmar Reserva"><i class="fas fa-fw fa-check-circle text-success"></i></a>
 
                     }
-                    <a href="@Url.Action("Edit", "Rents", new { id = item.Id })"  title="Editar Reserva"><i class="fas text-center fa-fw fa-edit text-primary"></i></a>
-                    <a href="@Url.Action("Details", "Rents", new { id = item.Id })"  title="Detalhes da Reserva"><i class="fas fa-fw fa-info-circle text-info"></i></a>
-                    <a href="@Url.Action("Delete", "Rents", new { id = item.Id })"  title="Apagar Reserva"><i class="fas fa-fw fa-trash-alt text-danger"></i></a>
+                    else
+                    {
+                        <a title="Reserva Confirmada"><i class="fas fa-check-circle text-secondary"></i></a>
+                    }
+
+                    <a href="@Url.Action("Edit", new { id = item.Id })"  title="Editar Reserva"><i class="fas text-center fa-fw fa-pen-square text-primary"></i></a>
+                    <a href="@Url.Action("DetailsAdmin", new { id = item.Id })"  title="Detalhes da Reserva"><i class="fas fa-fw fa-info-circle text-info"></i></a>
                 </td>
             </tr>
         }
 
     </table>
+    
+    <div class="text-center">
+        @Html.ActionLink("Voltar","Index", "CompanyUserArea", null, new{@class="btn btn-danger"})
+    </div>
 </div>
