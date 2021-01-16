@@ -4,7 +4,8 @@ namespace CarRenting.Controllers
 {
     public class AdminAreaController : Controller
     {
-        // GET: AdminArea
+      
+        [Authorize(Roles = "Administrador do Site")]
         public ActionResult Index()
         {
             return View();

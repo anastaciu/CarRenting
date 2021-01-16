@@ -4,7 +4,6 @@
     ViewBag.Title = "Lista de Alugueres da Empresa";
 }
 
-
 @if (TempData["isConfirmed"] as bool? == true)
 {
     <script type="text/javascript">
@@ -13,7 +12,7 @@
         });
     </script>
 }
-<div class="container">
+
     <div class="log-headers-h2 boxshadow">
         <h2>@ViewBag.Title</h2>
     </div>
@@ -37,35 +36,33 @@
 
         @foreach (var item in Model)
         {
-            @Html.HiddenFor(modelItem=>item.Id)
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ApplicationUser.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Car.License)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Begin)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.End)
-                </td>
-                <td>
-                    @if (!item.IsConfirmed)
-                    {
-                        <a href="@Url.Action("ConfirmRent", new { id = item.Id })" title="Confirmar Reserva"><i class="fas fa-fw fa-check-circle text-success"></i></a>
+    <tr>
+        <td>
+            @Html.HiddenFor(modelItem => item.Id)
+            @Html.DisplayFor(modelItem => item.ApplicationUser.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Car.License)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Begin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.End)
+        </td>
+        <td>
+            @if (!item.IsConfirmed)
+            {
+                <a href="@Url.Action("ConfirmRent", new {id = item.Id})" title="Confirmar Reserva"><i class="fas fa-fw fa-check-circle text-success"></i></a>
 
-                    }
-                    else
-                    {
-                        <a title="Reserva Confirmada"><i class="fas fa-check-circle text-secondary"></i></a>
-                    }
-
-                    <a href="@Url.Action("Edit", new { id = item.Id })"  title="Editar Reserva"><i class="fas text-center fa-fw fa-pen-square text-primary"></i></a>
-                    <a href="@Url.Action("DetailsAdmin", new { id = item.Id })"  title="Detalhes da Reserva"><i class="fas fa-fw fa-info-circle text-info"></i></a>
-                </td>
-            </tr>
+            }
+            else
+            {
+                <a title="Reserva Confirmada"><i class="fas fa-check-circle text-secondary"></i></a>
+            }
+            <a href="@Url.Action("DetailsAdmin", new {id = item.Id})" title="Detalhes da Reserva"><i class="fas fa-fw fa-info-circle text-info"></i></a>
+        </td>
+    </tr>
         }
 
     </table>
@@ -73,4 +70,4 @@
     <div class="text-center">
         @Html.ActionLink("Voltar","Index", "CompanyUserArea", null, new{@class="btn btn-danger"})
     </div>
-</div>
+

@@ -2,9 +2,9 @@
 
 namespace CarRenting.Controllers
 {
-    [Authorize(Roles = "Utilizador Registado")]
     public class ClientAreaController : Controller
     {
+        [Authorize(Roles = "Utilizador Registado")]
         public ActionResult Index()
         {
             return View();

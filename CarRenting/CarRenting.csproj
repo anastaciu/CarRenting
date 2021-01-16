@@ -628,7 +628,6 @@
     <Content Include="Views\Cars\CompanyCars.cshtml" />
     <Content Include="Views\Shared\_UserInfoPartial.cshtml" />
     <Content Include="Views\Rents\Create.cshtml" />
-    <Content Include="Views\Rents\Delete.cshtml" />
     <Content Include="Views\Rents\Details.cshtml" />
     <Content Include="Views\Rents\Edit.cshtml" />
     <Content Include="Views\Rents\Index.cshtml" />
@@ -657,6 +656,7 @@
     <Content Include="Views\Shared\_FooterPartial.cshtml" />
     <Content Include="Views\Rents\DetailsAdmin.cshtml" />
     <Content Include="Views\Rents\ConfirmRent.cshtml" />
+    <Content Include="Views\ApplicationUsers\ManageUserDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

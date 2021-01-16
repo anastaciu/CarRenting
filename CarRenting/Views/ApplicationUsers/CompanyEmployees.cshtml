@@ -25,6 +25,16 @@
     </script>
 }
 
+@if (TempData["deleted"] as bool? == true)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            toastr.success('Utilizador eliminado');
+        });
+
+    </script>
+}
+
 <div class="log-headers-h2 boxshadow">
     <h2>@ViewBag.Title</h2>
 </div>
@@ -80,9 +90,9 @@
                 else
                 {
                     <span>
-                        <a href="@Url.Action("Edit", new { id = item.Id })"  title="Editar Utilizador"><i class="fas text-center fa-fw fa-edit text-primary"></i></a>
-                        <a href="@Url.Action("Details", new { id = item.Id })"  title="Detalhes da Utilizador"><i class="fas fa-fw fa-info-circle text-info"></i></a>
-                        <a href="@Url.Action("Delete", new { id = item.Id })"  title="Apagar Utilizador"><i class="fas fa-fw fa-trash-alt text-danger"></i></a>
+                        <a href="@Url.Action("Edit", new { id = item.Id })" title="Editar Utilizador"><i class="fas text-center fa-fw fa-edit text-primary"></i></a>
+                        <a href="@Url.Action("Details", new { id = item.Id })" title="Detalhes da Utilizador"><i class="fas fa-fw fa-info-circle text-info"></i></a>
+                        <a href="@Url.Action("Delete", new { id = item.Id })" title="Apagar Utilizador"><i class="fas fa-fw fa-trash-alt text-danger"></i></a>
                     </span>
                 }
             </td>

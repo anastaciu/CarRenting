@@ -127,6 +127,36 @@ namespace CarRenting.Controllers
             return View(userViewModel);
         }
 
+        [Authorize(Roles = "Administrador da Empresa, Administrador do Site, Utilizador Registado, Utilizador da Empresa")]
+        // GET: ApplicationUsers/Details/5
+        public async Task<ActionResult> ManageUserDetails()
+        {
+            var userId = User.Identity.GetUserId();
+            ApplicationUser applicationUser = _dbContext.Users.Find(userId);
+
+            if (applicationUser == null)
+            {
+                throw new HttpException(404, NoUserFound());
+            }
+
+            var roleId = applicationUser.Roles.SingleOrDefault()?.RoleId;
+            var company = await _dbContext.Companies.SingleOrDefaultAsync(c => c.Employees.Any(e => e.ApplicationUserId == applicationUser.Id));
+            var role = await RoleManager.FindByIdAsync(roleId);
+            var userViewModel = new UserViewModel
+            {
+                Id = applicationUser.Id,
+                Email = applicationUser.Email,
+                Name = applicationUser.Name,
+                Role = role.Name,
+                PhoneNumber = applicationUser.PhoneNumber,
+                CompanyName = company?.CompanyName
+
+            };
+
+            return View(userViewModel);
+        }
+
+
         // GET: ApplicationUsers/Edit/5
         [Authorize(Roles = "Administrador da Empresa, Administrador do Site")]
         public async Task<ActionResult> Edit(string id)
@@ -165,7 +195,7 @@ namespace CarRenting.Controllers
         // POST: ApplicationUsers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Administrador da Empresa,  Administrador do Site")]
+        [Authorize(Roles = "Administrador da Empresa, Administrador do Site")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Email,PhoneNumber,Role")] UserViewModel applicationUser)
@@ -246,7 +276,8 @@ namespace CarRenting.Controllers
 
             _dbContext.Users.Remove(applicationUser);
             await _dbContext.SaveChangesAsync();
-            return RedirectToAction("Index", "Home");
+            TempData["deleted"] = true;
+            return RedirectToAction("CompanyEmployees");
 
         }
 

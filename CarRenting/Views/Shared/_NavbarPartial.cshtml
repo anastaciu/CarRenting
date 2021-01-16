@@ -9,7 +9,7 @@
         <div class="navbar-collapse collapse" id="navbarSupportedContent">
             <ul class="nav navbar-nav">
 
-                <li>@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
+                <li>@Html.ActionLink("Início", "Index", "Home", null, new { @class = "nav-link", @style = "margin-right:10px;" })</li>
 
                 @if (User.IsInRole(WebConfigurationManager.AppSettings["Cn"]))
                 {

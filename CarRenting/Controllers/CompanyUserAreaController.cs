@@ -4,7 +4,8 @@ namespace CarRenting.Controllers
 {
     public class CompanyUserAreaController : Controller
     {
-        // GET: CompanyUserArea
+       
+        [Authorize(Roles = "Utilizador da Empresa")]
         public ActionResult Index()
         {
             return View();

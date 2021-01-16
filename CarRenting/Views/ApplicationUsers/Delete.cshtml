@@ -6,68 +6,50 @@
 @{
     ViewBag.Title = "Delete";
 }
-<div class="log-headers boxshadow offset-1 col-md-10">
-    <h2>Eliminar Utilizador</h2>
-</div>
-<div class="jumbotron boxshadow offset-1 col-md-10">
-    <dl>
-        <dt>
-            Nome
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+<div class="container">
+    <div class="log-headers-h2 boxshadow offset-md-3 col-md-6">
+        <h2>Eliminar Utilizador</h2>
+    </div>
 
-        <dt>
-            Email
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-           Telefone
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-
-    </dl>
-    <h4>Tem a certeza que quer eliminar o utilizador?</h4>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        string user = null;
-        if (User.Identity.IsAuthenticated)
+    <div class="jumbotron boxshadow offset-md-3 col-md-6">
+        @using (Html.BeginForm())
         {
-            user = HttpContext.Current.GetOwinContext()?.GetUserManager<ApplicationUserManager>()?.FindById(User.Identity.GetUserId())?.Name;
-        }
+            <dl>
+                <dt>
+                    Nome
+                </dt>
 
-        <div class="row">
-            <div class="col-sm-12 text-center">
-                @if (Request.IsAuthenticated && user != null)
-                {
-                    if (User.IsInRole(WebConfigurationManager.AppSettings["Cn"]))
-                    {
-                        @Html.ActionLink("Cancelar", "CompanyEmployees", "ApplicationUsers", new { @area = "" }, new { @class = "btn btn-danger" })
-                        ;
-                    }
-                    else if (User.IsInRole(WebConfigurationManager.AppSettings["An"]))
-                    {
-                        @Html.ActionLink("Cancelar", "Index", "ApplicationUsers", new { @area = "" }, new { @class = "btn btn-danger" });
-                    }
-                    else
-                    {
-                        Response.Redirect(@Url.Action("Index", "Home") ?? string.Empty);
-                    }
-                }
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.LabelFor(model => model.Email)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+
+                <dt>
+                    Telefone
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.PhoneNumber)
+                </dd>
+            </dl>
+            <h4>Tem a certeza que quer eliminar o utilizador?</h4>
+
+
+            @Html.AntiForgeryToken()
+
+            <div class="text-center">
+                @Html.ActionLink("Cancelar", "CompanyEmployees", null, new { @class = "btn btn-danger" })
                 <button type="submit" class="btn btn-primary" Style="width: 100px;">Eliminar</button>
             </div>
-        </div>
-    }
+
+        }
+    </div>
+
 </div>

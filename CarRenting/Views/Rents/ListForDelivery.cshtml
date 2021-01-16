@@ -3,68 +3,73 @@
 @{
     ViewBag.Title = "Veículos para entrega";
 }
-<div class="boxshadow log-headers-h2">
-    <h2>@ViewBag.Title</h2>
-</div>
 
-<table class="table boxshadow">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ApplicationUser.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ApplicationUser.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Car.License)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Begin)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.End)
-        </th>
-    </tr>
+    <div class="boxshadow log-headers-h2">
+        <h2>@ViewBag.Title</h2>
+    </div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ApplicationUser.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ApplicationUser.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Car.License)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Begin)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.End)
-        </td>
-        <td>
-            @if (item.IsConfirmed)
-            {
-                if (!item.IsDelivered)
-                {
-                    <a href="@Url.Action("DeliverVehicle", new {id = item.Id})" title="Entregar Veículo"><i class="far text-center fa-fw fa-check-circle text-primary"></i></a>
-                }
-                if (!item.IsReceived && item.IsDelivered)
-                {
-                    <a href="@Url.Action("ReceiveVehicle", new {id = item.Id})" title="Receber Veículo"><i class="fas fa-fw fa-check-circle text-success"></i></a>
-                }
-                if (item.IsDelivered && item.IsReceived)
-                {
-                    <span class="text-success">Finalizada</span>
-                }
-            }
-            else
-            {
-                <span class="text-danger">Não confirmada</span>
-            }
-        </td>
-    </tr>
-}
+    <table class="table boxshadow">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUser.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car.License)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Begin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.End)
+            </th>
+        </tr>
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApplicationUser.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApplicationUser.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Car.License)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Begin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.End)
+                </td>
+                <td>
+                    @if (item.IsConfirmed)
+                    {
+                        if (!item.IsDelivered)
+                        {
+                            <a href="@Url.Action("DeliverVehicle", new {id = item.Id})" title="Entregar Veículo"><i class="far text-center fa-fw fa-check-circle text-primary"></i></a>
+                        }
+                        if (!item.IsReceived && item.IsDelivered)
+                        {
+                            <a href="@Url.Action("ReceiveVehicle", new {id = item.Id})" title="Receber Veículo"><i class="fas fa-fw fa-check-circle text-success"></i></a>
+                        }
+                        if (item.IsDelivered && item.IsReceived)
+                        {
+                            <span class="text-success">Finalizada</span>
+                        }
+                    }
+                    else
+                    {
+                        <span class="text-danger">Não confirmada</span>
+                    }
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div class="text-center">
+        @Html.ActionLink("Voltar", "Index", "CompanyUserArea", null, new { @class = "btn btn-danger" })
+    </div>
