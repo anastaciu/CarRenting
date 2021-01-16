@@ -91,25 +91,6 @@ namespace CarRenting.Controllers
                             ModelState.AddModelError("", @"Dados incorretos!");
                             return View(model);
                         }
-                        var role = UserManager.GetRoles(user.Id).SingleOrDefault();
-                        if (role == WebConfigurationManager.AppSettings["Cn"])
-                        {
-                            return RedirectToAction("Index", "CompanyAdminArea");
-
-                        }
-                        if (role == WebConfigurationManager.AppSettings["Cr"])
-                        {
-                            return RedirectToAction("Index", "CompanyUserArea");
-                        }
-                        if (role == WebConfigurationManager.AppSettings["Ur"])
-                        {
-                            return RedirectToAction("Index", "ClientArea");
-                        }
-
-                        if (role == WebConfigurationManager.AppSettings["An"])
-                        {
-                            return RedirectToAction("Index", "AdminArea");
-                        }
                         else return RedirectToLocal(returnUrl);
 
                     }

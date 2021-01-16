@@ -206,6 +206,13 @@ namespace CarRenting.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (_dbContext.Users.Any(u => u.Email == applicationUser.Email))
+                    {
+                        ModelState.AddModelError(nameof(applicationUser.Email), @"O email já está registado");
+                        roles = new SelectList(_dbContext.Roles.Where(r => r.Name.Contains("Empresa")), "Name", "Name");
+                        ViewBag.Roles = roles;
+                        return View(applicationUser);
+                    }
                     try
                     {
                         var originalRole = user.Roles.SingleOrDefault();
