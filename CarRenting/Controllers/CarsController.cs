@@ -32,12 +32,10 @@ namespace CarRenting.Controllers
                 var carModels = _dbContext.Cars.Include(c => c.Company).Include(c => c.Type).Where(c => c.Model.Contains(term));
                 var carTypes = _dbContext.Cars.Include(c => c.Company).Include(c => c.Type).Where(c => c.Type.Type.Contains(term));
                 var finalList = carModels.Union(carTypes).Union(carsBrands);
-                if (!finalList.Any())
+                if (finalList.Any())
                 {
-                    TempData["termNorFound"] = true;
+                    return View("Index", await finalList.ToListAsync());
                 }
-                return View("Index", await finalList.ToListAsync());
-                
             }
             TempData["termNorFound"] = true;
             return RedirectToAction("Index");
