@@ -1,10 +1,13 @@
 ﻿using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using CarRenting.Models;
 using CarRenting.Utils;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 
 namespace CarRenting.Controllers
@@ -18,6 +21,27 @@ namespace CarRenting.Controllers
         {
             var cars = _dbContext.Cars.Include(c => c.Company).Include(c => c.Type);
             return View(await cars.ToListAsync());
+        }
+
+        // GET: Cars
+        public async Task<ActionResult> Search(string term)
+        {
+            if (!term.IsEmpty())
+            {
+                var carsBrands = _dbContext.Cars.Include(c => c.Company).Include(c => c.Type).Where(c=>c.Brand == term || c.Brand.Contains(term));
+                var carModels = _dbContext.Cars.Include(c => c.Company).Include(c => c.Type).Where(c => c.Model == term || c.Model.Contains(term));
+                var carTypes = _dbContext.Cars.Include(c => c.Company).Include(c => c.Type).Where(c => c.Type.Type == term || c.Type.Type.Contains(term));
+                var cars = carsBrands.Concat(carModels);
+                var finalList = cars.Union(carTypes).Union(carsBrands);
+                if (!finalList.Any())
+                {
+                    TempData["termNorFound"] = true;
+                }
+                return View("Index", await finalList.ToListAsync());
+                
+            }
+            TempData["termNorFound"] = true;
+            return RedirectToAction("Index");
         }
 
         [Authorize(Roles = "Administrador da Empresa, Administrador do Site")]

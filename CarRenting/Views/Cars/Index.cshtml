@@ -10,6 +10,15 @@
     </script>
 }
 
+@if (TempData["termNorFound"] as bool? == true)
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            toastr.error('O termo não foi encontrado');
+        });
+    </script>
+}
+
 <div class="modal fade" id="newCarList" tabindex="-1" role="dialog" aria-labelledby="label" aria-hidden="false">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -36,6 +45,12 @@
         Lista de Veículos
     </h2>
 
+    <form method="get" action="@Url.Action("Search", "Cars")" class="input-group mb-3 mt-3 col-md-6 offset-md-3">
+        @Html.TextBox("term", ViewData["term"], new { @class = "form-control", @placeholder="Marca ou Modelo ou Categoria",@title="São permitidos termos incompletos" })
+        <div class="input-group-append">
+            <button type="submit" class="input-group-text"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
     <div>
         <table class="table boxshadow col-md-12">
             <tr>
@@ -180,7 +195,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                            @Html.ActionLink("Confirmar", "RentVehicleValidDate", "Rents", new { carId = item.Id, begin = (DateTime)TempData["begin"], end = (DateTime)TempData["end"] }, new{@class="btn-primary btn"})
+                                            @Html.ActionLink("Confirmar", "RentVehicleValidDate", "Rents", new { carId = item.Id, begin = (DateTime)TempData["begin"], end = (DateTime)TempData["end"] }, new { @class = "btn-primary btn" })
 
                                         </div>
                                     </div>
@@ -190,8 +205,8 @@
                         else
                         {
                             <div>
-                                <a href="@Url.Action("RentVehicle", "Rents", new { carId = item.Id })"  title="Reservar Veículo"><i class="fas text-center fa-fw fa-shopping-cart text-primary"></i></a>
-                                <a href="@Url.Action("Details", "Cars", new { id = item.Id })"  title="Detalhes do Veículo"><i class="fas fa-fw fa-info-circle text-info"></i></a>
+                                <a href="@Url.Action("RentVehicle", "Rents", new { carId = item.Id })" title="Reservar Veículo"><i class="fas text-center fa-fw fa-shopping-cart text-primary"></i></a>
+                                <a href="@Url.Action("Details", "Cars", new { id = item.Id })" title="Detalhes do Veículo"><i class="fas fa-fw fa-info-circle text-info"></i></a>
                             </div>
                         }
                     </td>
