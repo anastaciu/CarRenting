@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web;
 
 namespace CarRenting.Models
 {
@@ -42,9 +43,12 @@ namespace CarRenting.Models
         [ForeignKey("Company")] 
         public int CompanyId { get; set; }
         public Company Company { get; set; }
+        [Display(Name = "Reservas")]
         public ICollection<Rent> Rents { get; set; }
-
-
+        [Display(Name = "Fotos da viatura")]
+        public ICollection<CarImage> CarImages { get; set; }
+        [Display(Name = "Fotos da viatura")]
+        public HttpPostedFileBase[] Files { get; set; }
         public Car()
         {
             FuelLevel = "Cheio";

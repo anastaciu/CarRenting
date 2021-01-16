@@ -55,6 +55,10 @@
         <table class="table boxshadow col-md-12">
             <tr>
                 <th>
+                    
+                    @Html.DisplayNameFor(model => model.CarImages)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.Type.Type)
                 </th>
                 <th>
@@ -75,6 +79,18 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>
+                        @if (item.CarImages.Count > 0)
+                        {
+                            <div>
+                                <a href="@Url.Action("Details", new{item.Id})"><img class="img-thumbnail w-75" src="@Url.Content(item.CarImages.ElementAt(0).ImagePath)" /></a>
+                            </div>
+                        }
+                        else
+                        {
+                            @:N/A
+                        }
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Type.Type)
                     </td>

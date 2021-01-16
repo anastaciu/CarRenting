@@ -201,6 +201,7 @@ dd {
     min-height: 90vh;
 }
 
-.tooltip {
-    font-weight: bold;
+img {
+    width: 100%;
+    height: auto;
 }

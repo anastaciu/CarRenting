@@ -142,9 +142,6 @@
 
                 </dd>
                 <dt>
-
-
-
                     @Html.DisplayNameFor(model => model.DamageImages)
                 </dt>
                 <dd>
@@ -190,16 +187,17 @@
                             </div>
                         </div>
                     </div>
-                    @if(Model.DamageImages.Count > 0){
-                    <button type="button" class="btn-primary btn" data-toggle="modal" data-target="#damageModal" style="padding: 0px;font-size: 95%">
-                        Ver danos
-                    </button>
+                    @if (Model.DamageImages.Count > 0)
+                    {
+                        <button type="button" class="btn-primary btn" data-toggle="modal" data-target="#damageModal" style="padding: 0px;font-size: 95%">
+                            Ver danos
+                        </button>
                     }
                     else
                     {
                         @:N/A
                     }
-                    
+
                 </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.IsChecked)

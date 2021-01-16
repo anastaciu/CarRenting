@@ -181,7 +181,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Attributes\MinDateAttribute.cs" />
-    <Compile Include="Attributes\UniqueImagePathAttribute.cs" />
     <Compile Include="Attributes\UniqueTypeAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminAreaController.cs" />
@@ -333,9 +332,18 @@
     <Compile Include="Migrations\202101111911078_updt.Designer.cs">
       <DependentUpon>202101111911078_updt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101161209499_car-images.cs" />
+    <Compile Include="Migrations\202101161209499_car-images.Designer.cs">
+      <DependentUpon>202101161209499_car-images.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101161216259_car-images2.cs" />
+    <Compile Include="Migrations\202101161216259_car-images2.Designer.cs">
+      <DependentUpon>202101161216259_car-images2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppUser.cs" />
+    <Compile Include="Models\CarImage.cs" />
     <Compile Include="Models\Cars.cs" />
     <Compile Include="Models\CarType.cs" />
     <Compile Include="Models\Check.cs" />
@@ -660,6 +668,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="CarImagesUpload\" />
     <Folder Include="DamageImagesUpload\" />
   </ItemGroup>
   <ItemGroup>
@@ -771,6 +780,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101111911078_updt.resx">
       <DependentUpon>202101111911078_updt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101161209499_car-images.resx">
+      <DependentUpon>202101161209499_car-images.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101161216259_car-images2.resx">
+      <DependentUpon>202101161216259_car-images2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

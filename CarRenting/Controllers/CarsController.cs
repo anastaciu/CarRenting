@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -19,7 +20,7 @@ namespace CarRenting.Controllers
         // GET: Cars
         public async Task<ActionResult> Index()
         {
-            var cars = _dbContext.Cars.Include(c => c.Company).Include(c => c.Type);
+            var cars = _dbContext.Cars.Include(c => c.Company).Include(c => c.Type).Include(c=>c.CarImages);
             return View(await cars.ToListAsync());
         }
 
@@ -28,9 +29,9 @@ namespace CarRenting.Controllers
         {
             if (!term.IsEmpty())
             {
-                var carsBrands = _dbContext.Cars.Include(c => c.Company).Include(c => c.Type).Where(c=> c.Brand.Contains(term));
-                var carModels = _dbContext.Cars.Include(c => c.Company).Include(c => c.Type).Where(c => c.Model.Contains(term));
-                var carTypes = _dbContext.Cars.Include(c => c.Company).Include(c => c.Type).Where(c => c.Type.Type.Contains(term));
+                var carsBrands = _dbContext.Cars.Include(c => c.Company).Include(c => c.CarImages).Include(c => c.Type).Where(c=> c.Brand.Contains(term));
+                var carModels = _dbContext.Cars.Include(c => c.Company).Include(c => c.CarImages).Include(c => c.Type).Where(c => c.Model.Contains(term));
+                var carTypes = _dbContext.Cars.Include(c => c.Company).Include(c => c.CarImages).Include(c => c.Type).Where(c => c.Type.Type.Contains(term));
                 var finalList = carModels.Union(carTypes).Union(carsBrands);
                 if (finalList.Any())
                 {
@@ -78,7 +79,7 @@ namespace CarRenting.Controllers
             {
                 throw new HttpException(400, NoCar());
             }
-            Car car = await _dbContext.Cars.Include(c=>c.Type).Include(c=>c.Company).SingleOrDefaultAsync(c=>c.Id == id);
+            Car car = await _dbContext.Cars.Include(c=>c.CarImages).Include(c=>c.Type).Include(c=>c.Company).SingleOrDefaultAsync(c=>c.Id == id);
 
             if (car == null)
             {
@@ -101,7 +102,7 @@ namespace CarRenting.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador da Empresa")]
-        public async Task<ActionResult> Create([Bind(Include = "Id,License,Brand,Model,Fuel,FuelLevel,Seats,TypeId,Price,Kms")] Car car)
+        public async Task<ActionResult> Create([Bind(Include = "Id,License,Brand,Model,Fuel,FuelLevel,Seats,TypeId,Price,Kms,Files")] Car car)
         {
             if (ModelState.IsValid)
             {
@@ -121,9 +122,29 @@ namespace CarRenting.Controllers
                 {
                     car.Company = employee.Company;
                     _dbContext.Cars.Add(car);
+
+                    foreach (HttpPostedFileBase file in car.Files)
+                    {
+                        if (file != null)
+                        {
+                            var fileName = Path.GetFileName(file.FileName);
+                            var relativePath = "~/CarImagesUpload/" + fileName;
+                            var path = Path.Combine(Server.MapPath("~/CarImagesUpload/") + fileName);
+                            file.SaveAs(path);
+                            if (!_dbContext.CarImages.Any(d => d.ImagePath == fileName))
+                            {
+                                _dbContext.CarImages.Add(new CarImage
+                                    { ImagePath = relativePath, CarId = car.Id });
+                            }
+                        }
+                    }
+
                     await _dbContext.SaveChangesAsync();
+
+
                     TempData["carCreated"] = true;
                     return RedirectToAction("CompanyCars");
+
                 }
             }
             ViewBag.FuelLevels = SelectLists.FuelLevelList();
