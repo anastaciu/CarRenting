@@ -28,11 +28,10 @@ namespace CarRenting.Controllers
         {
             if (!term.IsEmpty())
             {
-                var carsBrands = _dbContext.Cars.Include(c => c.Company).Include(c => c.Type).Where(c=>c.Brand == term || c.Brand.Contains(term));
-                var carModels = _dbContext.Cars.Include(c => c.Company).Include(c => c.Type).Where(c => c.Model == term || c.Model.Contains(term));
-                var carTypes = _dbContext.Cars.Include(c => c.Company).Include(c => c.Type).Where(c => c.Type.Type == term || c.Type.Type.Contains(term));
-                var cars = carsBrands.Concat(carModels);
-                var finalList = cars.Union(carTypes).Union(carsBrands);
+                var carsBrands = _dbContext.Cars.Include(c => c.Company).Include(c => c.Type).Where(c=> c.Brand.Contains(term));
+                var carModels = _dbContext.Cars.Include(c => c.Company).Include(c => c.Type).Where(c => c.Model.Contains(term));
+                var carTypes = _dbContext.Cars.Include(c => c.Company).Include(c => c.Type).Where(c => c.Type.Type.Contains(term));
+                var finalList = carModels.Union(carTypes).Union(carsBrands);
                 if (!finalList.Any())
                 {
                     TempData["termNorFound"] = true;
