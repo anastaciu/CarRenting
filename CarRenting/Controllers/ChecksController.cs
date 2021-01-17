@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity;
 
 namespace CarRenting.Controllers
 {
+    [Authorize(Roles = "Administrador da Empresa")]
     public class ChecksController : Controller
     {
         private ApplicationDbContext _dbContext = new ApplicationDbContext();

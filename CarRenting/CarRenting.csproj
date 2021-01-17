@@ -624,15 +624,11 @@
     <Content Include="Views\AdminArea\Index.cshtml" />
     <Content Include="Views\CompanyUserArea\Index.cshtml" />
     <Content Include="Views\CarTypes\Create.cshtml" />
-    <Content Include="Views\CarTypes\Delete.cshtml" />
-    <Content Include="Views\CarTypes\Details.cshtml" />
     <Content Include="Views\CarTypes\Edit.cshtml" />
     <Content Include="Views\CarTypes\Index.cshtml" />
     <Content Include="Views\Checks\Create.cshtml" />
-    <Content Include="Views\Checks\Delete.cshtml" />
     <Content Include="Views\Checks\Index.cshtml" />
     <Content Include="Views\Cars\Create.cshtml" />
-    <Content Include="Views\Cars\Delete.cshtml" />
     <Content Include="Views\Cars\Details.cshtml" />
     <Content Include="Views\Cars\Edit.cshtml" />
     <Content Include="Views\Cars\Index.cshtml" />
@@ -669,6 +665,7 @@
     <Content Include="Views\Rents\DetailsAdmin.cshtml" />
     <Content Include="Views\Rents\ConfirmRent.cshtml" />
     <Content Include="Views\ApplicationUsers\ManageUserDetails.cshtml" />
+    <Content Include="Views\Checks\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

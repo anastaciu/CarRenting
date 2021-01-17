@@ -10,29 +10,13 @@ namespace CarRenting.Controllers
     [Authorize(Roles = "Administrador do Site")]
     public class CarTypesController : Controller
     {
-        private ApplicationDbContext _dbContext = new ApplicationDbContext();
+        private readonly ApplicationDbContext _dbContext = new ApplicationDbContext();
 
         // GET: CarTypes
     
         public async Task<ActionResult> Index()
         {
             return View(await _dbContext.CarTypes.ToListAsync());
-        }
-
-        // GET: CarTypes/Details/5
- 
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                throw new HttpException(404, NoCarTypes());
-            }
-            CarType carType = await _dbContext.CarTypes.FindAsync(id);
-            if (carType == null)
-            {
-                throw new HttpException(404, NoCarTypesFound());
-            }
-            return View(carType);
         }
 
         // GET: CarTypes/Create
@@ -45,8 +29,8 @@ namespace CarRenting.Controllers
         // POST: CarTypes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
-     
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,Type")] CarType carType)
         {
@@ -97,42 +81,6 @@ namespace CarRenting.Controllers
                 return RedirectToAction("Index");
             }
             TempData["isModified"] = false;
-            return RedirectToAction("Index");
-        }
-
-        // GET: CarTypes/Delete/5
-  
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                throw new HttpException(400, NoCarTypes());
-            }
-            CarType carType = await _dbContext.CarTypes.FindAsync(id);
-            if (carType == null)
-            {
-                throw new HttpException(404, NoCarTypesFound());
-            }
-            return View(carType);
-        }
-
-        // POST: CarTypes/Delete/5
-       
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int? id)
-        {
-            if (id == null)
-            {
-                throw new HttpException(400, NoCarTypes());
-            }
-            CarType carType = await _dbContext.CarTypes.FindAsync(id);
-            if (carType == null)
-            {
-                throw new HttpException(404, NoCarTypesFound());
-            }
-            _dbContext.CarTypes.Remove(carType);
-            await _dbContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 

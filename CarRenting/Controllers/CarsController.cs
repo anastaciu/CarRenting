@@ -194,35 +194,6 @@ namespace CarRenting.Controllers
             return RedirectToAction("CompanyCars");
         }
 
-        // GET: Cars/Delete/5
-        [Authorize(Roles = "Administrador da Empresa")]
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                throw new HttpException(400, NoCar());
-            }
-            Car car = await _dbContext.Cars.FindAsync(id);
-            if (car == null)
-            {
-                throw new HttpException(404, NoCarFound());
-            }
-            return View(car);
-        }
-
-        // POST: Cars/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [Authorize(Roles = "Administrador da Empresa")]
-        [ValidateAntiForgeryToken]
-        
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            Car car = await _dbContext.Cars.FindAsync(id);
-            _dbContext.Cars.Remove(car ?? throw new HttpException(404, NoCarFound()));
-            await _dbContext.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
