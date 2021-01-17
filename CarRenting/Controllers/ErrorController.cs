@@ -1,14 +1,14 @@
 ﻿using System.Web.Mvc;
 
-/// <summary>
-/// This controller exists to provide the error page
-/// </summary>
-public class ErrorController : Controller
+namespace CarRenting.Controllers
 {
-    public ActionResult Index(string message)
+    
+    public class ErrorController : Controller
     {
-        // We choose to use the ViewBag to communicate the error message to the view
-        ViewBag.Message = message;
-        return View();
+        public ActionResult Index(string message)
+        {
+            ViewBag.Message = message;
+            return View();
+        }
     }
 }
