@@ -646,43 +646,6 @@ namespace CarRenting.Controllers
             }
         }
 
-        private bool IsCompanyAdmin(string userId)
-        {
-            try
-            {
-                var role = UserManager.GetRoles(userId).SingleOrDefault();
-                if (userId == null || role != WebConfigurationManager.AppSettings["Cn"])
-                {
-                    return false;
-                }
-                return true;
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Debug: " + e.Message);
-                return false;
-            }
-        }
-
-        private bool IsAdmin()
-        {
-            try
-            {
-                var userId = User.Identity.GetUserId();
-                var role = UserManager.GetRoles(userId).SingleOrDefault();
-                if (userId == null || role != WebConfigurationManager.AppSettings["An"])
-                {
-                    return false;
-                }
-                return true;
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Debug: " + e.Message);
-                return false;
-            }
-
-        }
 
         #region Helpers
         // Used for XSRF protection when adding external logins

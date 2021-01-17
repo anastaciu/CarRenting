@@ -86,10 +86,10 @@
                 @Html.DisplayNameFor(model => model.CarImages)
             </dt>
             <dd>
-                <div class="modal fade" id="damageModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal fade" id="fotosModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content" style="background-color: transparent!important">
-                            <div id="damage" class="carousel slide" data-ride="carousel">
+                        <div class="modal-content">
+                            <div id="fotos" class="carousel slide" data-ride="carousel">
 
                                 <ol class="carousel-indicators">
                                     @{
@@ -100,7 +100,7 @@
                                         {
                                             i++;
                                             var olactive = i == 1 ? "active" : "";
-                                            <li data-target="#damage" data-slide-to="@sliders" class="@olactive"></li>
+                                            <li data-target="#fotos" data-slide-to="@sliders" class="@olactive"></li>
                                             sliders++;
                                         }
                                     }
@@ -112,16 +112,16 @@
                                     {
                                         i++;
                                         var active = i == 1 ? "active" : "";
-                                        <div class="carousel-item @active" >
+                                        <div class="carousel-item fixed-carousel @active" >
                                             <img class="d-block" src="@Url.Content(item.ImagePath)" alt="imagem não encontrada"/>
                                         </div>
 
                                     }
                                 </div>
-                                <a class="carousel-control-prev" href="#damage" data-slide="prev">
+                                <a class="carousel-control-prev" href="#fotos" data-slide="prev">
                                     <span class="carousel-control-prev-icon"></span>
                                 </a>
-                                <a class="carousel-control-next" href="#damage" data-slide="next">
+                                <a class="carousel-control-next" href="#fotos" data-slide="next">
                                     <span class="carousel-control-next-icon"></span>
                                 </a>
                             </div>
@@ -130,8 +130,8 @@
                 </div>
                 @if (Model.CarImages.Count > 0)
                 {
-                    <button type="button" class="btn-primary btn" data-toggle="modal" data-target="#damageModal" style="padding: 0px;font-size: 95%">
-                        Ver
+                    <button type="button" class="btn-info btn" data-toggle="modal" data-target="#fotosModal" style="padding: 0px;font-size: 95%">
+                        Ver fotos
                     </button>
                 }
                 else

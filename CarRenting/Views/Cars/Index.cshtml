@@ -82,9 +82,16 @@
                     <td>
                         @if (item.CarImages.Count > 0)
                         {
-                            <div>
-                                <a href="@Url.Action("Details", new{item.Id})"><img class="img-thumbnail w-75" src="@Url.Content(item.CarImages.ElementAt(0).ImagePath)" /></a>
-                            </div>
+                            if (TempData["newCarList"] as bool? == true)
+                            {
+                                <a href="#" type="button" data-toggle="modal" data-target="#detailsModal"><img class="img-thumbnail w-75" src="@Url.Content(item.CarImages.ElementAt(0).ImagePath)" /></a>
+                            }
+                            else
+                            {
+                                <div>
+                                    <a href="@Url.Action("Details", new {item.Id})"><img class="img-thumbnail w-75" src="@Url.Content(item.CarImages.ElementAt(0).ImagePath)" /></a>
+                                </div>
+                            }
                         }
                         else
                         {
@@ -182,10 +189,65 @@
                                                 <dd>
                                                     @Html.DisplayFor(modelItem => item.Kms)
                                                 </dd>
+                                                <dd style="border-bottom: 0px!important">
+                                                    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                            <div class="modal-content">
+                                                                <div id="image" class="carousel slide" data-ride="carousel">
+
+                                                                    <ol class="carousel-indicators">
+                                                                        @{
+                                                                            int i = 0;
+                                                                            var sliders = 0;
+
+                                                                            while (sliders < item.CarImages.Count)
+                                                                            {
+                                                                                i++;
+                                                                                var olactive = i == 1 ? "active" : "";
+                                                                                <li data-target="#image" data-slide-to="@sliders" class="@olactive"></li>
+                                                                                sliders++;
+                                                                            }
+                                                                        }
+                                                                    </ol>
+                                                                    <div class="carousel-inner" role="listbox">
+
+                                                                        @{i = 0;}
+                                                                        @foreach (var foto in item.CarImages)
+                                                                        {
+                                                                            i++;
+                                                                            var active = i == 1 ? "active" : "";
+                                                                            <div class="carousel-item fixed-carousel @active">
+                                                                                <img class="d-block" src="@Url.Content(foto.ImagePath)" alt="imagem não encontrada" />
+                                                                            </div>
+
+                                                                        }
+                                                                    </div>
+                                                                    <a class="carousel-control-prev" href="#image" data-slide="prev">
+                                                                        <span class="carousel-control-prev-icon"></span>
+                                                                    </a>
+                                                                    <a class="carousel-control-next" href="#image" data-slide="next">
+                                                                        <span class="carousel-control-next-icon"></span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </dd>
+                                               
                                             </dl>
                                         </div>
                                     </div>
                                     <div class="modal-footer bg-warning">
+                                        @if (item.CarImages.Count > 0)
+                                        {
+                                            <button type="button" class="btn-info btn" data-toggle="modal" data-target="#imageModal">
+                                                Ver fotos
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            @:N/A
+                                        }
                                         <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
 
                                     </div>
@@ -200,8 +262,8 @@
                             <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title bg-primary" id="confirmTitle">Reservar Veículo?</h5>
+                                        <div class="modal-header bg-primary text-light">
+                                            <h5 class="modal-title" id="confirmTitle">Reservar Veículo?</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>

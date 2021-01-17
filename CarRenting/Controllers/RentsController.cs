@@ -80,7 +80,7 @@ namespace CarRenting.Controllers
 
                 var unavailableCars = _dbContext.Cars.Where(c =>
                       c.Rents.Any(r => !(rent.End < r.Begin || rent.Begin > r.End)));
-                var carList = _dbContext.Cars.Where(c=>c.TypeId == car.TypeId).Include(c=>c.Type).Include(c=>c.Company).Except(unavailableCars);
+                var carList = _dbContext.Cars.Where(c=>c.TypeId == car.TypeId).Include(c=>c.Type).Include(c=>c.CarImages).Include(c=>c.Company).Except(unavailableCars);
                 TempData["newCarList"] = true;
                 TempData["begin"] = rent.Begin;
                 TempData["end"] = rent.End;

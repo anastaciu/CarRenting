@@ -146,9 +146,9 @@
                 </dt>
                 <dd>
                     <div class="modal fade" id="damageModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content">
-                                <div id="damage" class="carousel slide" data-ride="carousel" style="margin-bottom: -3px">
+                                <div id="damage" class="carousel slide" data-ride="carousel">
 
                                     <ol class="carousel-indicators">
                                         @{
@@ -171,7 +171,7 @@
                                         {
                                             i++;
                                             var active = i == 1 ? "active" : "";
-                                            <div class="carousel-item @active">
+                                            <div class=" fixed-carousel carousel-item @active">
                                                 <img class="d-block" src="@Url.Content(item.ImagePath)" alt="imagem não encontrada" />
                                             </div>
 
