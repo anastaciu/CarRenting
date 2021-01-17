@@ -35,28 +35,6 @@ namespace CarRenting.Controllers
             return View(company);
         }
 
-        // GET: Companies/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Companies/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,CompanyName,CompanyPhoneNumber,CompanyCellNumber")] Company company)
-        {
-            if (ModelState.IsValid)
-            {
-                _dbContext.Companies.Add(company);
-                await _dbContext.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-
-            return View(company);
-        }
 
         // GET: Companies/Edit/5
         public async Task<ActionResult> Edit(int? id)

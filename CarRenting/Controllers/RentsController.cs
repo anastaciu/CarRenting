@@ -57,7 +57,7 @@ namespace CarRenting.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (rent.End.Day < rent.Begin.Day)
+                if (rent.End < rent.Begin)
                 {
                     ModelState.AddModelError(nameof(rent.End), @"Data de fim não pode ser inferior à data de início");
                     return View(rent);

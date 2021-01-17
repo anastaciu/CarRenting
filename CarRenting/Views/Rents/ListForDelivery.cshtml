@@ -11,6 +11,9 @@
     <table class="table boxshadow">
         <tr>
             <th>
+
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ApplicationUser.Name)
             </th>
             <th>
@@ -30,6 +33,9 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    <a href="@Url.Action("DetailsAdmin", new {id = item.Id})" title="Informação da reserva"><i class="fas fa-fw fa-info text-info"></i></a>
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ApplicationUser.Name)
                 </td>

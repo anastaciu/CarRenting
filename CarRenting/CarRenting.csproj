@@ -604,7 +604,6 @@
     <Content Include="Views\CompanyAdminArea\Index.cshtml" />
     <Content Include="Views\ClientArea\Index.cshtml" />
     <Content Include="Views\Account\RegisterInitCompanyAdmin.cshtml" />
-    <Content Include="Views\Companies\Create.cshtml" />
     <Content Include="Views\Companies\Delete.cshtml" />
     <Content Include="Views\Companies\Details.cshtml" />
     <Content Include="Views\Companies\Edit.cshtml" />
