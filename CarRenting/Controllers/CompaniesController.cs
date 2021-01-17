@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -114,7 +115,13 @@ namespace CarRenting.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             var company = await _dbContext.Companies.FindAsync(id);
+            var employees = _dbContext.Employees.Include(e=>e.ApplicationUser).Where(e => e.CompanyId == id);
+            foreach (var employee in employees)
+            {
+                _dbContext.Users.Remove(employee.ApplicationUser);
+            }
             _dbContext.Companies.Remove(company ?? throw new HttpException(400, NoCompanyFound()));
+
             await _dbContext.SaveChangesAsync();
             return RedirectToAction("Index");
         }
