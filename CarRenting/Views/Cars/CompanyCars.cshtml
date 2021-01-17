@@ -57,10 +57,10 @@ else if(TempData["edited"] as bool? == false)
 <table class="table boxshadow">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Type.Type)
+            @Html.DisplayNameFor(model => model.CarImages)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.License)
+            @Html.DisplayNameFor(model => model.Type.Type)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Brand)
@@ -84,10 +84,26 @@ else if(TempData["edited"] as bool? == false)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Type.Type)
+                @if (item.CarImages.Any())
+                {
+                    if (TempData["newCarList"] as bool? == true)
+                    {
+                        <a href="#" type="button" data-toggle="modal" data-target="#detailsModal"><img class="img-thumbnail w-75" src="@Url.Content(item.CarImages.ElementAt(0).ImagePath)" /></a>
+                    }
+                    else
+                    {
+                        <div>
+                            <a href="@Url.Action("Details", new {item.Id})"><img class="img-thumbnail w-75" src="@Url.Content(item.CarImages.ElementAt(0).ImagePath)" /></a>
+                        </div>
+                    }
+                }
+                else
+                {
+                    @:N/A
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.License)
+                @Html.DisplayFor(modelItem => item.Type.Type)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Brand)
@@ -107,9 +123,9 @@ else if(TempData["edited"] as bool? == false)
             <td>
                 @if (isCompanyAdmin)
                 {
-                    <a href="@Url.Action("Edit", new { id = item.Id })" title="Editar Veículo"><i class="fas text-center fa-fw fa-edit text-primary"></i></a>
+                    <a href="@Url.Action("Edit", new {id = item.Id})" title="Editar Veículo"><i class="fas text-center fa-fw fa-edit text-primary"></i></a>
                 }
-                <a href="@Url.Action("Details", new { id = item.Id })" title="Detalhes do Veículo"><i class="fas fa-fw fa-info text-info"></i></a>
+                <a href="@Url.Action("Details", new {id = item.Id})" title="Detalhes do Veículo"><i class="fas fa-fw fa-info text-info"></i></a>
             </td>
         </tr>
     }

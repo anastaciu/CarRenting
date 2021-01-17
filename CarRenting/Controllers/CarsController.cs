@@ -47,7 +47,7 @@ namespace CarRenting.Controllers
         {
             var userId = User.Identity.GetUserId();
             var employee = _dbContext.Employees.Include(e=>e.Company).SingleOrDefault(e => e.ApplicationUserId == userId);
-            var cars = _dbContext.Cars.Where(c=>c.CompanyId == employee.CompanyId).Include(c=>c.Type);
+            var cars = _dbContext.Cars.Include(c => c.CarImages).Include(c => c.Type).Where(c=>c.CompanyId == employee.CompanyId);
             return View(await cars.ToListAsync());
         }
 
@@ -69,7 +69,7 @@ namespace CarRenting.Controllers
                 throw new HttpException(404, NoCarFound());
             }
             
-            return View("CompanyCars", await _dbContext.Cars.Include(c=>c.Company).Include(c=>c.Type).Where(c => c.CompanyId == id).ToListAsync());
+            return View("CompanyCars", await _dbContext.Cars.Include(c=>c.Company).Include(c => c.CarImages).Include(c=>c.Type).Where(c => c.CompanyId == id).ToListAsync());
         }
 
         // GET: Cars/Details/5
