@@ -192,7 +192,6 @@
     <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\CompanyAdminAreaController.cs" />
     <Compile Include="Controllers\CompanyUserAreaController.cs" />
-    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -602,11 +601,6 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Employees\Create.cshtml" />
-    <Content Include="Views\Employees\Delete.cshtml" />
-    <Content Include="Views\Employees\Details.cshtml" />
-    <Content Include="Views\Employees\Edit.cshtml" />
-    <Content Include="Views\Employees\Index.cshtml" />
     <Content Include="Views\CompanyAdminArea\Index.cshtml" />
     <Content Include="Views\ClientArea\Index.cshtml" />
     <Content Include="Views\Account\RegisterInitCompanyAdmin.cshtml" />

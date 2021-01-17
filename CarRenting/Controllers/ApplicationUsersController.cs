@@ -206,7 +206,7 @@ namespace CarRenting.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (_dbContext.Users.Any(u => u.Email == applicationUser.Email))
+                    if (_dbContext.Users.Any(u => u.Email == applicationUser.Email && user.Email != u.Email))
                     {
                         ModelState.AddModelError(nameof(applicationUser.Email), @"O email já está registado");
                         roles = new SelectList(_dbContext.Roles.Where(r => r.Name.Contains("Empresa")), "Name", "Name");
@@ -241,14 +241,7 @@ namespace CarRenting.Controllers
                     _dbContext.Entry(user).State = EntityState.Modified;
                     await _dbContext.SaveChangesAsync();
                     TempData["isChanged"] = true;
-                    if (User.IsInRole(WebConfigurationManager.AppSettings["Cn"]))
-                    {
-                        return RedirectToAction("CompanyEmployees");
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index");
-                    }
+                    return RedirectToAction("CompanyEmployees");
                 }
             }
             roles = new SelectList(_dbContext.Roles.Where(r => r.Name.Contains("Empresa")), "Name", "Name");

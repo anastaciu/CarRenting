@@ -211,8 +211,3 @@ img {
     height: 500px;
     max-height: 500px;
 }
-
-.modal-content {
-    background-color: transparent!important; 
-    border: 0px !important;
-}
