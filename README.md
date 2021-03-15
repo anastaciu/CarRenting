@@ -26,19 +26,25 @@ Registar como cliente;
 Registar como empresa de Renting; 
 
 Clientes:
+
 Login / Recuperar password; 
 Ver catálogo que produtos (veículos e preçários);
 Efetuar uma reserva (escolher veículo(s) e datas da reserva). Só deve ser possível reservar o veículo caso este esteja disponível nas datas que o cliente escolhe; 
-Ver histórico de reservas Funcionários das empresas de Renting: 
+Ver histórico de reservas;
+
+Funcionários das empresas de Renting: 
+
 Gerir Reservas (ver lista de reservas, confirmar uma reserva, ver detalhes de uma reserva) da sua empresa; 
 Entregar veículo ao cliente (Marcar o veículo como entregue indicando os km, estado do depósito e se tem defeitos); 
 Receber veículo (Indicar km, nível do depósito e proceder à validação de uma checklist de verificações a fazer no veículo e upload de fotos com danos); 
 
 Administração da empresa de Renting: 
+
 Gestão de Funcionários oGestão do catálogo que veículos 
 Definição da checklist de verificações a realizar para cada tipo de viatura 
 
 Administração da plataforma: 
+
 Gestão de empresas de Renting; 
 Gestão de clientes (listar, visualizar, editar); 
 Gestão de Categorias de veículos a disponibilizar; 
