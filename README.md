@@ -1,7 +1,7 @@
 # CarRenting
-## Licenciaturas em Engenharia Informática Programação Web Trabalho Prático 1º Semestre - 2020/2021 
+Licenciaturas em Engenharia Informática Programação Web Trabalho Prático 1º Semestre - 2020/2021 
 
- ## Requisitos:
+## Requisitos:
 
 1.Âmbito O trabalho prático tem como objetivo o desenvolvimento de uma aplicação web em ASP.NET MVC 5 (com a framework 4.7/4.8) recorrendo à linguagem de programação C# e ao SQLServer (localdb). Para implementar o trabalho proposto, cada grupo deve aplicar os conhecimentos lecionados nas aulas de Programação  Web  e  reutilizar  os  conhecimentos  lecionados  noutras  unidades  curriculares  da licenciatura, com o objetivo de desenvolver uma solução web coerente. 
 
@@ -50,7 +50,7 @@ As bases de  dados, que forem incluídas  na  aplicação web (na diretoria App_
   4. Prazo de Entrega A entrega do trabalho prático tem de ser realizada até ao dia 8 de Janeiro de 2021. Após a entrega não é possível alterar o trabalho entregue. Aquando da entrega o grupo de alunos terá de escolher um dos “slots” disponível para a realização das defesas. E defesa dos dois elementos do grupo será feita no mesmo dia e hora correspondente ao “slot” escolhido para a defesa.  
   5. Modo de Entrega  A entrega do trabalho prático é realizada em formato digital no Moodle (um ficheiro ZIP com a seguinte designação: Tema_Grupo.zip).  Para além do projeto, que inclui o código fonte, a base de dados, as imagens e outros elementos que tenham sido utilizados, o ficheiro ZIP deve incluir um ficheiro em formato PDF com a seguinte informação:  1.Elementos do grupo de trabalho (Nome completo + Número de aluno).  2.Dados de acesso à aplicação web, tais como o login e a password atribuídos aos diversos “utilizadores exemplo”. 
 
- ## Manual
+ ## Manual:
  
 Palavra passe para todos os utilizadores: **1234**
 
