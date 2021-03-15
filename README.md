@@ -142,6 +142,6 @@ Utilizadores de empresas
 - Abrir com Visual Studio
 - Instalar a .NET framework 4.8 (se não estiver instalada)
 - Se os packages não forem instalados automaticamente, instalá-los através do Nuget Package Manager
-- Correr directamente do Visual Studio(IIS) ou num servidor compatível (Windows Server, Web Server(IIS), Azure, Docker, etc.)
+- Correr directamente do Visual Studio(IIS) ou compilar e correr num servidor compatível (Windows Server, Web Server(IIS), Azure, Docker, etc.)
 
 
