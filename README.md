@@ -1,8 +1,7 @@
 # CarRenting
+Licenciaturas em Engenharia Informática Programação Web Trabalho Prático 1º Semestre - 2020/2021 
 
 Requisitos:
-
-Licenciaturas em Engenharia Informática Programação Web Trabalho Prático 1º Semestre - 2020/2021 
 
 1.Âmbito O trabalho prático tem como objetivo o desenvolvimento de uma aplicação web em ASP.NET MVC 5 (com a framework 4.7/4.8) recorrendo à linguagem de programação C# e ao SQLServer (localdb). Para implementar o trabalho proposto, cada grupo deve aplicar os conhecimentos lecionados nas aulas de Programação  Web  e  reutilizar  os  conhecimentos  lecionados  noutras  unidades  curriculares  da licenciatura, com o objetivo de desenvolver uma solução web coerente. 
 
