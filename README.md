@@ -1,6 +1,11 @@
 # CarRenting
 Licenciaturas em Engenharia Informática Programação Web Trabalho Prático 1º Semestre - 2020/2021 
 
+O trabalho proposto consiste na criação de uma aplicação web para gestão de aluguer de veículos que permite que uma empresas de Renting possa disponibilizar as suas viaturas de forma a que clientes online possam ter acesso às mesmas e as possam alugar, o objetivo é proporcionar uma forma fácil e intuitiva de proporcionar aos clientes uma forma simples e eficaz de alugarem os seus veículos, bem como de gerirem o seu parque de veículos.
+A plataforma foi desenvolvida em ASP.NET MVC 5 com recurso à framework 4.8 e linguagem de desenvolvimento C#, bem como à ferramenta de gestão de base de dados SQLServer como era requerido.
+Aspetos a considerar, são a qualidade e robustez dos dados, a qualidade e solidez do código a apresentar, e   a criação de um interface fácil de usar e que permita que o utilizador possa intuitivamente fazer o que pretende.
+
+
 ## Requisitos:
 
 1.Âmbito O trabalho prático tem como objetivo o desenvolvimento de uma aplicação web em ASP.NET MVC 5 (com a framework 4.7/4.8) recorrendo à linguagem de programação C# e ao SQLServer (localdb). Para implementar o trabalho proposto, cada grupo deve aplicar os conhecimentos lecionados nas aulas de Programação  Web  e  reutilizar  os  conhecimentos  lecionados  noutras  unidades  curriculares  da licenciatura, com o objetivo de desenvolver uma solução web coerente. 
