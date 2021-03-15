@@ -146,6 +146,6 @@ Utilizadores de empresas
 
 - Se os packages não forem instalados automaticamente, instalá-los através do Nuget Package Manager
 
-- Correr directamente do Visual Studio ou instalar num servidor compatível (Windows Server, IIS)
+- Correr directamente do Visual Studio ou num servidor compatível (Windows Server, IIS)
 
 
