@@ -74,23 +74,23 @@ Carregamento de fotos com resoluções muito elevadas é desaconselhado, a apres
 
 Página inicial:
 
-•	Ver Veículos – Ver lista de viaturas, procurar viatura, ver detalhes da viatura, reservar viatura se tiver permissões para tal.</br>
-•	Particulares – Registar como cliente.</br>
-•	Empresas – Registar como empresa.</br>
-•	Entrar – Entrar no site na respetiva área consoante as permissões, recuperar a password.</br>
-•	Início – Página inicial.</br>
+-	Ver Veículos – Ver lista de viaturas, procurar viatura, ver detalhes da viatura, reservar viatura se tiver permissões para tal.</br>
+-	Particulares – Registar como cliente.</br>
+-	Empresas – Registar como empresa.</br>
+-	Entrar – Entrar no site na respetiva área consoante as permissões, recuperar a password.</br>
+-	Início – Página inicial.</br>
 
 Página de Administrador:
 
-•	Empresas – Permite ver as empresas registadas, editar, ver detalhes, eliminar empresa, ver catálogo de veículos para cada empresa</br>
-•	Categorias – Editar e adicionar categorias de veículos</br>
-•	Utilizadores – Editar e ver detalhes de utilizadores da plataforma</br>
+-	Empresas – Permite ver as empresas registadas, editar, ver detalhes, eliminar empresa, ver catálogo de veículos para cada empresa</br>
+-	Categorias – Editar e adicionar categorias de veículos</br>
+-	Utilizadores – Editar e ver detalhes de utilizadores da plataforma</br>
 
 Página de Administrador de empresa:
 
-•	Utilizadores – Permite adicionar editar, ver detalhes e eliminar um utilizador</br>
-•	Checklists – Permite adicionar, eliminar e associar/dissociar a categorias de veículos</br>
-•	Veículos – Permite adicionar, editar e consultar detalhes de veículos da empresa</br>
+-	Utilizadores – Permite adicionar editar, ver detalhes e eliminar um utilizador</br>
+-	Checklists – Permite adicionar, eliminar e associar/dissociar a categorias de veículos</br>
+-	Veículos – Permite adicionar, editar e consultar detalhes de veículos da empresa</br>
 
 Página de cliente:
 
