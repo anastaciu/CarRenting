@@ -54,27 +54,20 @@ As bases de  dados, que forem incluídas  na  aplicação web (na diretoria App_
  
 Palavra passe para todos os utilizadores: **1234**
 
-Administradores do site
-
+Administradores do site</br>
 • admin@admin</br>
 • tobias@tobias</br>
-
-Clientes
-
+Clientes</br>
 •	 ricardojvsilva@hotmail.com</br>
 •	 antonio@antonio</br>
 •	 antonio@antonio</br>
 •	 jose@jose</br>
 •	 maria@maria</br>
-
-Administradores de empresas
-
+Administradores de empresas</br>
 •	 ric@ric</br>
 •	 alberto@alberto</br>
 •	 jorge@jorge</br>
-
-Utilizadores de empresas
-
+Utilizadores de empresas</br>
 •	 sid@sid</br>
 •	 manel@manel</br>
 •	 carlo@carlos</br>
