@@ -52,21 +52,28 @@ As bases de  dados, que forem incluídas  na  aplicação web (na diretoria App_
 
  ## Manual
  
-Palavra passe para todos os utilizadores: 1234
+Palavra passe para todos os utilizadores: **1234**
 
 Administradores do site
+
 • admin@admin
 • tobias@tobias
+
 Clientes
+
 •	 ricardojvsilva@hotmail.com
 •	 antonio@antonio
 •	 jose@jose
 •	 maria@maria
+
 Administradores de empresas
+
 •	 ric@ric
 •	 alberto@alberto
 •	 jorge@jorge
+
 Utilizadores de empresas
+
 •	 sid@sid
 •	 manel@manel
 •	 carlo@carlos
