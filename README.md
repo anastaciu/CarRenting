@@ -56,29 +56,30 @@ Palavra passe para todos os utilizadores: **1234**
 
 Administradores do site
 
-• admin@admin
-• tobias@tobias
+• admin@admin</br>
+• tobias@tobias</br>
 
 Clientes
 
-•	 ricardojvsilva@hotmail.com
-•	 antonio@antonio
-•	 jose@jose
-•	 maria@maria
+•	 ricardojvsilva@hotmail.com</br>
+•	 antonio@antonio</br>
+•	 antonio@antonio</br>
+•	 jose@jose</br>
+•	 maria@maria</br>
 
 Administradores de empresas
 
-•	 ric@ric
-•	 alberto@alberto
-•	 jorge@jorge
+•	 ric@ric</br>
+•	 alberto@alberto</br>
+•	 jorge@jorge</br>
 
 Utilizadores de empresas
 
-•	 sid@sid
-•	 manel@manel
-•	 carlo@carlos
-•	 marco@marco
-•	 marco@paulo
-•	 zeca@zeca
-•	 carlota@carlota
+•	 sid@sid</br>
+•	 manel@manel</br>
+•	 carlo@carlos</br>
+•	 marco@marco</br>
+•	 marco@paulo</br>
+•	 zeca@zeca</br>
+•	 carlota@carlota</br>
 
