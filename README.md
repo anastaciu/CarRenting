@@ -7,7 +7,7 @@ A plataforma foi desenvolvida em ASP.NET MVC 5 com recurso à framework 4.8 e li
 Aspetos a considerar, são a qualidade e robustez dos dados, a qualidade e solidez do código a apresentar, e   a criação de um interface fácil de usar e que permita que o utilizador possa intuitivamente fazer o que pretende.
 
 
-## Requisitos:
+## Requisitos
 
 1.Âmbito O trabalho prático tem como objetivo o desenvolvimento de uma aplicação web em ASP.NET MVC 5 (com a framework 4.7/4.8) recorrendo à linguagem de programação C# e ao SQLServer (localdb). Para implementar o trabalho proposto, cada grupo deve aplicar os conhecimentos lecionados nas aulas de Programação  Web  e  reutilizar  os  conhecimentos  lecionados  noutras  unidades  curriculares  da licenciatura, com o objetivo de desenvolver uma solução web coerente. 
 
@@ -63,7 +63,7 @@ As bases de  dados, que forem incluídas  na  aplicação web (na diretoria App_
   4. Prazo de Entrega A entrega do trabalho prático tem de ser realizada até ao dia 8 de Janeiro de 2021. Após a entrega não é possível alterar o trabalho entregue. Aquando da entrega o grupo de alunos terá de escolher um dos “slots” disponível para a realização das defesas. E defesa dos dois elementos do grupo será feita no mesmo dia e hora correspondente ao “slot” escolhido para a defesa.  
   5. Modo de Entrega  A entrega do trabalho prático é realizada em formato digital no Moodle (um ficheiro ZIP com a seguinte designação: Tema_Grupo.zip).  Para além do projeto, que inclui o código fonte, a base de dados, as imagens e outros elementos que tenham sido utilizados, o ficheiro ZIP deve incluir um ficheiro em formato PDF com a seguinte informação:  1.Elementos do grupo de trabalho (Nome completo + Número de aluno).  2.Dados de acesso à aplicação web, tais como o login e a password atribuídos aos diversos “utilizadores exemplo”. 
 
- ## Manual:
+ ## Manual
  
  ### Restrições de utilização
  
@@ -103,7 +103,7 @@ Página de Utilizador da empresa:
 •	Entregar ou Receber Veículo – Listar reservas, consultar o seu estado, entregar veículo se reserva estiver confirmada, receber veículo se tiver sido entrega.</br>
 
 
- ### Utilizadores exemplo BD
+ ### Utilizadores exemplo BD:
  
 Palavra passe para todos os utilizadores: **1234**
 
@@ -135,4 +135,17 @@ Utilizadores de empresas
 •	 marco@paulo</br>
 •	 zeca@zeca</br>
 •	 carlota@carlota</br>
+
+## Uso:
+
+- Clonar o Repo
+
+- Abrir com Visual Studio
+
+- Instalar a .NET framework 4.8 (se não estiver instalada)
+
+- Se os packages não forem instalados automaticamente, instalá-los através do Nuget Package Manager
+
+- Correr directamente do Visual Studio ou instalar num servidor compatível (Windows Server, IIS)
+
 
