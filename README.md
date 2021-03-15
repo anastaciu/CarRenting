@@ -136,7 +136,7 @@ Utilizadores de empresas
 -	 zeca@zeca</br>
 -  carlota@carlota</br>
 
-## Uso:
+## Uso
 
 - Clonar o Repo
 - Abrir com Visual Studio
