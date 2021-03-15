@@ -94,13 +94,13 @@ Página de Administrador de empresa:
 
 Página de cliente:
 
-•	Alugar Veículo – Permite alugar um veículo em datas disponíveis, caso as datas estejam indisponíveis uma nova lista de veículos da mesma categoria é apresentada, o utilizador pode escolher e não precisa de especificar nova data. Ver detalhes do veículo.</br>
-•	As minhas reservas – Ver lista de reservas, ver detalhes de uma reserva.</br>
+-	Alugar Veículo – Permite alugar um veículo em datas disponíveis, caso as datas estejam indisponíveis uma nova lista de veículos da mesma categoria é apresentada, o utilizador pode escolher e não precisa de especificar nova data. Ver detalhes do veículo.</br>
+-	As minhas reservas – Ver lista de reservas, ver detalhes de uma reserva.</br>
 
 Página de Utilizador da empresa:
 
-•	Reservas – Permite consultar, ver detalhes e confirmar reserva.</br>
-•	Entregar ou Receber Veículo – Listar reservas, consultar o seu estado, entregar veículo se reserva estiver confirmada, receber veículo se tiver sido entrega.</br>
+-	Reservas – Permite consultar, ver detalhes e confirmar reserva.</br>
+-	Entregar ou Receber Veículo – Listar reservas, consultar o seu estado, entregar veículo se reserva estiver confirmada, receber veículo se tiver sido entrega.</br>
 
 
  ### Utilizadores exemplo BD:
@@ -109,43 +109,39 @@ Palavra passe para todos os utilizadores: **1234**
 
 Administradores do site
 
-• admin@admin</br>
-• tobias@tobias</br>
+- admin@admin</br>
+- tobias@tobias</br>
 
 Clientes
 
-•	 ricardojvsilva@hotmail.com</br>
-•	 antonio@antonio</br>
-•	 antonio@antonio</br>
-•	 jose@jose</br>
-•	 maria@maria</br>
+-	 ricardojvsilva@hotmail.com</br>
+-	 antonio@antonio</br>
+-	 antonio@antonio</br>
+-	 jose@jose</br>
+-	 maria@maria</br>
 
 Administradores de empresas
 
-•	 ric@ric</br>
-•	 alberto@alberto</br>
-•	 jorge@jorge</br>
+-	 ric@ric</br>
+-	 alberto@alberto</br>
+-	 jorge@jorge</br>
 
 Utilizadores de empresas
 
-•	 sid@sid</br>
-•	 manel@manel</br>
-•	 carlo@carlos</br>
-•	 marco@marco</br>
-•	 marco@paulo</br>
-•	 zeca@zeca</br>
-•	 carlota@carlota</br>
+-	 sid@sid</br>
+-	 manel@manel</br>
+-	 carlo@carlos</br>
+-	 marco@marco</br>
+-	 marco@paulo</br>
+-	 zeca@zeca</br>
+-  carlota@carlota</br>
 
 ## Uso:
 
 - Clonar o Repo
-
 - Abrir com Visual Studio
-
 - Instalar a .NET framework 4.8 (se não estiver instalada)
-
 - Se os packages não forem instalados automaticamente, instalá-los através do Nuget Package Manager
-
 - Correr directamente do Visual Studio ou num servidor compatível (Windows Server, IIS)
 
 
