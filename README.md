@@ -74,33 +74,33 @@ Carregamento de fotos com resoluções muito elevadas é desaconselhado, a apres
 
 Página inicial:
 
-•	Ver Veículos – Ver lista de viaturas, procurar viatura, ver detalhes da viatura, reservar viatura se tiver permissões para tal.
-•	Particulares – Registar como cliente.
-•	Empresas – Registar como empresa.
-•	Entrar – Entrar no site na respetiva área consoante as permissões, recuperar a password.
-•	Início – Página inicial.
+•	Ver Veículos – Ver lista de viaturas, procurar viatura, ver detalhes da viatura, reservar viatura se tiver permissões para tal.</br>
+•	Particulares – Registar como cliente.</br>
+•	Empresas – Registar como empresa.</br>
+•	Entrar – Entrar no site na respetiva área consoante as permissões, recuperar a password.</br>
+•	Início – Página inicial.</br>
 
 Página de Administrador:
 
-•	Empresas – Permite ver as empresas registadas, editar, ver detalhes, eliminar empresa, ver catálogo de veículos para cada empresa
-•	Categorias – Editar e adicionar categorias de veículos
-•	Utilizadores – Editar e ver detalhes de utilizadores da plataforma
+•	Empresas – Permite ver as empresas registadas, editar, ver detalhes, eliminar empresa, ver catálogo de veículos para cada empresa</br>
+•	Categorias – Editar e adicionar categorias de veículos</br>
+•	Utilizadores – Editar e ver detalhes de utilizadores da plataforma</br>
 
 Página de Administrador de empresa:
 
-•	Utilizadores – Permite adicionar editar, ver detalhes e eliminar um utilizador
-•	Checklists – Permite adicionar, eliminar e associar/dissociar a categorias de veículos
-•	Veículos – Permite adicionar, editar e consultar detalhes de veículos da empresa
+•	Utilizadores – Permite adicionar editar, ver detalhes e eliminar um utilizador</br>
+•	Checklists – Permite adicionar, eliminar e associar/dissociar a categorias de veículos</br>
+•	Veículos – Permite adicionar, editar e consultar detalhes de veículos da empresa</br>
 
 Página de cliente:
 
-•	Alugar Veículo – Permite alugar um veículo em datas disponíveis, caso as datas estejam indisponíveis uma nova lista de veículos da mesma categoria é apresentada, o utilizador pode escolher e não precisa de especificar nova data. Ver detalhes do veículo.
-•	As minhas reservas – Ver lista de reservas, ver detalhes de uma reserva.
+•	Alugar Veículo – Permite alugar um veículo em datas disponíveis, caso as datas estejam indisponíveis uma nova lista de veículos da mesma categoria é apresentada, o utilizador pode escolher e não precisa de especificar nova data. Ver detalhes do veículo.</br>
+•	As minhas reservas – Ver lista de reservas, ver detalhes de uma reserva.</br>
 
 Página de Utilizador da empresa:
 
-•	Reservas – Permite consultar, ver detalhes e confirmar reserva.
-•	Entregar ou Receber Veículo – Listar reservas, consultar o seu estado, entregar veículo se reserva estiver confirmada, receber veículo se tiver sido entrega.
+•	Reservas – Permite consultar, ver detalhes e confirmar reserva.</br>
+•	Entregar ou Receber Veículo – Listar reservas, consultar o seu estado, entregar veículo se reserva estiver confirmada, receber veículo se tiver sido entrega.</br>
 
 
  ### Utilizadores exemplo BD
