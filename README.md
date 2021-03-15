@@ -27,7 +27,8 @@ Registar como empresa de Renting;
 
 Clientes:
 Login / Recuperar password; 
-Ver catálogo que produtos (veículos e preçários) oEfetuar uma reserva (escolher veículo(s) e datas da reserva). Só deve ser possível reservar o veículo caso este esteja disponível nas datas que o cliente escolhe; 
+Ver catálogo que produtos (veículos e preçários);
+Efetuar uma reserva (escolher veículo(s) e datas da reserva). Só deve ser possível reservar o veículo caso este esteja disponível nas datas que o cliente escolhe; 
 Ver histórico de reservas Funcionários das empresas de Renting: 
 Gerir Reservas (ver lista de reservas, confirmar uma reserva, ver detalhes de uma reserva) da sua empresa; 
 Entregar veículo ao cliente (Marcar o veículo como entregue indicando os km, estado do depósito e se tem defeitos); 
