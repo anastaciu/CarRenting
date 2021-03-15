@@ -49,3 +49,28 @@ As bases de  dados, que forem incluídas  na  aplicação web (na diretoria App_
   3. A completude e a consistência dos dados de demonstração das funcionalidades da aplicação. Os dados  de  demonstração  devem  mostrar,  convenientemente,  todas  as  funcionalidades  da aplicação no domínio do problema. 
   4. Prazo de Entrega A entrega do trabalho prático tem de ser realizada até ao dia 8 de Janeiro de 2021. Após a entrega não é possível alterar o trabalho entregue. Aquando da entrega o grupo de alunos terá de escolher um dos “slots” disponível para a realização das defesas. E defesa dos dois elementos do grupo será feita no mesmo dia e hora correspondente ao “slot” escolhido para a defesa.  
   5. Modo de Entrega  A entrega do trabalho prático é realizada em formato digital no Moodle (um ficheiro ZIP com a seguinte designação: Tema_Grupo.zip).  Para além do projeto, que inclui o código fonte, a base de dados, as imagens e outros elementos que tenham sido utilizados, o ficheiro ZIP deve incluir um ficheiro em formato PDF com a seguinte informação:  1.Elementos do grupo de trabalho (Nome completo + Número de aluno).  2.Dados de acesso à aplicação web, tais como o login e a password atribuídos aos diversos “utilizadores exemplo”. 
+
+ ## Manual
+ 
+ Palavra passe para todos os utilizadores: 1234
+Administradores do site
+•	 admin@admin
+•	 tobias@tobias
+Clientes
+•	 ricardojvsilva@hotmail.com
+•	 antonio@antonio
+•	 jose@jose
+•	 maria@maria
+Administradores de empresas
+•	 ric@ric
+•	 alberto@alberto
+•	 jorge@jorge
+Utilizadores de empresas
+•	 sid@sid
+•	 manel@manel
+•	 carlo@carlos
+•	 marco@marco
+•	 marco@paulo
+•	 zeca@zeca
+•	 carlota@carlota
+
