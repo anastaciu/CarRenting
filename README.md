@@ -52,6 +52,46 @@ As bases de  dados, que forem incluídas  na  aplicação web (na diretoria App_
 
  ## Manual:
  
+ ### Restrições de utilização
+ 
+O tamanho do upload de dados foi expandido nas configurações do site e no servidor no ficheiro Web.config, no entanto este tamanho foi limitado a 1Gb, carregamentos superiores não são permitidos.
+Carregamento de fotos com resoluções muito elevadas é desaconselhado, a apresentação no componente carousel do bootstrap, tendo em conta que é apresentado num componente modal, pode cortar partes importantes das mesmas.  Resoluções de 640x480 seria idealmente o máximo aconselhado.
+
+### Manual Resumido de Utilização do Website	
+
+Página inicial:
+
+•	Ver Veículos – Ver lista de viaturas, procurar viatura, ver detalhes da viatura, reservar viatura se tiver permissões para tal.
+•	Particulares – Registar como cliente.
+•	Empresas – Registar como empresa.
+•	Entrar – Entrar no site na respetiva área consoante as permissões, recuperar a password.
+•	Início – Página inicial.
+
+Página de Administrador:
+
+•	Empresas – Permite ver as empresas registadas, editar, ver detalhes, eliminar empresa, ver catálogo de veículos para cada empresa
+•	Categorias – Editar e adicionar categorias de veículos
+•	Utilizadores – Editar e ver detalhes de utilizadores da plataforma
+
+Página de Administrador de empresa:
+
+•	Utilizadores – Permite adicionar editar, ver detalhes e eliminar um utilizador
+•	Checklists – Permite adicionar, eliminar e associar/dissociar a categorias de veículos
+•	Veículos – Permite adicionar, editar e consultar detalhes de veículos da empresa
+
+Página de cliente:
+
+•	Alugar Veículo – Permite alugar um veículo em datas disponíveis, caso as datas estejam indisponíveis uma nova lista de veículos da mesma categoria é apresentada, o utilizador pode escolher e não precisa de especificar nova data. Ver detalhes do veículo.
+•	As minhas reservas – Ver lista de reservas, ver detalhes de uma reserva.
+
+Página de Utilizador da empresa:
+
+•	Reservas – Permite consultar, ver detalhes e confirmar reserva.
+•	Entregar ou Receber Veículo – Listar reservas, consultar o seu estado, entregar veículo se reserva estiver confirmada, receber veículo se tiver sido entrega.
+
+
+ ### Utilizadores exemplo BD
+ 
 Palavra passe para todos os utilizadores: **1234**
 
 Administradores do site
