@@ -21,8 +21,9 @@ Tema A - eRenting Objetivo: Criação de uma aplicação web para gestão de alu
 
 As principais funcionalidades/características da referida plataforma, e para cada tipo de utilizador são: 
 
-Utilizadores anónimos 
-Ver catálogo que produtos (veículos e preçários) 
+Utilizadores anónimos:
+
+Ver catálogo que produtos (veículos e preçários);
 Registar como cliente; 
 Registar como empresa de Renting; 
 
